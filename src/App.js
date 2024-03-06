@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect, useReducer, useState } from "react";
 
 function App() {
+  const [agree, setAgree] = useReducer((agree) => !agree, false);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Connect with me</h2>
+      
+      <input
+        type="checkbox"
+        value={agree}
+        onChange={setAgree}
+      />
+      <label>I {agree ? "Agree" : "do not agree"}</label>
     </div>
   );
 }
