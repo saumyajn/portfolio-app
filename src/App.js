@@ -1,18 +1,19 @@
 import "./App.css";
-import { useEffect, useReducer, useState } from "react";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Header from "./components/header";
 
 function App() {
-  const [agree, setAgree] = useReducer((agree) => !agree, false);
   return (
     <div className="App">
-      <h2>Connect with me</h2>
-      
-      <input
-        type="checkbox"
-        value={agree}
-        onChange={setAgree}
-      />
-      <label>I {agree ? "Agree" : "do not agree"}</label>
+      <Box sx={{ width: "100%", maxWidth: 500 }}>
+        <Typography variant="h3" gutterBottom>
+          {/* Saumya Jain */}
+        </Typography>
+      </Box>
+      <Header />
+
+    
     </div>
   );
 }
