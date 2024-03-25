@@ -4,8 +4,10 @@ import myimg from '../images/myimg.png';
 
 import styles from '../styles/header.module.css'
 export default function Home() {
+    let code = "<h3>";
+    let codeEnd= "</h3>"
     return (<div>
-        <Box sx={{ height: '100vh', flexGrow: 1, margin: 1, textAlign: 'left' }}>
+        <Box sx={{ height: '100vh', textAlign: 'left' }}>
             <br />  <br />
             <Grid container spacing={1}>
                 <Grid item xs={11} className={styles.home}>
@@ -14,12 +16,14 @@ export default function Home() {
                     </h1>
                     <h2>Front end Developer</h2>
                     <Grid item xs={10} >
-                    <h3>Front end developer who focuses on writing clean,
+                        <h3> {code}Coder, Artist, Animal Lover{codeEnd}</h3>
+                        <h3>
+                            Front end developer who focuses on writing clean,
 
-                        elegant and efficient code. Passionate about creating
+                            elegant and efficient code. Passionate about creating
 
-                        solid and scalable interactive applications with great user exp.</h3>
-                        </Grid>
+                            solid and scalable interactive applications with great user experience.</h3>
+                    </Grid>
                     <img src={myimg} className={styles.myImg} width={325} /></Grid>
             </Grid>
         </Box>

@@ -6,16 +6,16 @@ import Face3TwoToneIcon from '@mui/icons-material/Face3TwoTone';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import StarsTwoToneIcon from '@mui/icons-material/StarsTwoTone';
 import ContactPageTwoToneIcon from '@mui/icons-material/ContactPageTwoTone';
-import { pink } from '@mui/material/colors';
+import { pink, red } from '@mui/material/colors';
 import CssBaseline from '@mui/material/CssBaseline';
 import styles from '../styles/header.module.css'
 import PathConstants from '../routes/pathConstants';
 import { Link, useNavigate } from "react-router-dom";
 const drawerWidth = 200;
 
-const headersList = [{ name: 'Home', path: '/' }, { name: 'About', path: '/about-me' }, { name: 'Projects', path: '/projects' }, { name: 'Contact', path: '/contact' }];
+const headersList = [{ name: 'Home', path: '/' }, { name: 'About Me', path: '/about-me' }, { name: 'Passion Projects', path: '/projects' }, { name: 'Contact Me', path: '/contact' }];
 
-export default function Header() {
+export default function Header(props) {
     const [selectedIndex, setSelectedIndex] = React.useState(null);
 
     const navigate = useNavigate();
@@ -23,8 +23,7 @@ export default function Header() {
         event.preventDefault();
         setSelectedIndex(index);
         navigate(text)
-
-
+        props.parentCallBack(text)
     };
 
     return (
@@ -57,7 +56,7 @@ export default function Header() {
                                     onClick={(event) => handleListItemClick(event, text.path, index)}>
 
                                     <ListItemIcon className={styles.iconWidth}>{
-                                        [<HomeTwoToneIcon color='primary' />, <Face3TwoToneIcon sx={{ color: pink[500] }} />, <StarsTwoToneIcon color='success' />, <ContactPageTwoToneIcon color='secondary' />][index]}</ListItemIcon>
+                                        [<HomeTwoToneIcon sx={{ color: '#C00E8B ' }} />, <Face3TwoToneIcon  color="primary"/>, <StarsTwoToneIcon color='success' />, <ContactPageTwoToneIcon sx={{ color: '#8B0000' }} />][index]}</ListItemIcon>
 
                                     <ListItemText
                                         primary={text.name}
