@@ -5,10 +5,16 @@ import Home from "./components/home";
 
 import AboutMe from "./components/about-me";
 import Projects from "./components/passion-projects";
-import cover from "./images/layered-wave-orange.png";
-import cover1 from "./images/layered-wave-pink.png";
-import cover2 from "./images/layered-wave-blue.png";
-import cover3 from "./images/layered-wave-green.png";
+
+import lightCover1 from "./images/layered-wave-pink.png";
+import lightCover2 from "./images/layered-wave-blue.png";
+import lightCover3 from "./images/layered-wave-green.png";
+import lightCover4 from "./images/layered-wave-orange.png";
+
+import darkCover1 from "./images/dark-waves-pink.png";
+import darkCover2 from "./images/dark-waves-blue.png";
+import darkCover3 from "./images/dark-waves-green.png";
+import darkCover4 from "./images/dark-waves-orange.png";
 import Contact from "./components/contact-me";
 import { Suspense, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -16,35 +22,48 @@ import Layout from "./components/Layout";
 import Page404 from "./components/error";
 
 function App() {
-  const [img, setImg] = useState(cover1);
+  const [img, setImg] = useState(lightCover1);
+  const [theme, setTheme] = useState(null);
+  const handleChangeTheme = (val) => {
+    console.log(val);
+    if (val) {
+      setTheme("light");
+    } else setTheme("dark");
+
+    console.log(theme);
+    handleBack(window.location.pathname);
+  };
   const handleBack = (data) => {
-    console.log(data);
+    console.log(theme);
     switch (data) {
       case "/":
-        setImg(cover1);
+        theme === "light" ? setImg(lightCover1) : setImg(darkCover1);
         break;
 
       case "/about-me":
-        setImg(cover2);
+        theme === "light" ? setImg(lightCover2) : setImg(darkCover2);
         break;
 
       case "/projects":
-        setImg(cover3);
+        theme === "light" ? setImg(lightCover3) : setImg(darkCover3);
         break;
 
       case "/contact":
-        setImg(cover);
+        theme === "light" ? setImg(lightCover4) : setImg(darkCover4);
         break;
 
       default:
-        setImg(cover1);
+        setImg(lightCover1);
+
         break;
     }
     console.log(img);
   };
   const routes = createBrowserRouter([
     {
-      element: <Layout appCallBack={handleBack} />,
+      element: (
+        <Layout appPathCall={handleBack} appChangeTheme={handleChangeTheme} />
+      ),
       errorElement: <Page404 />,
       children: [
         { path: "/", element: <Home /> },

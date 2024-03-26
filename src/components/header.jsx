@@ -1,77 +1,141 @@
 import * as React from 'react';
 // import Button from '@mui/material/Button';
-import { AppBar, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Switch } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
+import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import Face3TwoToneIcon from '@mui/icons-material/Face3TwoTone';
+
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import StarsTwoToneIcon from '@mui/icons-material/StarsTwoTone';
 import ContactPageTwoToneIcon from '@mui/icons-material/ContactPageTwoTone';
-import { pink, red } from '@mui/material/colors';
+
 import CssBaseline from '@mui/material/CssBaseline';
+
 import styles from '../styles/header.module.css'
-import PathConstants from '../routes/pathConstants';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const drawerWidth = 200;
 
-const headersList = [{ name: 'Home', path: '/' }, { name: 'About Me', path: '/about-me' }, { name: 'Passion Projects', path: '/projects' }, { name: 'Contact Me', path: '/contact' }];
+const headersList = [
+    { name: 'Home', path: '/', icon: <HomeTwoToneIcon sx={{ color: '#D310C4' }} /> },
+    { name: 'About Me', path: '/about-me', icon: <Face3TwoToneIcon sx={{ color: '#1344BC ' }} /> },
+    { name: 'Passion Projects', path: '/projects', icon: <StarsTwoToneIcon color='success' /> },
+    { name: 'Contact Me', path: '/contact', icon: <ContactPageTwoToneIcon sx={{ color: '#BA4D00' }} /> }];
 
 export default function Header(props) {
-    const [selectedIndex, setSelectedIndex] = React.useState(null);
+
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [isClosing, setIsClosing] = React.useState(false);
+    const [checked, setChecked] = React.useState(true);
+
+    const handleChange = (event) => {
+        setChecked(event.target.checked);
+        props.changeTheme(checked);
+    };
+
+    const handleDrawerClose = () => {
+        setIsClosing(true);
+        setMobileOpen(false);
+    };
+
+    const handleDrawerTransitionEnd = () => {
+        setIsClosing(false);
+    };
+
+    const handleDrawerToggle = () => {
+        if (!isClosing) {
+            setMobileOpen(!mobileOpen);
+        }
+    };
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     const navigate = useNavigate();
     const handleListItemClick = (event, text, index) => {
         event.preventDefault();
         setSelectedIndex(index);
         navigate(text)
-        props.parentCallBack(text)
+        props.parentPathCall(text)
     };
 
+    const list = (
+        <List>
+
+            {headersList.map((val, index) => (
+
+                <ListItem key={val.name} className={styles.listSpacing} >
+
+                    <ListItemButton
+                        selected={selectedIndex === index}
+                        className={selectedIndex === index ? styles.listSelected : styles.listNotSelected}
+                        onClick={(event) => handleListItemClick(event, val.path, index)}>
+
+                        <ListItemIcon className={styles.iconWidth}>
+                            {val.icon}
+                        </ListItemIcon>
+
+                        <ListItemText
+                            primary={val.name}
+                        ></ListItemText>
+                    </ListItemButton>
+
+                </ListItem>
+
+            ))}
+
+        </List>)
+
+    const label = { inputProps: { 'aria-label': 'Switch demo' } };
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar position='fixed' color='transparent' elevation={0} sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} enableColorOnDark >
+            <AppBar position='fixed' color='transparent' elevation={0}
+                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} enableColorOnDark >
                 <Toolbar>
+
+                    <IconButton aria-label='open drawer' sx={{ mr: 2, display: { sm: 'none' } }} onClick={handleDrawerToggle}>
+                        <MenuTwoToneIcon />
+                    </IconButton>
+                    <Switch name="dark" {...label} checked={checked} onChange={handleChange} />
                     <Typography variant="h5" noWrap component="div">
-                        Saumya Jain
+                        SJ
                     </Typography>
                 </Toolbar>
             </AppBar>
+            <Box
+                component="nav"
+                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                aria-label="folders"
+            >
+                <Drawer
+                    //   container={container}
+                    variant="temporary"
+                    open={mobileOpen}
+                    onTransitionEnd={handleDrawerTransitionEnd}
+                    onClose={handleDrawerClose}
+                    ModalProps={{
+                        keepMounted: true, // Better open performance on mobile.
+                    }}
+                    sx={{
+                        display: { xs: 'block', sm: 'none' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                    }}
+                >
+                    <Toolbar />
+                    {list}
+                </Drawer>
+                <Drawer variant="permanent"
 
-            <Drawer variant="permanent"
+                    sx={{
+                        display: { xs: 'none', sm: 'block' },
 
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    [`& .MuiDrawer-paper`]: { width: drawerWidth, borderWidth: 0, background: 'transparent' }
-                }}>
-                <Toolbar />
-                <Box sx={{ overflow: 'auto' }}>
+                        flexShrink: 0,
+                        [`& .MuiDrawer-paper`]: { width: drawerWidth, borderWidth: 0, background: 'transparent' }
+                    }}>
+                    <Toolbar />
 
-                    <List>
-                        {headersList.map((text, index) => (
+                    {list}
 
-                            <ListItem key={text.name} className={styles.listSpacing} >
-
-                                <ListItemButton selected={selectedIndex === index} className={selectedIndex === index ? styles.listSelected : styles.listNotSelected}
-                                    onClick={(event) => handleListItemClick(event, text.path, index)}>
-
-                                    <ListItemIcon className={styles.iconWidth}>{
-                                        [<HomeTwoToneIcon sx={{ color: '#C00E8B ' }} />, <Face3TwoToneIcon  color="primary"/>, <StarsTwoToneIcon color='success' />, <ContactPageTwoToneIcon sx={{ color: '#8B0000' }} />][index]}</ListItemIcon>
-
-                                    <ListItemText
-                                        primary={text.name}
-                                    ></ListItemText>
-                                </ListItemButton>
-
-                            </ListItem>
-
-                        ))}
-
-                    </List>
-
-
-                </Box>
-            </Drawer >
+                </Drawer >
+            </Box>
         </Box >
     )
 

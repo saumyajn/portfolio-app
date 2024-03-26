@@ -1,34 +1,28 @@
 .iconWidth {
   margin: 0;
   padding-right: 0;
-  min-width: 20px;
+  min-width: 20px !important;
   width: 35px;
 }
 .listSpacing {
-  padding-left: 10px;
   margin-top: 20px;
 }
-.home{
-	z-index: 1;
-}
-.myImg{
-	z-index: 0;
-	position:absolute;
-    right:5px;
-    bottom: 0px ;
-	opacity: 90%;
-	/* bottom: 0; */
-	
+
+.myImg {
+  border-radius: 30% 75% 70% 40% /40% 30% 70% 50%;
 }
 
+@media only screen and (max-width: 600px) {
+  .myImg {
+    width: 50vw;
+  }
+}
 .listSelected {
   background-color: rgba(212, 202, 220, 0.578) !important;
   border-radius: 15px !important;
 }
 
-
-section{
-	width: 100%;
-	min-height: 400px;
+section {
+  width: 100%;
+  min-height: 400px;
 }
-
