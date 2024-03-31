@@ -1,6 +1,5 @@
 import * as React from 'react';
-// import Button from '@mui/material/Button';
-import { AppBar, Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Switch } from '@mui/material';
+import { AppBar, Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import Face3TwoToneIcon from '@mui/icons-material/Face3TwoTone';
@@ -25,13 +24,7 @@ export default function Header(props) {
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
-    const [checked, setChecked] = React.useState(true);
-
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-        props.changeTheme(checked);
-    };
-
+   
     const handleDrawerClose = () => {
         setIsClosing(true);
         setMobileOpen(false);
@@ -83,7 +76,6 @@ export default function Header(props) {
 
         </List>)
 
-    const label = { inputProps: { 'aria-label': 'Switch demo' } };
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -94,8 +86,8 @@ export default function Header(props) {
                     <IconButton aria-label='open drawer' sx={{ mr: 2, display: { sm: 'none' } }} onClick={handleDrawerToggle}>
                         <MenuTwoToneIcon />
                     </IconButton>
-                    <Switch name="dark" {...label} checked={checked} onChange={handleChange} />
-                    <Typography variant="h5" noWrap component="div">
+                    {/* <Switch name="dark" {...label} checked={checked} onChange={handleChange} /> */}
+                    <Typography variant="h5" noWrap component="div" color="primary">
                         SJ
                     </Typography>
                 </Toolbar>
@@ -116,7 +108,7 @@ export default function Header(props) {
                     }}
                     sx={{
                         display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,background:'rgb(240,240,240,0.9)' },
                     }}
                 >
                     <Toolbar />

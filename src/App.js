@@ -6,6 +6,7 @@ import Home from "./components/home";
 import AboutMe from "./components/about-me";
 import Projects from "./components/passion-projects";
 
+import styles from "./styles/header.module.css";
 import lightCover1 from "./images/layered-wave-pink.png";
 import lightCover2 from "./images/layered-wave-blue.png";
 import lightCover3 from "./images/layered-wave-green.png";
@@ -15,6 +16,9 @@ import darkCover1 from "./images/dark-waves-pink.png";
 import darkCover2 from "./images/dark-waves-blue.png";
 import darkCover3 from "./images/dark-waves-green.png";
 import darkCover4 from "./images/dark-waves-orange.png";
+import { Switch } from "@mui/material";
+
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Contact from "./components/contact-me";
 import { Suspense, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -22,19 +26,27 @@ import Layout from "./components/Layout";
 import Page404 from "./components/error";
 
 function App() {
-  const [img, setImg] = useState(lightCover1);
-  const [theme, setTheme] = useState(null);
-  const handleChangeTheme = (val) => {
-    console.log(val);
-    if (val) {
-      setTheme("light");
-    } else setTheme("dark");
-
-    console.log(theme);
-    handleBack(window.location.pathname);
+  const [img, setImg] = useState(darkCover1);
+  // state to manage the dark mode
+  const [toggleDarkMode, setToggleDarkMode] = useState(true);
+  const toggleDarkTheme = () => {
+    setToggleDarkMode(!toggleDarkMode);
   };
-  const handleBack = (data) => {
-    console.log(theme);
+  // applying the primary and secondary theme colors
+  const darkTheme = createTheme({
+    palette: {
+      mode: toggleDarkMode ? "dark" : "light", // handle the dark mode state on toggle
+
+      // primary: {
+      //   main: "#90caf9",
+      // },
+      // secondary: {
+      //   main: "#131052",
+      // },
+    },
+  });
+  const handlePath = (data) => {
+    const theme = toggleDarkMode ? "dark" : "light";
     switch (data) {
       case "/":
         theme === "light" ? setImg(lightCover1) : setImg(darkCover1);
@@ -51,18 +63,23 @@ function App() {
       case "/contact":
         theme === "light" ? setImg(lightCover4) : setImg(darkCover4);
         break;
-
-      default:
-        setImg(lightCover1);
-
-        break;
     }
-    console.log(img);
   };
   const routes = createBrowserRouter([
     {
       element: (
-        <Layout appPathCall={handleBack} appChangeTheme={handleChangeTheme} />
+        <>
+          {" "}
+          <ThemeProvider theme={darkTheme}>
+            <Switch
+              name="dark"
+              className={styles.switchBox}
+              checked={toggleDarkMode}
+              onChange={toggleDarkTheme}
+            />
+            <Layout appPathCall={handlePath} />{" "}
+          </ThemeProvider>
+        </>
       ),
       errorElement: <Page404 />,
       children: [
@@ -78,6 +95,7 @@ function App() {
     <div className="App">
       <Box
         sx={{
+          color: "secondary",
           backgroundImage: `url(${img})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
