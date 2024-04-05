@@ -6,17 +6,17 @@ import Home from "./components/home";
 import AboutMe from "./components/about-me";
 import Projects from "./components/passion-projects";
 
-import styles from "./styles/header.module.css";
-import lightCover1 from "./images/layered-wave-pink.png";
-import lightCover2 from "./images/layered-wave-blue.png";
-import lightCover3 from "./images/layered-wave-green.png";
-import lightCover4 from "./images/layered-wave-orange.png";
+// import styles from "./styles/header.module.css";
+// import lightCover1 from "./images/layered-wave-pink.png";
+// import lightCover2 from "./images/layered-wave-blue.png";
+// import lightCover3 from "./images/layered-wave-green.png";
+// import lightCover4 from "./images/layered-wave-orange.png";
 
 import darkCover1 from "./images/dark-waves-pink.png";
 import darkCover2 from "./images/dark-waves-blue.png";
 import darkCover3 from "./images/dark-waves-green.png";
 import darkCover4 from "./images/dark-waves-orange.png";
-import { Switch } from "@mui/material";
+// import { Switch } from "@mui/material";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Contact from "./components/contact-me";
@@ -28,40 +28,43 @@ import Page404 from "./components/error";
 function App() {
   const [img, setImg] = useState(darkCover1);
   // state to manage the dark mode
-  const [toggleDarkMode, setToggleDarkMode] = useState(true);
-  const toggleDarkTheme = () => {
-    setToggleDarkMode(!toggleDarkMode);
-  };
+  // const [toggleDarkMode, setToggleDarkMode] = useState(true);
+  // const toggleDarkTheme = () => {
+  //   setToggleDarkMode(!toggleDarkMode);
+  // };
   // applying the primary and secondary theme colors
   const darkTheme = createTheme({
     palette: {
-      mode: toggleDarkMode ? "dark" : "light", // handle the dark mode state on toggle
+      mode: "dark", // handle the dark mode state on toggle
 
-      // primary: {
-      //   main: "#90caf9",
-      // },
-      // secondary: {
-      //   main: "#131052",
-      // },
+      primary: {
+        main: "#90caf9",
+      },
+      secondary: {
+        main: "#131052",
+      },
     },
   });
   const handlePath = (data) => {
-    const theme = toggleDarkMode ? "dark" : "light";
+    // const theme = "dark" ;
     switch (data) {
       case "/":
-        theme === "light" ? setImg(lightCover1) : setImg(darkCover1);
+        setImg(darkCover1);
         break;
 
       case "/about-me":
-        theme === "light" ? setImg(lightCover2) : setImg(darkCover2);
+        setImg(darkCover2);
         break;
 
       case "/projects":
-        theme === "light" ? setImg(lightCover3) : setImg(darkCover3);
+        setImg(darkCover3);
         break;
 
       case "/contact":
-        theme === "light" ? setImg(lightCover4) : setImg(darkCover4);
+        setImg(darkCover4);
+        break;
+      default:
+        setImg(darkCover1);
         break;
     }
   };
@@ -71,12 +74,12 @@ function App() {
         <>
           {" "}
           <ThemeProvider theme={darkTheme}>
-            <Switch
+            {/* <Switch
               name="dark"
               className={styles.switchBox}
               checked={toggleDarkMode}
               onChange={toggleDarkTheme}
-            />
+            /> */}
             <Layout appPathCall={handlePath} />{" "}
           </ThemeProvider>
         </>
