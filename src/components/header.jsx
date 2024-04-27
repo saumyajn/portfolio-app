@@ -17,7 +17,7 @@ const drawerWidth = 200;
 const headersList = [
     { name: 'Home', path: '/', icon: <HomeTwoToneIcon sx={{ color: '#D310C4' }} /> },
     { name: 'About Me', path: '/about-me', icon: <Face3TwoToneIcon sx={{ color: '#1344BC ' }} /> },
-    { name: 'Passion Projects', path: '/projects', icon: <StarsTwoToneIcon color='success' /> },
+    { name: 'Passion Projects', path: '/projects', icon: <StarsTwoToneIcon sx={{ color: '#2b8830' }}  /> },
     { name: 'Contact Me', path: '/contact', icon: <ContactPageTwoToneIcon sx={{ color: '#BA4D00' }} /> }];
 
 export default function Header(props) {
