@@ -11,11 +11,11 @@ export default function Layout(props) {
     return (<>       
         <Grid sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
-                <Grid item xs={1} sm={3} md={3}>
+                <Grid item xs={1} sm={3} md={2}>
                     <Header parentPathCall={handleBack} />
 
                 </Grid>
-                <Grid item xs={11} sm={9} md={9}>
+                <Grid item xs={11} sm={9} md={10}>
 
                     <Outlet />
 
