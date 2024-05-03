@@ -2,15 +2,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import myimg from '../images/formal-img.jpg';
 import Button from '@mui/material/Button';
-
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import styles from '../styles/header.module.css';
 import myResume from '../assets/Saumya_Jain_resume.pdf'
 export default function Home() {
-    const downloadCV = ()=>{
 
-    };
     return (<div>
         <Box sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'left' }}>
             <br />  <br />
@@ -28,7 +24,7 @@ export default function Home() {
                         creating engaging UI and bringing products to life.
                         Passionate about creating solid and scalable interactive applications with great user experience.</h3>
                     <Stack spacing={2} direction="row">
-                    <a href={myResume} target="_blank" download><Button variant='contained'>Get a copy</Button></a>
+                        <a href={myResume} target="_blank" download><Button variant='contained'>Get a copy</Button></a>
                         <Button variant='outlined'>Contact Me</Button>
                     </Stack>
                 </Grid>
