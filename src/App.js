@@ -5,7 +5,7 @@ import Home from "./components/home";
 
 import AboutMe from "./components/about-me";
 import Projects from "./components/passion-projects";
-
+// import useLocation from 'react-router'
 // import styles from "./styles/header.module.css";
 // import lightCover1 from "./images/layered-wave-pink.png";
 // import lightCover2 from "./images/layered-wave-blue.png";
@@ -16,17 +16,17 @@ import darkCover1 from "./images/dark-waves-pink.png";
 import darkCover2 from "./images/dark-waves-blue.png";
 import darkCover3 from "./images/dark-waves-green.png";
 import darkCover4 from "./images/dark-waves-orange.png";
-// import { Switch } from "@mui/material";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Contact from "./components/contact-me";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import Page404 from "./components/error";
 
 function App() {
   const [img, setImg] = useState(darkCover1);
+  // const [path, setPath] = useState("/");
   // state to manage the dark mode
   // const [toggleDarkMode, setToggleDarkMode] = useState(true);
   // const toggleDarkTheme = () => {
@@ -37,16 +37,19 @@ function App() {
     palette: {
       mode: "dark", // handle the dark mode state on toggle
 
-      primary: {
-        main: "#90caf9",
-      },
-      secondary: {
-        main: "#131052",
-      },
+      // primary: {
+      //   main: "#90caf9",
+      // },
+      // secondary: {
+      //   main: "#131052",
+      // },
     },
   });
+  useEffect(() => {
+    handlePath(localStorage.getItem("path"));
+  });
   const handlePath = (data) => {
-    // const theme = "dark" ;
+
     switch (data) {
       case "/":
         setImg(darkCover1);
@@ -98,6 +101,7 @@ function App() {
     <div className="App">
       <Box
         sx={{
+          height: "fit-content",
           color: "secondary",
           backgroundImage: `url(${img})`,
           backgroundSize: "cover",
@@ -105,7 +109,7 @@ function App() {
         }}
       >
         <Suspense fallback={<div className="container">LOADING...</div>}>
-          <RouterProvider router={routes} />
+          <RouterProvider forceRefresh={true} router={routes} />
         </Suspense>
       </Box>
     </div>

@@ -5,6 +5,11 @@ import Grid from '@mui/material/Grid'
 import Carousel from 'react-material-ui-carousel'
 import CardMedia from '@mui/material/CardMedia';
 import Card from "@mui/material/Card";
+
+import colorfulTree from '../images/paintings/IMG_1.jpg';
+import colorfulGuitar from '../images/paintings/IMG_2.jpg';
+import colorfulGirl from '../images/paintings/IMG_3.jpg';
+import butterfly from '../images/paintings/IMG_4.jpg';
 import chameleon from '../images/paintings/IMG_2241.jpg';
 import paradise from '../images/paintings/IMG_2481.jpg';
 import yinyang from '../images/paintings/IMG_5845.jpg';
@@ -14,31 +19,46 @@ import peacock from '../images/paintings/IMG_6255.jpg';
 import door from '../images/paintings/IMG_6353.jpg';
 import ladyinRed from '../images/paintings/IMG_7241.jpg';
 import umbrella from '../images/paintings/IMG_7383.jpg';
-import tree from '../images/paintings/IMG_7672.jpg'
-import { NavigateBefore, NavigateNext } from '@mui/icons-material';
+import tree from '../images/paintings/IMG_7672.jpg';
+import { PinnedRepos } from '../services/getPinnedRepos';
+import { Typography } from '@mui/material';
 const cards = [
-    [{
-        path: chameleon, title: 'Watercolor chameleon'
-    }, {
-        path: paradise, title: 'Key to Paradise',
-
-    }, {
-        path: yinyang, title: "Yin Yang"
-    }, {
-        path: flowerHead, title: 'Flower Head'
-    }],
     [{
         path: flowerBed, title: 'Falling flowers',
     }, {
-        path: peacock, title: "Peacock"
+        path: tree, title: "Beautiful Tree"
     }, {
-        path: ladyinRed, title: 'Lady in Red'
+        path: paradise, title: 'Key to Paradise',
+
+    },
+    {
+        path: flowerHead, title: "Flower head"
+    }],
+    [{
+        path: chameleon, title: 'Watercolor chameleon'
     }, {
-        path: umbrella, title: 'Colorful Umbrella',
-    }], [{
         path: door, title: 'New Door',
     }, {
-        path: tree, title: "Beautiful Tree"
+        path: ladyinRed, title: 'Lady in Red'
+    },
+    ],
+    [{
+        path: colorfulTree, title: "Colorful Glass tree"
+    }, {
+        path: umbrella, title: 'Colorful Umbrella',
+    }, {
+        path: colorfulGuitar, title: "Colorful Guitar"
+    }, {
+        path: colorfulGirl, title: "Colorful Melting Girl"
+    }],
+    [{
+        path: butterfly, title: 'Half butterfly',
+    }, {
+        path: yinyang, title: 'Koi ying yang',
+
+    },
+    {
+        path: peacock, title: "Peacock"
     }]
 ]
 function ImageItem(props) {
@@ -65,29 +85,25 @@ function ImageItem(props) {
     )
 }
 
-function GithubList(props) {
-return (
-    <div>
-        PROJECTS
-        <Card></Card>
-    </div>
-)
-}
 export default function Projects() {
+
+    const username = "saumyajn"
     return (<div>
-        <Box sx={{ height: '100vh', textAlign: 'left', alignItems: 'center', justifyContent: "center" }}>
-            <h3>PASSION</h3>
-            Github projects
-            <GithubList/>
-            <h4>My paintings</h4>
-            <Carousel fullHeightHover={true}  >
-                {cards.map((val, i) => (
+        <Box sx={{ height: '100vh', textAlign: 'center', alignItems: 'center', justifyContent: "center" }}>
+            <h2>PASSION PROJECTS</h2>
+            <Box>
+               <Typography variant='h5'> Github projects</Typography>
+                    <PinnedRepos username={username} />
+            </Box>
+            <Box>
+                <Typography variant='h5'>My paintings</Typography>
+                <Carousel fullHeightHover={true}>
+                    {cards.map((val, i) => (
+                        <ImageItem key={i} itemName={val} />
 
-                    <ImageItem key={i} itemName={val} />
-
-
-                ))}
-            </Carousel>
+                    ))}
+                </Carousel>
+            </Box>
         </Box>
     </div>)
 }

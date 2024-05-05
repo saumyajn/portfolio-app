@@ -12,7 +12,8 @@ export default function Home() {
             <br />  <br />
             <Grid container spacing={1}>
 
-                <Grid item xs={10} sm={8} md={7}> <h1> Hi, </h1>
+                <Grid item xs={10} sm={8} md={7}>
+                    <h1> Hi, </h1>
                     <h1>I am Saumya Jain
                     </h1>
                     <h2>Front end Developer</h2>
@@ -24,7 +25,7 @@ export default function Home() {
                         creating engaging UI and bringing products to life.
                         Passionate about creating solid and scalable interactive applications with great user experience.</h3>
                     <Stack spacing={2} direction="row">
-                        <a href={myResume} target="_blank" download><Button variant='contained'>Get a copy</Button></a>
+                        <a href={myResume} target="_blank" download rel='noreferrer'><Button variant='contained'>Get a copy</Button></a>
                         <Button variant='outlined'>Contact Me</Button>
                     </Stack>
                 </Grid>
