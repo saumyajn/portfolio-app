@@ -63,48 +63,56 @@ export default function AboutMe() {
         }
     ];
     return (<div>
-        <Box sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'center' }}>
-            <h3>ABOUT ME</h3>
-            <Paper sx={{ display: 'flex' }} style={{ backgroundColor: '#ffffff30', padding: '3px', margin: '3px' }}>
-                <h4 sx={{ textAlign: 'justify' }}>
-                    Full Stack developer (MEAN) with 4 years of experience in  conceptualizing, designing, and coding technical solutions using UI, Java and NodeJS technology stacks</h4>
+        <Box sx={{ textAlign: 'center', margin: '4px', height:'100%' }}>
+            {/* <br /> */}
+            <Paper style={{ backgroundColor: '#ffffff30', padding: '3px', }}>
+
+                <h2 sx={{ textAlign: 'center' }}>ABOUT ME</h2>
+                <h5 sx={{ textAlign: 'justify' }}>
+
+                    Welcome! I'm Saumya Jain, a Senior Frontend Engineer with 4 years' experience. I specialize in crafting scalable UI solutions and driving team productivity. From revolutionizing microservices with Angular to optimizing user experiences, I bring innovation and leadership to every project. Let's build something remarkable together.</h5>
             </Paper>
-            <h3>My Interests</h3>
-            <Paper sx={{ display: 'flex' }} style={{ backgroundColor: 'transparent', margin: '0 25%', padding: '10px', listStyle: 'none', width: 'fit-content', alignContent: 'center' }} component='ul'>
+            <Box>
+                <h3>My Interests</h3>
+                <Paper  sx={{ display: 'flex',sm:{flexDirection:'column'} }} style={{ backgroundColor: 'transparent', margin: '0 20%', padding: '10px', listStyle: 'none', justifyContent: 'center', alignContent: 'center'}} component='ul'>
 
-                {chipData.map((data) => {
-                    return (
-                        <li style={{ padding: '0 10px' }} key={data.key}>
-                            <Chip icon={data.icon}
-                                label={data.label} color='primary' />
-                        </li>
-                    )
-                })}
-            </Paper>
+                    {chipData.map((data) => {
+                        return (
+                            <li style={{ padding: '0 10px' }} key={data.key}>
+                                <Chip icon={data.icon}
+                                    label={data.label} color='primary' />
+                            </li>
+                        )
+                    })}
+                </Paper>
+            </Box>
+            <Box>
+                <h4 style={{ marginBottom: '0px' }}>Area of expertise</h4>
+                <Grid container sx={{ padding: '5px', margin: '0' }} columnSpacing={{ xs: 2 }}>
+                    <Grid item xs={12} sm={4} >
+                        <Item component='ul' sx={{ listStyle: 'none', backgroundColor: 'transparent', }}>
+                            {frontVal.map((data, index) => {
+                                return <li key={index}>{data}</li>
+                            })}</Item>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
 
-            <h4>Area of expertise</h4>
-            <Grid container sx={{ padding: '5px' , margin:'0'}} columnSpacing={{ xs: 2 }}>
-                <Grid item xs={4} >
-                    <Item component='ul' sx={{ listStyle: 'none', marginTop: '-15px', backgroundColor: 'transparent', }}>{frontVal.map((data) => {
-                        return <li key={data}>{data}</li>
-                    })}</Item>
+                        <Item component='ul' sx={{ listStyle: 'none', backgroundColor: 'transparent', }}>
+                            {otherVal.map((data, index) => {
+                                return <li key={index}>{data}</li>
+                            })}</Item>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+
+                        <Item component='ul' sx={{ listStyle: 'none', backgroundColor: 'transparent', }}>
+                            {profVal.map((data, index) => {
+                                return <li key={index}>{data}</li>
+                            })}</Item>
+                    </Grid>
                 </Grid>
-                <Grid item xs={4}>
 
-                    <Item component='ul' sx={{ listStyle: 'none', marginTop: '-15px', backgroundColor: 'transparent', }}>{otherVal.map((data) => {
-                        return <li key={data}>{data}</li>
-                    })}</Item>
-                </Grid>
-                <Grid item xs={4}>
-
-                    <Item component='ul' sx={{ listStyle: 'none', marginTop: '-15px', backgroundColor: 'transparent', }}>{profVal.map((data) => {
-                        return <li key={data}>{data}</li>
-                    })}</Item>
-                </Grid>
-            </Grid>
-
+            </Box>
         </Box>
-
 
 
     </div>)

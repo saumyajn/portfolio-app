@@ -17,14 +17,14 @@ const drawerWidth = 200;
 const headersList = [
     { name: 'Home', path: '/', icon: <HomeTwoToneIcon sx={{ color: '#D310C4' }} /> },
     { name: 'About Me', path: '/about-me', icon: <Face3TwoToneIcon sx={{ color: '#1344BC ' }} /> },
-    { name: 'Passion Projects', path: '/projects', icon: <StarsTwoToneIcon sx={{ color: '#2b8830' }}  /> },
+    { name: 'Passion Projects', path: '/projects', icon: <StarsTwoToneIcon sx={{ color: '#2b8830' }} /> },
     { name: 'Contact Me', path: '/contact', icon: <ContactPageTwoToneIcon sx={{ color: '#BA4D00' }} /> }];
 
 export default function Header(props) {
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
-   
+
     const handleDrawerClose = () => {
         setIsClosing(true);
         setMobileOpen(false);
@@ -46,16 +46,23 @@ export default function Header(props) {
         event.preventDefault();
         setSelectedIndex(index);
         navigate(text)
+        localStorage.setItem('path', text)
         props.parentPathCall(text)
     };
 
+    let GetValue = (val, index) => {
+        React.useEffect(() => {
+            let path = localStorage.getItem('path')
+            if (val.path === path)
+           setSelectedIndex(index)
+        })
+
+    }
     const list = (
         <List>
-
             {headersList.map((val, index) => (
-
                 <ListItem key={val.name} className={styles.listSpacing} >
-
+                    {GetValue(val, index)}
                     <ListItemButton
                         selected={selectedIndex === index}
                         className={selectedIndex === index ? styles.listSelected : styles.listNotSelected}
@@ -87,7 +94,7 @@ export default function Header(props) {
                         <MenuTwoToneIcon />
                     </IconButton>
                     {/* <Switch name="dark" {...label} checked={checked} onChange={handleChange} /> */}
-                    <Typography variant="h5" noWrap component="div" color="primary">
+                    <Typography variant="h5" noWrap component="div" >
                         SJ
                     </Typography>
                 </Toolbar>
@@ -108,7 +115,7 @@ export default function Header(props) {
                     }}
                     sx={{
                         display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,background:'rgb(240,240,240,0.9)' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: 'rgb(240,240,240,0.9)' },
                     }}
                 >
                     <Toolbar />
@@ -130,6 +137,4 @@ export default function Header(props) {
             </Box>
         </Box >
     )
-
-
 }
