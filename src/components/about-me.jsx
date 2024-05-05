@@ -63,7 +63,7 @@ export default function AboutMe() {
         }
     ];
     return (<div>
-        <Box sx={{ height: { xs: '100%', sm: "100%" }, textAlign: 'center' }}>
+        <Box sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'center' }}>
             <h3>ABOUT ME</h3>
             <Paper sx={{ display: 'flex' }} style={{ backgroundColor: '#ffffff30', padding: '3px', margin: '3px' }}>
                 <h4 sx={{ textAlign: 'justify' }}>
