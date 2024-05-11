@@ -26,8 +26,7 @@ export default function Home() {
                         Passionate about creating solid and scalable interactive applications with great user experience.</h3>
                     <Stack spacing={2} direction="row">
                         <a href={myResume} target="_blank" download rel='noreferrer'><Button variant='contained'>Get a copy</Button></a>
-                        <Button variant='outlined'>Contact Me</Button>
-                    </Stack>
+                          </Stack>
                 </Grid>
                 <Grid item xs={4} sm={4} md={5}>
                     <img src={myimg} className={styles.myImg} width={325} alt="saumya-jain" />

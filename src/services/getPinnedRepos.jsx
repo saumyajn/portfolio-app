@@ -7,13 +7,13 @@ import Carousel from 'react-material-ui-carousel'
 function GitRepoCard({ repo }) {
     return (
         <Card sx={{
-            width: 500, justifyContent: "center", padding: '3px', background: '#ffffff30'
+            width: {xs:300,sm:500}, justifyContent: "center", padding: '3px', background: '#ffffff30'
 
         }}>
             <CardContent>
                 <Typography variant="h5" sx={{ textTransform: 'capitalize' }} component="div">
-                    <Link href={repo.html_url} target="_blank" rel="noopener noreferrer" color='#7fb782'>{repo.name}</Link>
-                    <Button sx={{ textAlign: 'right', color: '#559f59' }}>{repo.homepage ? <OpenInNewTwoToneIcon /> : ''}</Button>
+                    <Link href={repo.html_url} target="_blank" rel="noopener noreferrer" color='#ceedc2'>{repo.name}</Link>
+                    <Button sx={{ textAlign: 'right', color: '#c2c7c2' }}>{repo.homepage ? <OpenInNewTwoToneIcon /> : ''}</Button>
                 </Typography>
 
                 <Typography variant="body" >{repo.description}</Typography>
@@ -55,8 +55,8 @@ export function PinnedRepos({ username }) {
     return (
         <div>
             <Carousel fullHeightHover={false} animation='slide' interval='5000' duration='700'>
-                {repos.map((repo) => (
-                    <Grid container sx={{
+                {repos.map((repo, index) => (
+                    <Grid key={index} container sx={{
                         justifyContent: "center",
                         alignContent: 'center',
                         alignItems: 'center',

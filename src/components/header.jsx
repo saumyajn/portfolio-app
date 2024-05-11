@@ -54,7 +54,7 @@ export default function Header(props) {
         React.useEffect(() => {
             let path = localStorage.getItem('path')
             if (val.path === path)
-           setSelectedIndex(index)
+                setSelectedIndex(index)
         })
 
     }
@@ -72,8 +72,7 @@ export default function Header(props) {
                             {val.icon}
                         </ListItemIcon>
 
-                        <ListItemText
-                            primary={val.name}
+                        <ListItemText sx={{ color: { xs: '#000', sm:'#fff' } }} primary={val.name}
                         ></ListItemText>
                     </ListItemButton>
 
@@ -87,7 +86,7 @@ export default function Header(props) {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position='fixed' color='transparent' elevation={0}
-                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} enableColorOnDark >
+                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: { xs: '#000' } }} enableColorOnDark >
                 <Toolbar>
 
                     <IconButton aria-label='open drawer' sx={{ mr: 2, display: { sm: 'none' } }} onClick={handleDrawerToggle}>
@@ -115,7 +114,7 @@ export default function Header(props) {
                     }}
                     sx={{
                         display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, background: 'rgb(240,240,240,0.9)' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, color: '#fff', background: 'rgb(240,240,240,0.9)' },
                     }}
                 >
                     <Toolbar />
