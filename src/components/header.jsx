@@ -86,7 +86,7 @@ export default function Header(props) {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position='fixed' color='transparent' elevation={0}
-                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: { xs: '#000' } }} enableColorOnDark >
+                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, color: { xs: '#000' , sm:'#fff'} }} enableColorOnDark >
                 <Toolbar>
 
                     <IconButton aria-label='open drawer' sx={{ mr: 2, display: { sm: 'none' } }} onClick={handleDrawerToggle}>

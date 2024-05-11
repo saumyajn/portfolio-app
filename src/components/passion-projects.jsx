@@ -90,7 +90,7 @@ export default function Projects() {
 
     const username = "saumyajn"
     return (<div>
-        <Box sx={{ height: { xs: '100%', sm: "100%" }, marginTop: { xs: '60px', sm: '0px' }, textAlign: 'center', alignItems: 'center', justifyContent: "center" }}>
+        <Box sx={{ height: { xs: '100%', sm: "100vh" }, marginTop: { xs: '60px', sm: '0px' }, textAlign: 'center', alignItems: 'center', justifyContent: "center" }}>
             <h2>PASSION PROJECTS</h2>
             <Box>
                 <Typography variant='h5'>Github projects</Typography>
