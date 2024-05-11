@@ -15,7 +15,7 @@ export default function Layout(props) {
                     <Header parentPathCall={handleBack} />
 
                 </Grid>
-                <Grid item xs={11} sm={9} md={10} sx={{ height: '100%', }}>
+                <Grid item xs={11} sm={9} md={10} sx={{ height: '100%',width:'100%' }}>
 
                     <Outlet />
 
