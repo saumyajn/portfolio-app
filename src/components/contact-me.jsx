@@ -58,7 +58,7 @@ export default function Contact() {
         <Box sx={{
             height: { xs: '100%', sm: "100vh" },
             textAlign: 'left',
-            marginLeft: 5, marginTop: { xs: '60px', sm: '20px' }
+            marginLeft: 5, marginTop: '60px'
         }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6}>

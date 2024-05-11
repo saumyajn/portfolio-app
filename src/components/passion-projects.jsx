@@ -66,15 +66,17 @@ function ImageItem(props) {
     return (
         <div> <Grid container sx={{
             display: 'flex',
-            flexDirection: "row",
+            flexDirection: {xs:'column',sm:"row",},
             justifyContent: "center",
             alignContent: 'center',
             alignItems: 'center',
+            textAlign: 'center',
+
         }} >
             {props.itemName.map((item, id) => (
-                <Grid item xs={3} key={id} >
+                <Grid item xs={12} sm={5} md={3} key={id} >
 
-                    <Card sx={{ width: 200, justifyContent: "center", padding: '4px', margin: '4px', }}> <CardActionsArea>
+                    <Card sx={{ width: 200, justifyContent: "center", padding: '4px', margin: '4px', boxShadow: 'inset 1px 1px 1px #349889,0 0px 5px #fff' }}> <CardActionsArea>
                         <CardMedia sx={{ height: 200 }} image={item.path} title={item.title} />
                     </CardActionsArea>
                     </Card>
@@ -88,12 +90,13 @@ export default function Projects() {
 
     const username = "saumyajn"
     return (<div>
-        <Box sx={{ textAlign: 'center', alignItems: 'center', justifyContent: "center" }}>
+        <Box sx={{ height: { xs: '100%', sm: "100%" }, marginTop: { xs: '60px', sm: '0px' }, textAlign: 'center', alignItems: 'center', justifyContent: "center" }}>
             <h2>PASSION PROJECTS</h2>
             <Box>
-               <Typography variant='h5'>Github projects</Typography>
-                    <PinnedRepos username={username} />
+                <Typography variant='h5'>Github projects</Typography>
+                <PinnedRepos username={username} />
             </Box>
+            <br />
             <Box>
                 <Typography variant='h5'>My paintings</Typography>
                 <Carousel fullHeightHover={true}>

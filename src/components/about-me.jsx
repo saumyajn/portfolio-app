@@ -64,9 +64,9 @@ export default function AboutMe() {
         }
     ];
     return (<div>
-        <Box sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'center', margin: '4px', marginTop: { xs: '60px', sm: '0px' } }}>
+        <Box sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'center', margin: '4px', marginTop: { xs: '60px', sm: '10px' } }}>
 
-            <Paper style={{ backgroundColor: '#ffffff30', padding: '3px', }}>
+            <Paper elevation={6} style={{ backgroundColor: '#ffffff30', padding: '3px' }}>
 
                 <h2 sx={{ textAlign: 'center' }}>ABOUT ME</h2>
                 <Typography sx={{ textAlign: 'justify', margin: '5px' }} variant='body'>
@@ -75,7 +75,7 @@ export default function AboutMe() {
             </Paper>
             <Box>
                 <h3>My Interests</h3>
-                <Paper sx={{ display: 'flex', flexDirection: {xs:'column',sm:'row' } ,backgroundColor: 'transparent', margin: '0', padding: '10px', listStyle: 'none', justifyContent: 'center', alignContent: 'center' }} component='ul'>
+                <Paper sx={{ display: 'flex', flexDirection: {xs:'column',sm:'row' } ,backgroundColor: 'transparent', margin: '0 auto', width:'fit-content', padding: '10px', listStyle: 'none', justifyContent: 'center', alignContent: 'center' }} component='ul'>
 
                     {chipData.map((data) => {
                         return (
