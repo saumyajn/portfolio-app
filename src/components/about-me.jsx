@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 import { styled } from '@mui/material/styles';
+import { Typography } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -63,22 +64,22 @@ export default function AboutMe() {
         }
     ];
     return (<div>
-        <Box sx={{ textAlign: 'center', margin: '4px', height:'100%' }}>
-            {/* <br /> */}
+        <Box sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'center', margin: '4px', marginTop: { xs: '60px', sm: '0px' } }}>
+
             <Paper style={{ backgroundColor: '#ffffff30', padding: '3px', }}>
 
                 <h2 sx={{ textAlign: 'center' }}>ABOUT ME</h2>
-                <h5 sx={{ textAlign: 'justify' }}>
+                <Typography sx={{ textAlign: 'justify', margin: '5px' }} variant='body'>
 
-                    Welcome! I'm Saumya Jain, a Senior Frontend Engineer with 4 years' experience. I specialize in crafting scalable UI solutions and driving team productivity. From revolutionizing microservices with Angular to optimizing user experiences, I bring innovation and leadership to every project. Let's build something remarkable together.</h5>
+                    Welcome! I'm Saumya Jain, a Senior Frontend Engineer with 4 years' experience. I specialize in crafting scalable UI solutions and driving team productivity. From revolutionizing microservices with Angular to optimizing user experiences, I bring innovation and leadership to every project. Let's build something remarkable together.</Typography>
             </Paper>
             <Box>
                 <h3>My Interests</h3>
-                <Paper  sx={{ display: 'flex',sm:{flexDirection:'column'} }} style={{ backgroundColor: 'transparent', margin: '0 20%', padding: '10px', listStyle: 'none', justifyContent: 'center', alignContent: 'center'}} component='ul'>
+                <Paper sx={{ display: 'flex', flexDirection: {xs:'column',sm:'row' } ,backgroundColor: 'transparent', margin: '0', padding: '10px', listStyle: 'none', justifyContent: 'center', alignContent: 'center' }} component='ul'>
 
                     {chipData.map((data) => {
                         return (
-                            <li style={{ padding: '0 10px' }} key={data.key}>
+                            <li style={{ padding: '2px 10px' }} key={data.key}>
                                 <Chip icon={data.icon}
                                     label={data.label} color='primary' />
                             </li>

@@ -70,12 +70,11 @@ function ImageItem(props) {
             justifyContent: "center",
             alignContent: 'center',
             alignItems: 'center',
-
         }} >
             {props.itemName.map((item, id) => (
                 <Grid item xs={3} key={id} >
 
-                    <Card sx={{ width: 200, justifyContent: "center", padding: '2px', margin: '2px', }}> <CardActionsArea>
+                    <Card sx={{ width: 200, justifyContent: "center", padding: '4px', margin: '4px', }}> <CardActionsArea>
                         <CardMedia sx={{ height: 200 }} image={item.path} title={item.title} />
                     </CardActionsArea>
                     </Card>
@@ -89,10 +88,10 @@ export default function Projects() {
 
     const username = "saumyajn"
     return (<div>
-        <Box sx={{ height: '100vh', textAlign: 'center', alignItems: 'center', justifyContent: "center" }}>
+        <Box sx={{ textAlign: 'center', alignItems: 'center', justifyContent: "center" }}>
             <h2>PASSION PROJECTS</h2>
             <Box>
-               <Typography variant='h5'> Github projects</Typography>
+               <Typography variant='h5'>Github projects</Typography>
                     <PinnedRepos username={username} />
             </Box>
             <Box>
