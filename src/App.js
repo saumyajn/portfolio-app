@@ -11,6 +11,7 @@ import Projects from "./components/passion-projects";
 // import lightCover2 from "./images/layered-wave-blue.png";
 // import lightCover3 from "./images/layered-wave-green.png";
 // import lightCover4 from "./images/layered-wave-orange.png";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
 import darkCover1 from "./images/dark-waves-pink.png";
 import darkCover2 from "./images/dark-waves-blue.png";
@@ -85,6 +86,7 @@ function App() {
             /> */}
             <Layout appPathCall={handlePath} />{" "}
             <Analytics />
+            <SpeedInsights/>
           </ThemeProvider>
         </>
       ),
