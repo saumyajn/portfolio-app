@@ -5,7 +5,12 @@ import Grid from '@mui/material/Grid'
 import Carousel from 'react-material-ui-carousel'
 import CardMedia from '@mui/material/CardMedia';
 import Card from "@mui/material/Card";
-
+import Chip from '@mui/material/Chip';
+import ColorLensTwoToneIcon from '@mui/icons-material/ColorLensTwoTone';
+import LibraryMusicTwoToneIcon from '@mui/icons-material/LibraryMusicTwoTone';
+import LuggageTwoToneIcon from '@mui/icons-material/LuggageTwoTone';
+import DinnerDiningTwoToneIcon from '@mui/icons-material/DinnerDiningTwoTone';
+import Paper from '@mui/material/Paper';
 import colorfulTree from '../images/paintings/IMG_1.jpg';
 import colorfulGuitar from '../images/paintings/IMG_2.jpg';
 import colorfulGirl from '../images/paintings/IMG_3.jpg';
@@ -87,15 +92,38 @@ function ImageItem(props) {
 }
 
 export default function Projects() {
-
-    const username = "saumyajn"
+    const chipData = [
+        {
+            key: 0, label: 'Painting', icon: <ColorLensTwoToneIcon sx={{ color: '#2b8830' }} />
+        },
+        {
+            key: 1, label: 'Music', icon: <LibraryMusicTwoToneIcon sx={{ color: '#D310C4' }} />
+        },
+        {
+            key: 2, label: 'Travel', icon: <LuggageTwoToneIcon sx={{ color: '#1344BC ' }} />
+        },
+        {
+            key: 3, label: 'Cooking', icon: <DinnerDiningTwoToneIcon sx={{ color: '#1344BC ' }} />
+        }
+    ];
     return (<div>
         <Box sx={{ height: { xs: '100%', sm: "100vh" }, marginTop: { xs: '60px', sm: '0px' }, textAlign: 'center', alignItems: 'center', justifyContent: "center" }}>
             <h2>PASSION PROJECTS</h2>
             <Box>
-                <Typography variant='h5'>Github projects</Typography>
-                <PinnedRepos username={username} />
+                <h3>My Interests</h3>
+                <Paper sx={{ display: 'flex', flexDirection: {xs:'column',sm:'row' } ,backgroundColor: 'transparent', margin: '0 auto', width:'fit-content', padding: '10px', listStyle: 'none', justifyContent: 'center', alignContent: 'center' }} component='ul'>
+
+                    {chipData.map((data) => {
+                        return (
+                            <li style={{ padding: '2px 10px' }} key={data.key}>
+                                <Chip icon={data.icon}
+                                    label={data.label} color='primary' />
+                            </li>
+                        )
+                    })}
+                </Paper>
             </Box>
+           
             <br />
             <Box>
                 <Typography variant='h5'>My paintings</Typography>

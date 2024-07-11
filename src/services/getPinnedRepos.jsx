@@ -3,22 +3,27 @@ import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import OpenInNewTwoToneIcon from '@mui/icons-material/OpenInNewTwoTone';
 import Carousel from 'react-material-ui-carousel'
-
+import { BallTriangle } from 'react-loader-spinner'
+import styles from '../styles/header.module.css'
 function GitRepoCard({ repo }) {
+
     return (
         <Card sx={{
-            width: {xs:300,sm:500}, justifyContent: "center", padding: '3px', background: '#ffffff30'
+            width: { xs: 300, sm: 500 }, height: 200, justifyContent: "center", padding: '5px', background: '#ffffff30'
 
         }}>
             <CardContent>
                 <Typography variant="h5" sx={{ textTransform: 'capitalize' }} component="div">
                     <Link href={repo.html_url} target="_blank" rel="noopener noreferrer" color='#ceedc2'>{repo.name}</Link>
-                    <Button sx={{ textAlign: 'right', color: '#c2c7c2' }}>{repo.homepage ? <OpenInNewTwoToneIcon /> : ''}</Button>
+
+                    <Button sx={{ textAlign: 'right', color: '#c2c7c2' }}>{repo.homepage ? <OpenInNewTwoToneIcon /> : ''}
+                    </Button>
                 </Typography>
 
                 <Typography variant="body" >{repo.description}</Typography>
 
             </CardContent>
+            <br />
             <CardActionArea>
                 <Grid container sx={{ textAlign: 'center' }}>
                     <Grid item xs={6}>   <Typography variant='body1' sx={{ textTransform: 'uppercase', marginRight: 2 }}>{(repo.topics)}
@@ -32,18 +37,27 @@ function GitRepoCard({ repo }) {
             </CardActionArea>
         </Card>
     )
+
 }
 export function PinnedRepos({ username }) {
+    const [isLoading, setIsLoading] = useState(true);
+
+
     const [repos, setRepos] = useState([]);
     useEffect(() => {
         async function fetchPinnedRepos() {
             try {
-                const response = await fetch(`https://api.github.com/users/${username}/starred?sort=updated`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch pinned repos');
-                }
-                const data = await response.json();
-                setRepos(data);
+                fetch(`https://api.github.com/users/${username}/starred?sort=updated`)
+                    .then((res) => res.json())
+                    .then(data => {
+                        setRepos(data); setIsLoading(false);
+
+
+                    }).catch(err => {
+                        throw new Error('Failed to fetch pinned repos' + err);
+                    })
+
+
             } catch (error) {
                 console.error('Error fetching pinned repos:', error);
             }
@@ -53,8 +67,20 @@ export function PinnedRepos({ username }) {
     }, [username]);
 
     return (
-        <div>
-            <Carousel fullHeightHover={false} animation='slide' interval='5000' duration='700'>
+        <div> {isLoading ?
+            <div className={styles.loader}><BallTriangle
+
+                height={100}
+                width={150}
+                radius={4}
+                color="#fff"
+                ariaLabel="ball-triangle-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+            /> </div> : null}
+
+            <Carousel fullHeightHover={false} animation='slide' interval='5000' duration='800'>
                 {repos.map((repo, index) => (
                     <Grid key={index} container sx={{
                         justifyContent: "center",
