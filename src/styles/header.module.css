@@ -32,3 +32,8 @@ section {
   width: 100%;
   min-height: 400px;
 }
+
+.loader{
+  display: flex;
+  justify-content: center;
+}
