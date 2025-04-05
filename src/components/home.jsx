@@ -4,7 +4,7 @@ import myimg from '../images/formal-img.jpg';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import styles from '../styles/header.module.css';
-import myResume from '../assets/Saumya_Jain_Resume.pdf'
+import myResume from '../assets/Saumya_Jain_resume.pdf'
 export default function Home() {
 
     return (<div>
