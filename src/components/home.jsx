@@ -29,7 +29,7 @@ export default function Home() {
                     borderRadius: '20px',
                     minHeight: '60vh',
                     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)', width: '100%',
                     p: { xs: 2, md: 4 },
                     m: { xs: 2, md: 4 },
                 }}
