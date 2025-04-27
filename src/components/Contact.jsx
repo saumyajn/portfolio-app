@@ -55,7 +55,7 @@ export default function Contact() {
         setInputs({ name: '', email: '', subject: '', phone: '', message: '' })
     }
     return (
-        <Box sx={{
+        <Box id="contact" sx={{
             height: { xs: '100%', sm: "100vh" },
             textAlign: 'left',
             marginLeft: 5, marginTop: '60px'

@@ -3,7 +3,7 @@ import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
-import { PinnedRepos } from '../services/getPinnedRepos';
+import {PinnedRepos } from './getPinnedRepos';
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 
@@ -45,12 +45,13 @@ const profVal = [
 
 export default function AboutMe() {
 
-  
-    const username = "saumyajn"
-    return (<div>
-        <Box sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'center', margin: '4px', marginTop: { xs: '60px', sm: '10px' } }}>
 
-           
+    const username = "saumyajn"
+    return (
+    <div>
+        <Box id="about" sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'center', margin: '4px', marginTop: { xs: '60px', sm: '10px' } }}>
+
+
             <Box>
                 <Typography variant='h5'>Github projects</Typography>
                 <PinnedRepos username={username} />

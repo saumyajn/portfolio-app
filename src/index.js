@@ -4,10 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+import theme from "./services/theme";
+import '@fontsource/quicksand/400.css';
+import '@fontsource/quicksand/600.css';
+import ThemeContextProvider from "./services/theme";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeContextProvider>
+      <App />
+    </ThemeContextProvider>
   </React.StrictMode>
 );
 
