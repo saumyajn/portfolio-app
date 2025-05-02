@@ -14,7 +14,7 @@ const darkTheme = {
         main: '#78ACD7', // muted version of #BDE0FE
       },
       background: {
-        default: '#1E1B2E', // base dark
+        default: '#241e36', // base dark
         paper: '#2A233C',
       },
       text: {

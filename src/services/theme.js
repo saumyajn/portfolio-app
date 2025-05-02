@@ -7,7 +7,7 @@ import darkTheme from './darkTheme';
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 export default function ThemeContextProvider({ children }) {
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState('dark');
 
   const colorMode = useMemo(() => ({
     toggleColorMode: () => {

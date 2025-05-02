@@ -9,7 +9,7 @@ const dustFloat = keyframes`
 `;
 
 const DustOverlay = () => {
-  const dots = Array.from({ length: 20 }); // 30 small floating dots
+  const dots = Array.from({ length: 60 }); // Increased to 60 for denser dust
 
   return (
     <Box
@@ -34,7 +34,8 @@ const DustOverlay = () => {
             width: '4px',
             height: '4px',
             borderRadius: '50%',
-            backgroundColor: 'rgba(255, 255, 255, 0.38)', // Soft white dots
+            backgroundColor: 'rgba(255, 255, 255, 0.56)',
+            boxShadow: '0 0 6px rgba(255, 255, 255, 0.6)', // Adds glow effect
             animation: `${dustFloat} ${10 + Math.random() * 10}s ease-in-out infinite`,
             animationDelay: `${Math.random() * 5}s`,
             opacity: 0.7,

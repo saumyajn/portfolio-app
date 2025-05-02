@@ -25,7 +25,7 @@ export default function Home() {
             <Card
                 sx={{
                     backdropFilter: 'blur(10px)',
-                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
                     borderRadius: '20px',
                     minHeight: '60vh',
                     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
@@ -73,7 +73,7 @@ export default function Home() {
                             </Typography>
                             <Button
                                 variant="contained"
-                                to="/projects"
+                                href="/Saumya_Jain_resume.pdf"
                                 size="large"
                                 sx={{
                                     borderRadius: 3,

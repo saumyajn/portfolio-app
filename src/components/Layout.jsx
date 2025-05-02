@@ -5,14 +5,17 @@ import Header from './Header';
 import Home from './Home';
 import DustOverlay from './DustOverlay';
 import { useTheme } from '@mui/material/styles';
+import Footer from './Footer';
 
 const gradient = keyframes`
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 `;
-const lightGradient = 'linear-gradient(270deg, #cdb4db, #ffc8dd, #ffafcc, #bde0fe, #a2d2ff)';
-const darkGradient = 'linear-gradient(270deg, #5f4b8b, #6a0572, #2c003e, #0f1020, #1a1a40)';
+const lightGradient = 'linear-gradient(270deg, #ecd9f7, #fcd2e1, #fdbccc, #cbe7fc, #b3dbfd)';
+
+const darkGradient = 'linear-gradient(270deg, #372c50, #45244a, #301e3c, #1b1b30, #262646)';
+
 
 const AboutMe = lazy(() => import('../components/AboutMe'));
 const Projects = lazy(() => import('../components/Projects'));
@@ -45,6 +48,7 @@ export default function Layout() {
                     <div id="projects" style={{ scrollSnapAlign: 'start' }}><Projects /></div>
                     <div id="contact" style={{ scrollSnapAlign: 'start' }}><Contact /></div>
                 </Suspense>
+                <Footer/>
             </Box>
         </Box>
     );

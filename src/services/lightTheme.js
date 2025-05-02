@@ -2,10 +2,10 @@ const lightTheme = {
     palette: {
       mode: 'light',
       primary: {
-        main: '#CDB4DB', // lavender
+        main: '#ba8cd4', // lavender
       },
       secondary: {
-        main: '#FFAFCC', // pink accent
+        main: '#de87a7', // pink accent
       },
       info: {
         main: '#A2D2FF', // soft blue (for buttons, highlights)
@@ -14,13 +14,13 @@ const lightTheme = {
         main: '#BDE0FE', // background section blue
       },
       background: {
-        default: '#FDF7FF',
+        default: '#f8f3fc',
         paper: '#FFFFFF',
       },
       text: {
-        primary: '#1a1a1a',
-        secondary: '#6b7280',
-      },
+        primary: '#2b2b2b',
+        secondary: '#404652',
+      }
     },
     typography: {
       fontFamily: '"Quicksand", "Roboto", sans-serif',

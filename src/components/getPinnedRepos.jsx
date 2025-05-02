@@ -1,98 +1,133 @@
-import { Button, CardActionArea, CardContent, Grid, Link, Typography, Box } from '@mui/material';
+import { Button, Chip, Card, CardContent, CardActions, Grid, Link, Typography, Box, useMediaQuery } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import Card from '@mui/material/Card';
-import OpenInNewTwoToneIcon from '@mui/icons-material/OpenInNewTwoTone';
-import Carousel from 'react-material-ui-carousel'
-import { BallTriangle } from 'react-loader-spinner'
-import styles from '../styles/header.module.css'
-function GitRepoCard({ repo }) {
+import { GitHub } from "@mui/icons-material";
 
-    return (
-        <Card sx={{
-            width: { xs: 300, sm: 500 }, height: 200, justifyContent: "center", padding: '5px', background: '#ffffff30'
-
-        }}>
-            <CardContent>
-                <Typography variant="h5" sx={{ textTransform: 'capitalize' }} component="div">
-                    <Link href={repo.html_url} target="_blank" rel="noopener noreferrer" color='#ceedc2'>{repo.name}</Link>
-
-                    <Button sx={{ textAlign: 'right', color: '#c2c7c2' }}>{repo.homepage ? <OpenInNewTwoToneIcon /> : ''}
-                    </Button>
-                </Typography>
-
-                <Typography variant="body" >{repo.description}</Typography>
-
-            </CardContent>
-            <br />
-            <CardActionArea>
-                <Grid container sx={{ textAlign: 'center' }}>
-                    <Grid item xs={6}>   <Typography variant='body1' sx={{ textTransform: 'uppercase', marginRight: 2 }}>{(repo.topics)}
-                    </Typography>
-                    </Grid><Grid item xs={6}> <Typography variant="body1" >
-                        {new Date(repo.pushed_at).toLocaleDateString()}
-                    </Typography>
-                    </Grid>
-                </Grid>
-
-            </CardActionArea>
-        </Card>
-    )
-
-}
+import { useTheme } from "@mui/material/styles";
 export function PinnedRepos({ username }) {
-    const [isLoading, setIsLoading] = useState(true);
-
-
     const [repos, setRepos] = useState([]);
+
     useEffect(() => {
-        async function fetchPinnedRepos() {
+
+        const fetchPinnedRepos = async () => {
             try {
-                fetch(`https://api.github.com/users/${username}/starred?sort=updated`)
-                    .then((res) => res.json())
-                    .then(data => {
-                        setRepos(data); setIsLoading(false);
-
-
-                    }).catch(err => {
-                        throw new Error('Failed to fetch pinned repos' + err);
-                    })
-
-
-            } catch (error) {
-                console.error('Error fetching pinned repos:', error);
+                const res = await fetch(`https://api.github.com/users/${username}/starred?sort=updated`);
+                const data = await res.json();
+                setRepos(data);
+                console.log(repos)
+            } catch (err) {
+                console.error("Failed to fetch pinned repos", err);
             }
-        }
+        };
 
         fetchPinnedRepos();
     }, [username]);
 
     return (
-        <div> {isLoading ?
-            <div className={styles.loader}><BallTriangle
-
-                height={100}
-                width={150}
-                radius={4}
-                color="#fff"
-                ariaLabel="ball-triangle-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-            /> </div> : null}
-
-            <Carousel fullHeightHover={false} animation='slide' interval='5000' duration='800'>
+        <Box sx={{ mt: 2 }}>
+            <Grid container spacing={2} justifyContent="center">
                 {repos.map((repo, index) => (
-                    <Grid key={index} container sx={{
-                        justifyContent: "center",
-                        alignContent: 'center',
-                        alignItems: 'center',
-
-                    }} >
-                        <GitRepoCard repo={repo} />
+                    <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+                        <HoverRepoCard repo={repo} username={username} />
                     </Grid>
                 ))}
+            </Grid>
+        </Box>
+    );
 
-            </Carousel>
-        </div>
-    )
+    function HoverRepoCard({ repo, username }) {
+        const theme = useTheme();
+        const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+        const [hovered, setHovered] = useState(false);
+        const overlayBg = theme.palette.mode === "dark" ? "rgba(37, 37, 37, 0.9)" : "rgba(250, 235, 235, 0.95)";
+
+        return (
+            <Card onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+                onClick={() => isMobile && setHovered(!hovered)}
+                sx={{
+                    position: "relative",
+                    overflow: "hidden",
+                    borderRadius: 2,
+                    boxShadow: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: "background.paper",
+                    transition: "transform 0.3s ease-in-out",
+                    cursor: isMobile ? "pointer" : "default",
+                    '&:hover': {
+                        transform: isMobile ? 'none' : 'scale(1.02)',
+                    },
+                }}
+            >
+                {(hovered || isMobile) && repo.homepage && (
+                    <Box sx={{ width: '100%', height: '100px', overflow: 'hidden' }}>
+                        <img
+                            src={`https://image.thum.io/get/${repo.homepage}`}
+                            alt={`${repo.homepage}`}
+                            style={{
+                                width: '100%',
+                                objectFit: 'scale-down',
+                                borderRadius: '8px',
+                                borderTopLeftRadius: '8px',
+                                borderTopRightRadius: '8px',
+                            }}
+                        />
+                    </Box>
+                )}
+                <CardContent sx={{ pt: 2, pb: 1 }}>
+                    <Typography variant="body1" sx={{ fontWeight: 600, pt: 0 }}>
+                        {repo.name}
+                    </Typography>
+                    {repo.topics?.length > 0 && (
+                        <Box sx={{ mt: 1, display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                            {repo.topics.slice(0, 4).map((topic, idx) => (
+                                <Chip
+                                    key={idx}
+                                    label={topic}
+                                    size="small"
+                                    sx={{
+                                        backgroundColor: "rgba(0,0,0,0.04)",
+                                        fontWeight: 500,
+                                        px: 1,
+                                        fontSize: "0.7rem",
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    )}
+
+
+                    {(hovered || isMobile) && (
+                        <Typography variant="caption" sx={{ mt: 1 }}>
+                            {repo.description}
+                        </Typography>
+                    )}
+
+                </CardContent>
+                {(hovered || isMobile) && (
+                    <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 1 }}>
+                        <Button
+                            size="small"
+                            href={`https://github.com/${username}/${repo.repo}`}
+                            target="_blank"
+                            startIcon={<GitHub fontSize="small" />}
+                        >
+                            Code
+                        </Button>
+                        {repo.homepage && (
+                            <Button
+                                size="small"
+                                href={repo.homepage}
+                                target="_blank"
+                                sx={{ fontWeight: 500 }}
+                            >
+                                Demo
+                            </Button>
+                        )}
+                    </CardActions>
+                )}
+            </Card>
+        );
+    }
+
 }
