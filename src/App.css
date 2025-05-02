@@ -3,7 +3,12 @@
   height: 100%;
 }
 
-
+#home,
+#about,
+#projects,
+#contact {
+  scroll-margin-top: 100px; /* adjust to your header height */
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

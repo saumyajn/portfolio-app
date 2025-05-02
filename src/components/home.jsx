@@ -1,39 +1,95 @@
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import myimg from '../images/formal-img.jpg';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import styles from '../styles/header.module.css';
-import myResume from '../assets/Saumya_Jain_Resume.pdf'
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import { Card, CardContent } from '@mui/material';
+import { useTheme } from '@mui/material/styles'; // ⭐ NEW
+import myImage from '../images/myimg1.png';
+
 export default function Home() {
+    const theme = useTheme();  // ⭐ Use MUI theme
+    const isDarkMode = theme.palette.mode === 'dark';
 
-    return (<div>
-        <Box sx={{ height: { xs: '100%', sm: "100vh" }, textAlign: 'left' }}>
-            <br />  <br />
-            <Grid container spacing={1}>
+    return (
+        <Box
+            sx={{
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                scrollSnapAlign: 'start',
+                px: 2,
+            }}
+        >
+            <Card
+                sx={{
+                    backdropFilter: 'blur(10px)',
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                    borderRadius: '20px',
+                    minHeight: '60vh',
+                    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)', width: '100%',
+                    p: { xs: 2, md: 4 },
+                    m: { xs: 2, md: 4 },
+                }}
+            >
+                <CardContent>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: { xs: 'column', md: 'row' },
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            textAlign: { xs: 'center', md: 'left' },
+                            gap: 6,
+                            maxWidth: '1200px',
+                            mx: 'auto',
+                        }}
+                    >
+                        <Avatar src={myImage} alt="Saumya" sx={{ width: 250, height: 250, boxShadow: 4 }} />
+                        <Box>
+                            <Typography
+                                variant="h2"
+                                sx={{
+                                    mb: 2,
+                                    fontFamily: 'Poppins, sans-serif',
+                                    color: isDarkMode ? '#eee' : '#333', // ⭐ Dynamic text color
+                                }}
+                            >
+                                Hi, I'm Saumya 👋
+                            </Typography>
+                            <Typography
+                                variant="h5"
+                                sx={{
+                                    mb: 4,
+                                    maxWidth: '700px',
+                                    color: isDarkMode ? '#ccc' : '#555', // ⭐ Dynamic text color
+                                    opacity: 0.9,
+                                    mx: { xs: 'auto', md: '0' },
+                                }}
+                            >
+                                I build user-centric, elegant, and scalable web applications. Passionate about frontend development, cloud-native solutions, and continuous learning.
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                href="/Saumya_Jain_resume.pdf"
+                                size="large"
+                                sx={{
+                                    borderRadius: 3,
+                                    textTransform: 'none',
+                                    px: 4,
+                                    py: 1.5,
+                                    
 
-                <Grid item xs={10} sm={8} md={7}>
-                    <h1> Hi, </h1>
-                    <h1>I am Saumya Jain
-                    </h1>
-                    <h4 style={{ fontStyle: 'italic' }}>Front end Developer, Artist, Animal Lover</h4>
-                    <h3>
-
-                        Front end developer and painter with keen eye for creating engaging UI and bringing products to life.
-                        Passionate about creating solid and scalable interactive applications with great user experience.
-                    </h3>
-                    <h5>
-                        I specialize in crafting scalable UI solutions and driving team productivity. From revolutionizing microservices with Angular to optimizing user experiences, I bring innovation and leadership to every project.
-                        Let's build something remarkable together.</h5>
-                    <Stack spacing={2} direction="row">
-                        <a href={myResume} target="_blank" download rel='noreferrer'><Button variant='contained'>Get a copy</Button></a>
-                    </Stack>
-                </Grid>
-                <Grid item xs={4} sm={4} md={5}>
-                    <img src={myimg} className={styles.myImg} width={325} alt="saumya-jain" />
-                </Grid>
-
-            </Grid>
+                                }}
+                            >
+                                View My Work
+                            </Button>
+                        </Box>
+                    </Box>
+                </CardContent>
+            </Card>
         </Box>
-    </div >)
+    );
 }
