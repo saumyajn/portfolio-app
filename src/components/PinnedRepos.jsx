@@ -38,7 +38,7 @@ export function PinnedRepos({ username }) {
         const theme = useTheme();
         const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
         const [hovered, setHovered] = useState(false);
-        const overlayBg = theme.palette.mode === "dark" ? "rgba(37, 37, 37, 0.9)" : "rgba(250, 235, 235, 0.95)";
+        // const overlayBg = theme.palette.mode === "dark" ? "rgba(37, 37, 37, 0.9)" : "rgba(250, 235, 235, 0.95)";
 
         return (
             <Card onMouseEnter={() => setHovered(true)}
