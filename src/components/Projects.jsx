@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { PinnedRepos } from './getPinnedRepos';
+import { PinnedRepos } from './PinnedRepos';
 
 const frontEndSkills = ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'Angular', 'React', 'Material UI'];
 const backEndSkills = ['NodeJS', 'Express', 'MongoDB', 'REST APIs', 'Jenkins'];
