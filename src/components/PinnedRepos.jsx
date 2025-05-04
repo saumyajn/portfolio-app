@@ -62,7 +62,7 @@ export function PinnedRepos({ username }) {
                 {(hovered || isMobile) && repo.homepage && (
                     <Box sx={{ width: '100%', height: '100px', overflow: 'hidden' }}>
                         <img
-                            src={`https://image.thum.io/get/${repo.homepage}`}
+                            src={`https://image.thum.io/get/${repo.homepage}?cb=${Date.now()}`}
                             alt={`${repo.homepage}`}
                             style={{
                                 width: '100%',
@@ -108,7 +108,7 @@ export function PinnedRepos({ username }) {
                     <CardActions sx={{ justifyContent: "space-between", px: 2, pb: 1 }}>
                         <Button
                             size="small"
-                            href={`https://github.com/${username}/${repo.repo}`}
+                            href={`https://github.com/${username}/${repo.name}`}
                             target="_blank"
                             startIcon={<GitHub fontSize="small" />}
                         >
