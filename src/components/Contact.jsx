@@ -134,7 +134,7 @@ export default function Contact() {
 
     return (
         <Box id="contact" sx={{
-            minHeight: '100vh',
+            minHeight: '80vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

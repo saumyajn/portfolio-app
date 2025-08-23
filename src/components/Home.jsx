@@ -14,7 +14,7 @@ export default function Home() {
     return (
         <Box
             sx={{
-                minHeight: '100vh',
+                minHeight: '80vh',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -54,7 +54,7 @@ export default function Home() {
                                 sx={{
                                     mb: 2,
                                     fontFamily: 'Poppins, sans-serif',
-                                    color: isDarkMode ? '#eee' : '#333', // ⭐ Dynamic text color
+                                    color: isDarkMode ? '#eee' : '#333',
                                 }}
                             >
                                 Hi, I'm Saumya 👋
@@ -62,14 +62,26 @@ export default function Home() {
                             <Typography
                                 variant="h5"
                                 sx={{
-                                    mb: 4,
+                                    mb: 2,
                                     maxWidth: '700px',
-                                    color: isDarkMode ? '#ccc' : '#555', // ⭐ Dynamic text color
+                                    color: isDarkMode ? '#ccc' : '#555',
                                     opacity: 0.9,
                                     mx: { xs: 'auto', md: '0' },
                                 }}
                             >
-                                I build user-centric, elegant, and scalable web applications. Passionate about frontend development, cloud-native solutions, and continuous learning.
+                                Developer | Painter/Artist | Learner
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    mb: 4,
+                                    maxWidth: '700px',
+                                    color: isDarkMode ? '#bbb' : '#666',
+                                    opacity: 0.95,
+                                    mx: { xs: 'auto', md: '0' },
+                                }}
+                            >
+                                I specialize in building delightful, performant, and accessible web experiences using modern technologies. My focus is on crafting scalable solutions, optimizing user journeys, and collaborating with teams to deliver impactful products. I am also passionate about painting and art, always seeking inspiration from creativity and colors. Always exploring new tools and best practices to stay ahead in the ever-evolving tech landscape.
                             </Typography>
                             <Button
                                 variant="contained"
@@ -80,11 +92,25 @@ export default function Home() {
                                     textTransform: 'none',
                                     px: 4,
                                     py: 1.5,
-                                    
-
+                                    mr: 2,
+                                    boxShadow: 3,
                                 }}
                             >
-                                View My Work
+                                View Resume
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                href="#projects"
+                                size="large"
+                                sx={{
+                                    borderRadius: 3,
+                                    textTransform: 'none',
+                                    px: 4,
+                                    py: 1.5,
+                                    boxShadow: 3,
+                                }}
+                            >
+                                See My Projects
                             </Button>
                         </Box>
                     </Box>

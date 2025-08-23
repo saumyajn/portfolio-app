@@ -8,20 +8,62 @@ import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { PinnedRepos } from './PinnedRepos';
 
-const frontEndSkills = ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'Angular', 'React', 'Material UI'];
-const backEndSkills = ['NodeJS', 'Express', 'MongoDB', 'REST APIs', 'Jenkins'];
-const softSkills = ['Team Leadership', 'Communication', 'Problem Solving', 'Creative UI Design'];
+
+const FRONTEND_SKILLS = Object.freeze(['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'Angular', 'React', 'Material UI']);
+const BACKEND_SKILLS = Object.freeze(['NodeJS', 'Express', 'MongoDB', 'REST APIs', 'Jenkins']);
+const SOFT_SKILLS = Object.freeze(['Team Leadership', 'Communication', 'Problem Solving', 'Creative UI Design']);
 
 export default function Projects() {
     const username = "saumyajn";
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
 
+    // Memoize skill chips to avoid unnecessary re-renders
+    const frontendChips = React.useMemo(() => FRONTEND_SKILLS.map(skill => (
+        <Chip
+            key={skill}
+            label={skill}
+            sx={{
+                boxShadow: 1,
+                backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+                color: 'text',
+                border: isDarkMode ? '1px solid rgba(255,255,255,0.3)' : '1px solid rgba(0,0,0,0.1)',
+                fontWeight: 'bold',
+            }}
+        />
+    )), [isDarkMode]);
+    const backendChips = React.useMemo(() => BACKEND_SKILLS.map(skill => (
+        <Chip
+            key={skill}
+            label={skill}
+            sx={{
+                boxShadow: 1,
+                backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+                color: 'text',
+                border: isDarkMode ? '1px solid rgba(255,255,255,0.3)' : '1px solid rgba(0,0,0,0.1)',
+                fontWeight: 'bold',
+            }}
+        />
+    )), [isDarkMode]);
+    const softChips = React.useMemo(() => SOFT_SKILLS.map(skill => (
+        <Chip
+            key={skill}
+            label={skill}
+            sx={{
+                boxShadow: 1,
+                backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+                color: 'text',
+                border: isDarkMode ? '1px solid rgba(255,255,255,0.3)' : '1px solid rgba(0,0,0,0.1)',
+                fontWeight: 'bold',
+            }}
+        />
+    )), [isDarkMode]);
+
     return (
         <Box
             id="projects"
             sx={{
-                minHeight: '100vh',
+                minHeight: '80vh',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -43,7 +85,6 @@ export default function Projects() {
                 }}
             >
                 <CardContent>
-
                     <Typography
                         variant="h3"
                         sx={{
@@ -58,18 +99,15 @@ export default function Projects() {
                     <Typography variant="h6" sx={{ textAlign: 'center', mb: 4 }}>
                         My recent work and open source contributions
                     </Typography>
-
                     {/* GitHub Projects Section */}
                     <Box sx={{ mb: 10 }}>
                         <PinnedRepos username={username} />
                     </Box>
-
                     {/* Area of Expertise Section */}
                     <Box>
                         <Typography variant="h4" sx={{ mb: 6, fontWeight: 'bold', textAlign: 'center' }}>
                             Area of Expertise
                         </Typography>
-
                         <Grid container spacing={6}>
                             {/* Frontend Skills */}
                             <Grid item xs={12} md={4}>
@@ -77,65 +115,29 @@ export default function Projects() {
                                     🖥️ Frontend & UI
                                 </Typography>
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1.5 }}>
-                                    {frontEndSkills.map((skill, index) => (
-                                        <Chip
-                                            key={index}
-                                            label={skill}
-                                            sx={{
-                                                backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
-                                                color: 'text',
-                                                border: isDarkMode ? '1px solid rgba(255,255,255,0.3)' : '1px solid rgba(0,0,0,0.1)',
-                                                fontWeight: 'bold',
-                                            }}
-                                        />
-                                    ))}
+                                    {frontendChips}
                                 </Box>
                             </Grid>
-
                             {/* Backend Skills */}
                             <Grid item xs={12} md={4}>
                                 <Typography variant="h6" sx={{ mb: 2 }}>
                                     🔧 Backend & Tools
                                 </Typography>
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1.5 }}>
-                                    {backEndSkills.map((skill, index) => (
-                                        <Chip
-                                            key={index}
-                                            label={skill}
-                                            sx={{
-                                                backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
-                                                color: 'text',
-                                                border: isDarkMode ? '1px solid rgba(255,255,255,0.3)' : '1px solid rgba(0,0,0,0.1)',
-                                                fontWeight: 'bold',
-                                            }}
-                                        />
-                                    ))}
+                                    {backendChips}
                                 </Box>
                             </Grid>
-
                             {/* Professional Skills */}
                             <Grid item xs={12} md={4}>
                                 <Typography variant="h6" sx={{ mb: 2 }}>
                                     🎯 Professional Skills
                                 </Typography>
                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1.5 }}>
-                                    {softSkills.map((skill, index) => (
-                                        <Chip
-                                            key={index}
-                                            label={skill}
-                                            sx={{
-                                                backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
-                                                color: 'text',
-                                                border: isDarkMode ? '1px solid rgba(255,255,255,0.3)' : '1px solid rgba(0,0,0,0.1)',
-                                                fontWeight: 'bold',
-                                            }}
-                                        />
-                                    ))}
+                                    {softChips}
                                 </Box>
                             </Grid>
                         </Grid>
                     </Box>
-
                 </CardContent>
             </Card>
         </Box>

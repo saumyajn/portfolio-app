@@ -13,8 +13,10 @@ const gradient = keyframes`
   100% { background-position: 0% 50%; }
 `;
 const lightGradient = 'linear-gradient(270deg, #ecd9f7, #fcd2e1, #fdbccc, #cbe7fc, #b3dbfd)';
+// Remove animation for static gradient
 
-const darkGradient = 'linear-gradient(270deg, #372c50, #45244a, #301e3c, #1b1b30, #262646)';
+const darkGradient = 'linear-gradient(270deg, #2d2240, #3a1c4d, #1a2238, #232946, #3e206d)';
+
 
 
 const AboutMe = lazy(() => import('../components/AboutMe'));
@@ -35,7 +37,7 @@ export default function Layout() {
                 scrollSnapType: 'y mandatory',
                 background: isDarkMode ? darkGradient : lightGradient,
                 backgroundSize: '1000% 1000%',
-                animation: `${gradient} 20s ease infinite`,
+                animation: `${gradient} 60s ease infinite`,
             }}
         >
             <DustOverlay />

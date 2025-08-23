@@ -9,8 +9,7 @@ const dustFloat = keyframes`
 `;
 
 const DustOverlay = () => {
-  const dots = Array.from({ length: 60 }); // Increased to 60 for denser dust
-
+  const starCount = 120; // Increased number of stars
   return (
     <Box
       sx={{
@@ -24,21 +23,21 @@ const DustOverlay = () => {
         overflow: 'hidden',
       }}
     >
-      {dots.map((_, index) => (
+      {Array.from({ length: starCount }).map((_, index) => (
         <Box
           key={index}
           sx={{
             position: 'absolute',
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
-            width: '4px',
-            height: '4px',
+            width: '5px',
+            height: '5px',
             borderRadius: '50%',
             backgroundColor: 'rgba(255, 255, 255, 0.56)',
-            boxShadow: '0 0 6px rgba(255, 255, 255, 0.6)', // Adds glow effect
-            animation: `${dustFloat} ${10 + Math.random() * 10}s ease-in-out infinite`,
-            animationDelay: `${Math.random() * 5}s`,
-            opacity: 0.7,
+            boxShadow: '0 0 6px rgba(255, 255, 255, 0.6)',
+            animation: `${dustFloat} ${10 + Math.random() * 5}s ease-in-out infinite`,
+            animationDelay: `${Math.random() * 3}s`,
+            opacity: 0.8,
           }}
         />
       ))}

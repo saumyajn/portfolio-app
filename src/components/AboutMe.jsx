@@ -23,7 +23,10 @@ function PaintingCard({ src, title }) {
         <Card sx={{
             width: 180,
             m: 1,
+            border: '4px solid #fff',
             boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
+            outline: '1px solid #e0e0e0',
+            outlineOffset: '-8px',
         }}>
             <CardActionArea>
                 <CardMedia component="img" sx={{ height: 180 }} image={src} alt={title} />
@@ -46,7 +49,7 @@ export default function AboutMe() {
         <Box
             id="about"
             sx={{
-                minHeight: '100vh',
+                minHeight: '80vh',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -90,12 +93,7 @@ export default function AboutMe() {
                             lineHeight: 1.6,
                         }}
                     >
-                        Frontend developer and painter passionate about creating beautiful user experiences.
-                        I specialize in building scalable UI applications with Angular and React, blending performance and design.
-                        Creativity flows both into my code and my canvas.
-                        With a strong focus on clean architecture and responsive design, I strive to build applications that are both intuitive and efficient.
-                        Beyond coding, my background in visual arts fuels my attention to detail, helping me craft interfaces that not only work great but feel great to use.
-                        I’m always eager to learn, explore new technologies, and turn innovative ideas into polished digital solutions.
+                      Frontend developer and painter passionate about creating beautiful user experiences. I specialize in building scalable UI applications with Angular and React, blending performance and design. Creativity flows both into my code and my canvas. With a strong focus on clean architecture and responsive design, I strive to build applications that are both intuitive and efficient. Beyond coding, my background in visual arts fuels my attention to detail, helping me craft interfaces that not only work great but feel great to use. I’m always eager to learn, explore new technologies, and turn innovative ideas into polished digital solutions.
 
                     </Typography>
 
@@ -106,12 +104,16 @@ export default function AboutMe() {
                                 icon={icon}
                                 label={label}
                                 variant="outlined"
-                                
                                 sx={{
+                                    px: 2,
                                     fontWeight: 'bold',
-                                    // color: 'secondary.main',
-                                    
+                                    boxShadow: 2,
+                                    cursor: 'default',
                                     borderColor: isDarkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)',
+                                    transition: 'background-color 0.2s',
+                                    '&:hover': {
+                                        backgroundColor: isDarkMode ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
+                                    },
                                 }}
                             />
                         ))}
