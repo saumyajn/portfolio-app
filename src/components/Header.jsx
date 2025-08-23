@@ -83,7 +83,7 @@ export default function Header() {
     }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant="h6" sx={{ ml: 2, fontSize: { xs: '1.15rem', sm: '1.25rem' } }}>
-          <Box component="img" src="/logo.png" alt="Saumya Logo" sx={{ height: 70 }} />
+          <Box component="img" src="/logo192.png" alt="Saumya Logo" sx={{ height: 70 }} />
         </Typography>
 
         <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
