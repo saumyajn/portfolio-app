@@ -1,3 +1,5 @@
+
+import img7672 from '../images/paintings/IMG_7672.jpg';
 import { Card, Box, Typography, CardContent, Chip, CardActionArea, CardMedia, useTheme } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import * as React from 'react';
@@ -7,13 +9,15 @@ import ColorLensTwoToneIcon from '@mui/icons-material/ColorLensTwoTone';
 import LibraryMusicTwoToneIcon from '@mui/icons-material/LibraryMusicTwoTone';
 import LuggageTwoToneIcon from '@mui/icons-material/LuggageTwoTone';
 import DinnerDiningTwoToneIcon from '@mui/icons-material/DinnerDiningTwoTone';
-const paintings = [
-    { src: require('../images/paintings/IMG_6250.jpg'), title: 'Falling flowers' },
-    { src: require('../images/paintings/IMG_7672.jpg'), title: 'Beautiful Tree' },
-    { src: require('../images/paintings/IMG_2481.jpg'), title: 'Key to Paradise' },
-    { src: require('../images/paintings/IMG_1.jpg'), title: 'Colorful Glass tree' },
-    { src: require('../images/paintings/IMG_2241.jpg'), title: 'Watercolor chameleon' },
-];
+
+import img6250 from '../images/paintings/IMG_6250.jpg';
+
+import img2481 from '../images/paintings/IMG_2481.jpg';
+
+import img1 from '../images/paintings/IMG_1.jpg';
+
+import img2241 from '../images/paintings/IMG_2241.jpg';
+
 
 
 
@@ -45,6 +49,13 @@ export default function AboutMe() {
         { key: 2, label: 'Travel', icon: <LuggageTwoToneIcon color='secondary' /> },
         { key: 3, label: 'Cooking', icon: <DinnerDiningTwoToneIcon color='secondary' /> },
     ];
+    const paintings = React.useMemo(() => [
+        { src: img6250, title: 'Falling flowers' },
+        { src: img7672, title: 'Beautiful Tree' },
+        { src: img2481, title: 'Key to Paradise' },
+        { src: img1, title: 'Colorful Glass tree' },
+        { src: img2241, title: 'Watercolor chameleon' },
+    ], []);
     return (
         <Box
             id="about"
