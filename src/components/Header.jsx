@@ -15,16 +15,23 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-
 import Face3RoundedIcon from '@mui/icons-material/Face3Rounded';
 import StarsRoundedIcon from '@mui/icons-material/StarsRounded';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ThemeToggle from './ThemeToggle';
+
+const NAV_ICONS = {
+  home: React.memo(() => <HomeRoundedIcon color="inherit" />),
+  about: React.memo(() => <Face3RoundedIcon color="inherit" />),
+  projects: React.memo(() => <StarsRoundedIcon color="inherit" />),
+  contact: React.memo(() => <ContactPageRoundedIcon color="inherit" />),
+};
+
 const navItems = [
-  { name: 'Home', id: 'home', icon: <HomeRoundedIcon color="inherit" /> },
-  { name: 'About', id: 'about', icon: <Face3RoundedIcon color="inherit" /> },
-  { name: 'Projects', id: 'projects', icon: <StarsRoundedIcon color="inherit" /> },
-  { name: 'Contact', id: 'contact', icon: <ContactPageRoundedIcon color="inherit" /> },
+  { name: 'Home', id: 'home', icon: NAV_ICONS.home },
+  { name: 'About', id: 'about', icon: NAV_ICONS.about },
+  { name: 'Projects', id: 'projects', icon: NAV_ICONS.projects },
+  { name: 'Contact', id: 'contact', icon: NAV_ICONS.contact },
 ];
 
 export default function Header() {
@@ -48,14 +55,17 @@ export default function Header() {
   const drawer = (
     <Box sx={{ textAlign: 'center' }}>
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item.id} disablePadding>
-            <ListItemButton onClick={() => { scrollTo(item.id); handleDrawerToggle(); }}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <ListItem key={item.id} disablePadding>
+              <ListItemButton onClick={() => { scrollTo(item.id); handleDrawerToggle(); }}>
+                <ListItemIcon><Icon /></ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List> <Box sx={{ borderTop: '1px solid #ddd', mt: 'auto', py: 1 }}>
         <ThemeToggle />
       </Box>
@@ -77,31 +87,33 @@ export default function Header() {
         </Typography>
 
         <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
-          {navItems.map((item) => (
-            <Button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              startIcon={item.icon}
-              sx={{
-                fontWeight: 500,
-                color: 'text.primary',
-                border: '2px solid transparent',
-                transition: 'border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s',
-                '&:hover': {
-                  transform: 'scale(1.05)',
-                  backgroundColor: theme => theme.palette.mode === 'light'
-                    ? 'rgba(205, 180, 219, 0.2)'
-                    : 'rgba(255, 175, 204, 0.1)',
-                  color: 'secondary.main',
-                  borderRadius: 2,
-                  fontWeight: 900,
-                  boxShadow: '1px 2px 6px rgba(204, 163, 227, 0.3)'
-                },
-              }}
-            >
-              {item.name}
-            </Button>
-          ))}
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                startIcon={<Icon />}
+                sx={{
+                  fontWeight: 500,
+                  color: 'text.primary',
+                  border: '2px solid transparent',
+                  transition: 'border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                    backgroundColor: theme => theme.palette.mode === 'light'
+                      ? 'rgba(205, 180, 219, 0.2)'
+                      : 'rgba(255, 175, 204, 0.1)',
+                    color: 'secondary.main',
+                    borderRadius: 2,
+                    boxShadow: '1px 2px 6px rgba(204, 163, 227, 0.3)'
+                  },
+                }}
+              >
+                {item.name}
+              </Button>
+            );
+          })}
           <ThemeToggle />
         </Box>
 
