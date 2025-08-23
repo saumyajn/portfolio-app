@@ -1,4 +1,4 @@
-import { Button, Chip, Card, CardContent, CardActions, Grid, Link, Typography, Box, useMediaQuery } from '@mui/material';
+import { Button, Chip, Card, CardContent, CardActions, Grid, Typography, Box, useMediaQuery } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { GitHub } from "@mui/icons-material";
 
@@ -13,7 +13,7 @@ export function PinnedRepos({ username }) {
                 const res = await fetch(`https://api.github.com/users/${username}/starred?sort=updated`);
                 const data = await res.json();
                 setRepos(data);
-                console.log(repos)
+                console.log(data)
             } catch (err) {
                 console.error("Failed to fetch pinned repos", err);
             }

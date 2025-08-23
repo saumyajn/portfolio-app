@@ -14,12 +14,22 @@ import * as React from 'react';
 import { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 
-const links = [
-    { component: <GitHubIcon fontSize='large' />, text: 'Help me improve my Github', link: 'https://github.com/saumyajn' },
-    { component: <LinkedInIcon fontSize='large' />, text: 'Connect with me on LinkedIn', link: 'https://www.linkedin.com/in/saumya-jain06/' }
+import emailjs from "emailjs-com";
+
+const LINKS = [
+    {
+        icon: GitHubIcon,
+        text: 'Help me improve my Github',
+        link: 'https://github.com/saumyajn',
+    },
+    {
+        icon: LinkedInIcon,
+        text: 'Connect with me on LinkedIn',
+        link: 'https://www.linkedin.com/in/saumya-jain06/',
+    },
 ];
 
-const addEmail = async (val) => {
+const addContact = async (val) => {
     try {
         const docRef = await addDoc(collection(db, 'formEmail'), val);
         console.log("Document written with ID: ", docRef.id);
@@ -30,41 +40,107 @@ const addEmail = async (val) => {
 };
 
 export default function Contact() {
+
     const [inputs, setInputs] = useState({ name: '', email: '', subject: '', phone: '', message: '' });
     const [showAlert, setShowAlert] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const theme = useTheme();
 
-    const handleChange = (e) => {
+    // Memoize email validity
+    const isEmailValid = React.useMemo(() => {
+        // Simple regex for email validation
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputs.email);
+    }, [inputs.email]);
+
+    // Memoize link rendering
+    const renderLinks = React.useCallback(() => (
+        LINKS.map((link, index) => {
+            const Icon = link.icon;
+            return (
+                <Link
+                    key={index}
+                    target="_blank"
+                    underline="none"
+                    color={theme.palette.secondary.main}
+                    href={link.link}
+                    sx={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        padding: '10px',
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        transition: 'all 0.3s ease-in-out',
+                        '&:hover': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                        },
+                    }}
+                >
+                    <Icon fontSize="large" />
+                    <Typography>{link.text}</Typography>
+                </Link>
+            );
+        })
+    ), [theme.palette.secondary.main]);
+
+    const handleChange = React.useCallback((e) => {
         const { name, value } = e.target;
         setInputs(values => ({ ...values, [name]: value }));
-    };
+    }, []);
 
-    const handleSubmit = async (e) => {
+
+    function sendEmail(data) {
+        // EmailJS expects a form or an object, so we send the data object directly
+        emailjs
+            .send(
+                "service_f3cnhfn",   
+                "template_25ncnyx",  
+                data,
+                "o9mgeDpc7oHyxG9GW"    
+            )
+            .then(
+                (result) => {
+                    console.log(result.text);
+                },
+                (error) => {
+                    console.log(error.text);
+                }
+            );
+    }
+
+    const handleSubmit = React.useCallback(async (e) => {
         e.preventDefault();
+
         setError(false);
         setLoading(true);
         try {
-            await addEmail(inputs);
+            const submittedAt = new Date().toLocaleString();
+            const dataWithDate = {
+                ...inputs,
+                submittedAt,
+            };
+            await addContact(dataWithDate);
             setShowAlert(true);
+            sendEmail(dataWithDate);
             setInputs({ name: '', email: '', subject: '', phone: '', message: '' });
+
         } catch (err) {
             setError(true);
         } finally {
             setLoading(false);
         }
-    };
+    }, [inputs]);
 
     return (
         <Box id="contact" sx={{
             minHeight: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                scrollSnapAlign: 'start',
-                px: 2,
-                py: 8,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            scrollSnapAlign: 'start',
+            px: 2,
+            py: 8,
         }}>
             <Card
                 sx={{
@@ -85,23 +161,7 @@ export default function Contact() {
                             <Typography variant='h6' sx={{ mb: 3 }}>Tell me about your project or connect with me to start a new one together?</Typography>
 
                             <Stack spacing={2} direction="column">
-                                {links.map((link, index) => (
-                                    <Link key={index} target="_blank" underline="none" color={theme.palette.secondary.main} href={link.link} sx={{
-                                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                        padding: '10px',
-                                        borderRadius: '8px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 2,
-                                        transition: 'all 0.3s ease-in-out',
-                                        '&:hover': {
-                                            backgroundColor: 'rgba(255, 255, 255, 0.35)',
-                                        }
-                                    }}>
-                                        {link.component}
-                                        <Typography>{link.text}</Typography>
-                                    </Link>
-                                ))}
+                                {renderLinks()}
                             </Stack>
                         </Grid>
 
@@ -111,7 +171,19 @@ export default function Contact() {
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField name="name" label="Your Name" variant="filled" size="small" onChange={handleChange} value={inputs.name} required fullWidth />
-                                        <TextField name="email" label="Your Email" variant="filled" size="small" onChange={handleChange} value={inputs.email} required fullWidth sx={{ mt: 2 }} error={!inputs.email.includes('@')} helperText={!inputs.email.includes('@') && "Enter a valid email"} />
+                                        <TextField
+                                            name="email"
+                                            label="Your Email"
+                                            variant="filled"
+                                            size="small"
+                                            onChange={handleChange}
+                                            value={inputs.email}
+                                            required
+                                            fullWidth
+                                            sx={{ mt: 2 }}
+                                            error={inputs.email.length > 0 && !isEmailValid}
+                                            helperText={inputs.email.length > 0 && !isEmailValid ? "Enter a valid email" : ''}
+                                        />
                                         <TextField name="subject" label="Subject" variant="filled" size="small" onChange={handleChange} value={inputs.subject} required fullWidth sx={{ mt: 2 }} />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -131,7 +203,7 @@ export default function Contact() {
                                 {error && (
                                     <Alert severity="error" sx={{ mt: 2 }}>Something went wrong. Please try again.</Alert>
                                 )}
-                                <Button type="submit" variant='contained' color="primary" sx={{ mt: 3 }} disabled={loading}>
+                                <Button type="submit" variant='contained' color="primary" sx={{ mt: 3 }} disabled={loading || !isEmailValid}>
                                     {loading ? <CircularProgress size={20} /> : 'Submit'}
                                 </Button>
                             </form>
