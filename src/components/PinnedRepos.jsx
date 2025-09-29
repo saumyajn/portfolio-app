@@ -61,6 +61,7 @@ const HoverRepoCard = React.memo(function HoverRepoCard({ repo, username }) {
                     }}
                     href={`https://github.com/${username}/${repo.name}`}
                     target="_blank"
+                    rel="noopener noreferrer"
                     startIcon={<GitHub fontSize="small" />}
                 >
                     Code
@@ -70,6 +71,7 @@ const HoverRepoCard = React.memo(function HoverRepoCard({ repo, username }) {
                         size="small"
                         href={repo.homepage}
                         target="_blank"
+                        rel="noopener noreferrer"
                         sx={{ fontWeight: 500, px: 2, "&:hover": {
                             boxShadow: 1
                         }, }}
@@ -87,11 +89,31 @@ export function PinnedRepos({ username }) {
 
     useEffect(() => {
         let isMounted = true;
+        const cacheKey = `pinned:${username}`;
+        const ttlMs = 1000 * 60 * 60; // 1 hour
+
         const fetchPinnedRepos = async () => {
             try {
-                const res = await fetch(`https://api.github.com/users/${username}/starred?sort=updated`);
+                // Check cache first
+                const cached = localStorage.getItem(cacheKey);
+                if (cached) {
+                    const parsed = JSON.parse(cached);
+                    if (Date.now() - parsed.ts < ttlMs) {
+                        if (isMounted) setRepos(parsed.data);
+                        return;
+                    }
+                }
+
+                // Limit per_page to 12 to reduce payload
+                const res = await fetch(`https://api.github.com/users/${username}/starred?sort=updated&per_page=12`);
                 const data = await res.json();
-                if (isMounted) setRepos(Array.isArray(data) ? data : []);
+                const final = Array.isArray(data) ? data : [];
+                if (isMounted) setRepos(final);
+                try {
+                    localStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), data: final }));
+                } catch (e) {
+                    // ignore storage exceptions
+                }
             } catch (err) {
                 if (isMounted) setRepos([]);
                 console.error("Failed to fetch pinned repos", err);

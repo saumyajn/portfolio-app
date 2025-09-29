@@ -4,9 +4,9 @@ import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { PinnedRepos } from './PinnedRepos';
+import React, { lazy as rLazy } from 'react';
+const PinnedRepos = rLazy(() => import('./PinnedRepos').then(mod => ({ default: mod.PinnedRepos })));
 
 
 const FRONTEND_SKILLS = Object.freeze(['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'Angular', 'React', 'Material UI']);

@@ -1,5 +1,5 @@
 import { keyframes } from '@mui/system';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import Header from './Header';
 import Home from './Home';
@@ -27,17 +27,28 @@ export default function Layout() {
 
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
+    const [animate, setAnimate] = useState(true);
+
+    useEffect(() => {
+        try {
+            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReduced) setAnimate(false);
+        } catch (e) {
+            // ignore in non-browser env
+        }
+    }, []);
+
     return (
         <Box
             sx={{
                 position: 'relative',
-                minHeight: '100%',
+                minHeight: '100vh',
                 height: 'auto',
-                // overflowY: 'scroll',
                 scrollSnapType: 'y mandatory',
                 background: isDarkMode ? darkGradient : lightGradient,
-                backgroundSize: '1000% 1000%',
-                animation: `${gradient} 60s ease infinite`,
+                // smaller backgroundSize reduces texture math on paint
+                backgroundSize: '400% 400%',
+                animation: animate ? `${gradient} 60s ease infinite` : 'none',
             }}
         >
             <DustOverlay />

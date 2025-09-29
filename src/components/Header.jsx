@@ -42,14 +42,18 @@ export default function Header() {
   };
 
   const scrollTo = (id) => {
-    const section = document.getElementById(id);
-    if (section) {
-      const yOffset = -60; // Approximate header height (you can adjust this)
-      const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-      window.scrollTo({ top: y, behavior: 'smooth' });
-      setMobileOpen(false);
-    }
+    if (!id) return;
+    // debounce to avoid multiple rapid scrolls
+    if (scrollTo._timer) clearTimeout(scrollTo._timer);
+    scrollTo._timer = setTimeout(() => {
+      const section = document.getElementById(id);
+      if (section) {
+        const yOffset = -60; // Approximate header height (you can adjust this)
+        const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        setMobileOpen(false);
+      }
+    }, 80);
   };
 
   const drawer = (
@@ -83,7 +87,7 @@ export default function Header() {
     }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant="h6" sx={{ ml: 2, fontSize: { xs: '1.15rem', sm: '1.25rem' } }}>
-          <Box component="img" src="/logo192.png" alt="Saumya Logo" sx={{ height: 70 }} />
+          <Box component="img" src="/logo192.png" alt="Saumya Logo" sx={{ height: 70 }} loading="lazy" decoding="async" />
         </Typography>
 
         <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
@@ -94,6 +98,9 @@ export default function Header() {
                 key={item.id}
                 onClick={() => scrollTo(item.id)}
                 startIcon={<Icon />}
+                component="a"
+                href={`#${item.id}`}
+                rel="noopener noreferrer"
                 sx={{
                   fontWeight: 500,
                   color: 'text.primary',

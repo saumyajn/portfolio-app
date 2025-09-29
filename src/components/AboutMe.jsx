@@ -32,9 +32,9 @@ function PaintingCard({ src, title }) {
             outline: '1px solid #e0e0e0',
             outlineOffset: '-8px',
         }}>
-            <CardActionArea>
-                <CardMedia component="img" sx={{ height: 180 }} image={src} alt={title} />
-            </CardActionArea>
+                    <CardActionArea>
+                        <CardMedia component="img" sx={{ height: 180 }} image={src} alt={title} loading="lazy" decoding="async" />
+                    </CardActionArea>
         </Card>
     );
 }
