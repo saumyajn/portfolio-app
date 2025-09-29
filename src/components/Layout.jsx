@@ -51,17 +51,20 @@ export default function Layout() {
                 animation: animate ? `${gradient} 60s ease infinite` : 'none',
             }}
         >
-            <DustOverlay />
+           
             {/* ⬇️ Your page content */}
             <Box sx={{ position: 'relative', zIndex: 1 }}>
-                <Header />
+               
                 <Suspense fallback={<div>Loading...</div>}>
+                 <DustOverlay />
+                 <Header />
                     <div id="home" style={{ scrollSnapAlign: 'start' }}><Home /></div>
                     <div id="about" style={{ scrollSnapAlign: 'start' }}><AboutMe /></div>
                     <div id="projects" style={{ scrollSnapAlign: 'start' }}><Projects /></div>
                     <div id="contact" style={{ scrollSnapAlign: 'start' }}><Contact /></div>
+                     <Footer/>
                 </Suspense>
-                <Footer/>
+               
             </Box>
         </Box>
     );
