@@ -1,18 +1,15 @@
 import "./App.css";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
-import Layout from "./components/Layout";
-import ThemeContextProvider from "./services/theme";
-
+import { RouterProvider } from 'react-router-dom';
+import router from './services/routes';
 
 function App() {
   return (
     <div className="App">
-      <ThemeContextProvider>
-        <Layout/>
-        <Analytics />
-        <SpeedInsights />
-      </ThemeContextProvider>
+       <RouterProvider router={router} />
+       <Analytics />
+       <SpeedInsights />
     </div>
   );
 }

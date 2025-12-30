@@ -1,177 +1,89 @@
-
-import img7672 from '../images/paintings/IMG_7672.jpg';
-import { Card, Box, Typography, CardContent, Chip, CardActionArea, CardMedia, useTheme } from '@mui/material';
+import React from 'react';
+import { Box, Typography, Chip, useTheme, Grid, Stack } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
-import * as React from 'react';
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import ColorLensTwoToneIcon from '@mui/icons-material/ColorLensTwoTone';
-import LibraryMusicTwoToneIcon from '@mui/icons-material/LibraryMusicTwoTone';
-import LuggageTwoToneIcon from '@mui/icons-material/LuggageTwoTone';
-import DinnerDiningTwoToneIcon from '@mui/icons-material/DinnerDiningTwoTone';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 
+// Import your images (Keep your existing imports)
 import img6250 from '../images/paintings/IMG_6250.jpg';
+import img7672 from '../images/paintings/IMG_7672.jpg';
+// ... other imports
+import IMG_1 from '../images/paintings/IMG_1.jpg';
+import IMG_2 from '../images/paintings/IMG_2.jpg';
 
-import img2481 from '../images/paintings/IMG_2481.jpg';
-
-import img1 from '../images/paintings/IMG_1.jpg';
-
-import img2241 from '../images/paintings/IMG_2241.jpg';
-
-
-
-
-function PaintingCard({ src, title }) {
-
-    return (
-        <Card sx={{
-            width: 180,
-            m: 1,
-            border: '4px solid #fff',
-            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
-            outline: '1px solid #e0e0e0',
-            outlineOffset: '-8px',
-        }}>
-                    <CardActionArea>
-                        <CardMedia component="img" sx={{ height: 180 }} image={src} alt={title} loading="lazy" decoding="async" />
-                    </CardActionArea>
-        </Card>
-    );
-}
+const paintings = [
+    { src: img6250, title: 'Falling flowers' },
+    { src: img7672, title: 'Beautiful Tree' },
+    { src: IMG_1, title: 'Abstract Colors' },
+    { src: IMG_2, title: 'Nature\'s Embrace' },
+];
 
 export default function AboutMe() {
-
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === 'dark';
-    const chipData = [
-        { key: 0, label: 'Painting', icon: <ColorLensTwoToneIcon color='secondary'/> },
-        { key: 1, label: 'Music', icon: <LibraryMusicTwoToneIcon color='secondary' /> },
-        { key: 2, label: 'Travel', icon: <LuggageTwoToneIcon color='secondary' /> },
-        { key: 3, label: 'Cooking', icon: <DinnerDiningTwoToneIcon color='secondary' /> },
-    ];
-    const paintings = React.useMemo(() => [
-        { src: img6250, title: 'Falling flowers' },
-        { src: img7672, title: 'Beautiful Tree' },
-        { src: img2481, title: 'Key to Paradise' },
-        { src: img1, title: 'Colorful Glass tree' },
-        { src: img2241, title: 'Watercolor chameleon' },
-    ], []);
+
     return (
-        <Box
-            id="about"
-            sx={{
-                minHeight: '80vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                scrollSnapAlign: 'start',
-                px: 2,
-            }}
-        >
-            <Card
-                sx={{
-                    backdropFilter: 'blur(10px)',
-                    backgroundColor: 'rgba(255, 255, 255, 0)',
-                    borderRadius: '20px',
-                    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    p: { xs: 2, md: 4 },
-                    m: { xs: 2, md: 4 },
-                    width: '100%',
-                    // maxWidth: '1200px',
-                }}
-            >
-                <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Typography
-                        variant="h3"
-                        sx={{
-                            mb: 3,
-                            fontFamily: 'Poppins, sans-serif',
-                            color: 'text.primary',
-                            textAlign: 'center',
-                        }}
-                    >
-                        About Me
-                    </Typography>
+        <Box id="about" sx={{ minHeight: '80vh', display: 'flex', alignItems: 'center', py: 10, px: { xs: 2, md: 8 } }}>
+            <Box sx={{ maxWidth: '1200px', mx: 'auto' }}>
+                <Grid container spacing={8} alignItems="center">
+                    
+                    {/* LEFT: The Story */}
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="overline" color="primary" sx={{ fontWeight: 'bold', letterSpacing: 2 }}>
+                            BEYOND THE CODE
+                        </Typography>
+                        <Typography variant="h3" sx={{ mb: 3, fontFamily: 'Quicksand', fontWeight: 700 }}>
+                            The Artist & The Engineer
+                        </Typography>
+                        <Typography variant="body1" sx={{ mb: 3, fontSize: '1.1rem', lineHeight: 1.8, color: 'text.secondary' }}>
+                            I believe the best digital experiences are born where logic meets creativity.
+                        </Typography>
+                        <Typography variant="body1" sx={{ mb: 4, lineHeight: 1.7, color: 'text.secondary' }}>
+                            As a developer, I architect scalable frontend systems using <strong>React</strong> and <strong>Angular</strong>. 
+                            But when I step away from the keyboard, I pick up the brush. My background in traditional painting 
+                            gives me a unique eye for color theory, composition, and detail that I bring back into every UI design.
+                        </Typography>
 
-                    <Typography
-                        variant="body1"
-                        sx={{
-                            mb: 4,
-                            maxWidth: '1200px',
-                            color: 'text.secondary',
-                            textAlign: 'justify',
-                            lineHeight: 1.6,
-                        }}
-                    >
-                      Frontend developer and painter passionate about creating beautiful user experiences. I specialize in building scalable UI applications with Angular and React, blending performance and design. Creativity flows both into my code and my canvas. With a strong focus on clean architecture and responsive design, I strive to build applications that are both intuitive and efficient. Beyond coding, my background in visual arts fuels my attention to detail, helping me craft interfaces that not only work great but feel great to use. I’m always eager to learn, explore new technologies, and turn innovative ideas into polished digital solutions.
+                        <Stack direction="row" gap={1} flexWrap="wrap">
+                            <Chip icon={<ColorLensIcon />} label="Acrylic Painting" variant="outlined" />
+                            <Chip label="Digital Art" variant="outlined" />
+                            <Chip label="UI Design" variant="outlined" />
+                        </Stack>
+                    </Grid>
 
-                    </Typography>
-
-                    <Box sx={{ mb: 5, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1 }}>
-                        {chipData.map(({ key, label, icon }) => (
-                            <Chip
-                                key={key}
-                                icon={icon}
-                                label={label}
-                                variant="outlined"
-                                sx={{
-                                    px: 2,
-                                    fontWeight: 'bold',
-                                    boxShadow: 2,
-                                    cursor: 'default',
-                                    borderColor: isDarkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)',
-                                    transition: 'background-color 0.2s',
-                                    '&:hover': {
-                                        backgroundColor: isDarkMode ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
-                                    },
-                                }}
-                            />
-                        ))}
-                    </Box>
-
-                    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', mt: 3 }}>
-                        <Box sx={{ width: { xs: 300, sm: 500, md: 600 } }}>
-                            <Carousel
-                                fullHeightHover
-                                indicators={false}
-                                navButtonsAlwaysVisible
-                                animation="slide"
-                                color="primary"
-                                autoPlay={true}
-                                interval={4000}
-                                NextIcon={<ArrowForwardIosRoundedIcon color='primary' />}
-                                PrevIcon={<ArrowBackIosNewRoundedIcon color='primary' />}
-                                navButtonsProps={{
-                                    style: {
-                                        backgroundColor: '#000',
-                                        borderRadius: 15
-                                    }
-                                }}
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}
+                    {/* RIGHT: The Gallery (Floating without a card border looks more modern) */}
+                    <Grid item xs={12} md={6}>
+                        <Box sx={{ 
+                            position: 'relative', 
+                            '&:before': { // Decorative background blob
+                                content: '""',
+                                position: 'absolute',
+                                top: -20, right: -20, bottom: -20, left: -20,
+                                background: theme.palette.primary.main,
+                                opacity: 0.1,
+                                borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+                                zIndex: 0
+                            }
+                        }}>
+                            <Carousel 
+                                animation="fade" 
+                                indicators={false} 
+                                navButtonsAlwaysVisible={true}
+                                sx={{ borderRadius: 4, boxShadow: 5, position: 'relative', zIndex: 1 }}
                             >
-                                {paintings.map(({ src, title }, index) => (
-                                    <Box
-                                        key={index}
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <PaintingCard src={src} title={title} />
-                                    </Box>
+                                {paintings.map((item, i) => (
+                                    <Box key={i} component="img" src={item.src} alt={item.title} 
+                                        sx={{ width: '100%', height: '400px', objectFit: 'cover' }} 
+                                    />
                                 ))}
                             </Carousel>
+                            <Typography variant="caption" sx={{ display: 'block', mt: 1, textAlign: 'center', fontStyle: 'italic', opacity: 0.7 }}>
+                                A few of my original paintings
+                            </Typography>
                         </Box>
-                    </Box>
+                    </Grid>
 
-                </CardContent>
-            </Card>
+                </Grid>
+            </Box>
         </Box>
     );
 }

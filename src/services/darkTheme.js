@@ -23,10 +23,17 @@ const darkTheme = {
       },
     },
     typography: {
-      fontFamily: '"Quicksand", "Roboto", sans-serif',
-      fontWeightBold: 700,
-      h5: {
-        fontWeight: 600,
+      fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+      h1: { fontFamily: '"Quicksand", sans-serif', fontWeight: 700 },
+      h2: { fontFamily: '"Quicksand", sans-serif', fontWeight: 700 },
+      h3: { fontFamily: '"Quicksand", sans-serif', fontWeight: 600 },
+      h4: { fontFamily: '"Quicksand", sans-serif', fontWeight: 600 },
+      h5: { fontFamily: '"Quicksand", sans-serif', fontWeight: 600 },
+      h6: { fontFamily: '"Quicksand", sans-serif', fontWeight: 600 },
+      button: { 
+        fontFamily: '"Inter", sans-serif', 
+        fontWeight: 600, 
+        textTransform: 'none' 
       },
     },
     components: {

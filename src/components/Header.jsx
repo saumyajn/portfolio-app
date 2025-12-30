@@ -1,156 +1,215 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
+  AppBar, Toolbar, Button, Box, IconButton, Drawer, List, 
+  ListItem, ListItemButton, ListItemIcon, ListItemText, useTheme
 } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom'; // 👈 Import Router hooks
+
+// Icons
 import MenuIcon from '@mui/icons-material/Menu';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import Face3RoundedIcon from '@mui/icons-material/Face3Rounded';
-import StarsRoundedIcon from '@mui/icons-material/StarsRounded';
-import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
+import HomeIcon from '@mui/icons-material/HomeRounded';
+import PersonIcon from '@mui/icons-material/Face3Rounded';
+import WorkIcon from '@mui/icons-material/StarsRounded';
+import MailIcon from '@mui/icons-material/ContactPageRounded';
+import DescriptionIcon from '@mui/icons-material/Description'; // For Resume
+
 import ThemeToggle from './ThemeToggle';
 
-const NAV_ICONS = {
-  home: React.memo(() => <HomeRoundedIcon color="inherit" />),
-  about: React.memo(() => <Face3RoundedIcon color="inherit" />),
-  projects: React.memo(() => <StarsRoundedIcon color="inherit" />),
-  contact: React.memo(() => <ContactPageRoundedIcon color="inherit" />),
-};
-
-const navItems = [
-  { name: 'Home', id: 'home', icon: NAV_ICONS.home },
-  { name: 'About', id: 'about', icon: NAV_ICONS.about },
-  { name: 'Projects', id: 'projects', icon: NAV_ICONS.projects },
-  { name: 'Contact', id: 'contact', icon: NAV_ICONS.contact },
+const NAV_ITEMS = [
+  { name: 'Home', id: 'home', icon: <HomeIcon /> },
+  { name: 'About', id: 'about', icon: <PersonIcon /> },
+  { name: 'Projects', id: 'projects', icon: <WorkIcon /> },
+  { name: 'Contact', id: 'contact', icon: <MailIcon /> },
 ];
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+  // Add scroll listener to change header style when scrolling
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+
+  const handleNavClick = (id) => {
+    setMobileOpen(false); // Close drawer on mobile
+
+    if (isHomePage) {
+      // If we are already home, just scroll
+      scrollToSection(id);
+    } else {
+      // If we are on a "Future App" page, go home first, then scroll
+      navigate('/');
+      setTimeout(() => scrollToSection(id), 100);
+    }
   };
 
-  const scrollTo = (id) => {
-    if (!id) return;
-    // debounce to avoid multiple rapid scrolls
-    if (scrollTo._timer) clearTimeout(scrollTo._timer);
-    scrollTo._timer = setTimeout(() => {
-      const section = document.getElementById(id);
-      if (section) {
-        const yOffset = -60; // Approximate header height (you can adjust this)
-        const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-        setMobileOpen(false);
-      }
-    }, 80);
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80; // Header height
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const drawer = (
-    <Box sx={{ textAlign: 'center' }}>
+    <Box sx={{ textAlign: 'center', pt: 2 }}>
+      {/* Mobile Logo */}
+      <Box 
+        component="img" 
+        src="/logo192.png" 
+        alt="Logo" 
+        sx={{ height: 50, mb: 2, filter: theme.palette.mode === 'dark' ? 'brightness(1.2)' : 'none' }} 
+      />
       <List>
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <ListItem key={item.id} disablePadding>
-              <ListItemButton onClick={() => { scrollTo(item.id); handleDrawerToggle(); }}>
-                <ListItemIcon><Icon /></ListItemIcon>
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
-      </List> <Box sx={{ borderTop: '1px solid #ddd', mt: 'auto', py: 1 }}>
+        {NAV_ITEMS.map((item) => (
+          <ListItem key={item.id} disablePadding>
+            <ListItemButton onClick={() => handleNavClick(item.id)} sx={{ justifyContent: 'center' }}>
+              <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        {/* Mobile Resume Button */}
+        <ListItem disablePadding>
+          <ListItemButton component="a" href="/Saumya_Jain_resume.pdf" target="_blank" sx={{ justifyContent: 'center' }}>
+             <ListItemIcon sx={{ minWidth: 40 }}><DescriptionIcon color="primary" /></ListItemIcon>
+             <ListItemText primary="Resume" primaryTypographyProps={{ color: 'primary', fontWeight: 'bold' }} />
+          </ListItemButton>
+        </ListItem>
+      </List>
+      <Box sx={{ mt: 'auto', py: 2 }}>
         <ThemeToggle />
       </Box>
     </Box>
   );
 
   return (
-    <AppBar position="sticky" color="inherit" elevation={1} sx={{
-      bgcolor: 'background.paper',
-      borderBottom: '1px solid',
-      borderColor: 'divider',
-      borderRadius: 3,
-      zIndex: (theme) => theme.zIndex.drawer + 1,
-      width: '95%', mx: 'auto'
-    }}>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant="h6" sx={{ ml: 2, fontSize: { xs: '1.15rem', sm: '1.25rem' } }}>
-          <Box component="img" src="/logo192.png" alt="Saumya Logo" sx={{ height: 70 }} loading="lazy" decoding="async" />
-        </Typography>
-
-        <Box sx={{ display: { xs: 'none', sm: 'flex' }, gap: 2 }}>
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <Button
-                key={item.id}
-                onClick={() => scrollTo(item.id)}
-                startIcon={<Icon />}
-                component="a"
-                href={`#${item.id}`}
-                rel="noopener noreferrer"
-                sx={{
-                  fontWeight: 500,
-                  color: 'text.primary',
-                  border: '2px solid transparent',
-                  transition: 'border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s',
-                  '&:hover': {
-                    transform: 'scale(1.05)',
-                    backgroundColor: theme => theme.palette.mode === 'light'
-                      ? 'rgba(205, 180, 219, 0.2)'
-                      : 'rgba(255, 175, 204, 0.1)',
-                    color: 'secondary.main',
-                    borderRadius: 2,
-                    boxShadow: '1px 2px 6px rgba(204, 163, 227, 0.3)'
-                  },
-                }}
-              >
-                {item.name}
-              </Button>
-            );
-          })}
-          <ThemeToggle />
+    <AppBar 
+      component="nav"
+      position="sticky"
+      elevation={scrolled ? 4 : 0} // Add shadow only when scrolled
+      sx={{
+        top: 0,
+        backgroundColor: theme.palette.mode === 'dark' 
+          ? (scrolled ? 'rgba(20, 20, 35, 0.8)' : 'transparent') 
+          : (scrolled ? 'rgba(255, 255, 255, 0.8)' : 'transparent'),
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        borderBottom: scrolled ? `1px solid ${theme.palette.divider}` : 'none',
+        transition: 'all 0.3s ease-in-out',
+        width: '100%',
+        maxWidth: '100vw', // Ensures it doesn't float weirdly
+        left: 0,
+      }}
+    >
+      <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 6 } }}>
+        {/* LOGO */}
+        <Box 
+          onClick={() => handleNavClick('home')}
+          sx={{ 
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1 
+          }}
+        >
+          {/* If you prefer text logo over image, uncomment below */}
+          {/* <Typography variant="h5" sx={{ fontFamily: 'Quicksand', fontWeight: 700 }}>Saumya.</Typography> */}
+          <Box component="img" src="/logo192.png" alt="Logo" sx={{ height: 50 }} />
         </Box>
 
+        {/* DESKTOP NAV */}
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
+          {NAV_ITEMS.map((item) => (
+            <Button
+              key={item.id}
+              onClick={() => handleNavClick(item.id)}
+              sx={{
+                color: 'text.primary',
+                fontWeight: 500,
+                textTransform: 'none',
+                fontSize: '1rem',
+                minWidth: 'auto',
+                px: 2,
+                '&:hover': { color: theme.palette.primary.main, background: 'transparent' }
+              }}
+            >
+              {item.name}
+            </Button>
+          ))}
+
+          {/* Special "Resume" CTA Button */}
+          <Button
+            variant="contained"
+            color="primary"
+            href="/Saumya_Jain_resume.pdf"
+            target="_blank"
+            startIcon={<DescriptionIcon />}
+            sx={{ 
+              ml: 2, 
+              borderRadius: '50px', 
+              px: 3, 
+              textTransform: 'none', 
+              fontWeight: 600,
+              boxShadow: '0 4px 14px 0 rgba(0,118,255,0.39)'
+            }}
+          >
+            Resume
+          </Button>
+
+          <Box sx={{ ml: 1 }}>
+            <ThemeToggle />
+          </Box>
+        </Box>
+
+        {/* MOBILE MENU ICON */}
         <IconButton
-          edge="end"
           color="inherit"
-          aria-label="menu"
+          aria-label="open drawer"
+          edge="end"
           onClick={handleDrawerToggle}
-          sx={{ display: { sm: 'none' } }}
+          sx={{ display: { md: 'none' } }}
         >
           <MenuIcon />
         </IconButton>
       </Toolbar>
 
+      {/* MOBILE DRAWER */}
       <Drawer
         anchor="right"
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{ keepMounted: true }}
         sx={{
-          '& .MuiDrawer-paper': {
-            width: 240,
-            backgroundColor: '#faf5ff',
-            color: '#1a1a1a',
+          '& .MuiDrawer-paper': { 
+            boxSizing: 'border-box', 
+            width: 260,
+            backgroundColor: theme.palette.background.default, // Matches theme now
+            backgroundImage: 'none'
           },
         }}
       >
         {drawer}
       </Drawer>
     </AppBar>
-
   );
 }
