@@ -49,7 +49,7 @@ export default function Projects() {
         const fetchRepos = async () => {
             try {
                 // Fetch repos sorted by update time, specifically YOURS
-                const res = await fetch('https://api.github.com/users/saumyajn/repos?sort=updated&per_page=6&type=owner');
+                const res = await fetch('https://api.github.com/users/saumyajn/starred?sort=updated&type=owner');
                 const data = await res.json();
                 if (Array.isArray(data)) {
                     // Filter out forks if you want only your code: .filter(repo => !repo.fork)
