@@ -1,5 +1,5 @@
-import React, { lazy, Suspense } from 'react';
-
+import  { lazy, Suspense } from 'react';
+import Loader from './Loader';
 // Lazy load the sections to keep performance high
 const Home = lazy(() => import('./Home'));
 const AboutMe = lazy(() => import('./AboutMe'));
@@ -8,7 +8,7 @@ const Contact = lazy(() => import('./Contact'));
 
 export default function MainPortfolio() {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loader message="Initializing Portfolio..." />}>
             <div id="home" style={{ scrollSnapAlign: 'start' }}><Home /></div>
             <div id="about" style={{ scrollSnapAlign: 'start' }}><AboutMe /></div>
             <div id="projects" style={{ scrollSnapAlign: 'start' }}><Projects /></div>
