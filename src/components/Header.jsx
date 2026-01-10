@@ -3,7 +3,7 @@ import {
   AppBar, Toolbar, Button, Box, IconButton, Drawer, List, 
   ListItem, ListItemButton, ListItemIcon, ListItemText, useTheme
 } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom'; // 👈 Import Router hooks
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // Icons
 import MenuIcon from '@mui/icons-material/Menu';
@@ -11,15 +11,19 @@ import HomeIcon from '@mui/icons-material/HomeRounded';
 import PersonIcon from '@mui/icons-material/Face3Rounded';
 import WorkIcon from '@mui/icons-material/StarsRounded';
 import MailIcon from '@mui/icons-material/ContactPageRounded';
-import DescriptionIcon from '@mui/icons-material/Description'; // For Resume
+import DescriptionIcon from '@mui/icons-material/Description'; 
+import TerminalIcon from '@mui/icons-material/TerminalRounded'; // Updated Icon for Python
 
 import ThemeToggle from './ThemeToggle';
 
+// UPDATED: Renamed Utilities to Python. 
+// You can add 'Hangman' here later by adding a new object to this array.
 const NAV_ITEMS = [
   { name: 'Home', id: 'home', icon: <HomeIcon /> },
   { name: 'About', id: 'about', icon: <PersonIcon /> },
   { name: 'Projects', id: 'projects', icon: <WorkIcon /> },
   { name: 'Contact', id: 'contact', icon: <MailIcon /> },
+  { name: 'Python', id: 'python', path: '/python', icon: <TerminalIcon /> }, 
 ];
 
 export default function Header() {
@@ -31,7 +35,6 @@ export default function Header() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
-  // Add scroll listener to change header style when scrolling
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
@@ -40,23 +43,28 @@ export default function Header() {
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
-  const handleNavClick = (id) => {
-    setMobileOpen(false); // Close drawer on mobile
+  const handleNavClick = (item) => {
+    setMobileOpen(false); 
 
+    // 1. Route Navigation (For Python, Hangman, etc.)
+    if (item.path) {
+        navigate(item.path);
+        return;
+    }
+
+    // 2. Scroll Navigation (For Home sections)
     if (isHomePage) {
-      // If we are already home, just scroll
-      scrollToSection(id);
+      scrollToSection(item.id);
     } else {
-      // If we are on a "Future App" page, go home first, then scroll
       navigate('/');
-      setTimeout(() => scrollToSection(id), 100);
+      setTimeout(() => scrollToSection(item.id), 100);
     }
   };
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80; // Header height
+      const offset = 80; 
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -73,7 +81,6 @@ export default function Header() {
 
   const drawer = (
     <Box sx={{ textAlign: 'center', pt: 2 }}>
-      {/* Mobile Logo */}
       <Box 
         component="img" 
         src="/logo192.png" 
@@ -83,13 +90,12 @@ export default function Header() {
       <List>
         {NAV_ITEMS.map((item) => (
           <ListItem key={item.id} disablePadding>
-            <ListItemButton onClick={() => handleNavClick(item.id)} sx={{ justifyContent: 'center' }}>
+            <ListItemButton onClick={() => handleNavClick(item)} sx={{ justifyContent: 'center' }}>
               <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
-        {/* Mobile Resume Button */}
         <ListItem disablePadding>
           <ListItemButton component="a" href="/Saumya_Jain_resume.pdf" target="_blank" sx={{ justifyContent: 'center' }}>
              <ListItemIcon sx={{ minWidth: 40 }}><DescriptionIcon color="primary" /></ListItemIcon>
@@ -107,7 +113,7 @@ export default function Header() {
     <AppBar 
       component="nav"
       position="sticky"
-      elevation={scrolled ? 4 : 0} // Add shadow only when scrolled
+      elevation={scrolled ? 4 : 0} 
       sx={{
         top: 0,
         backgroundColor: theme.palette.mode === 'dark' 
@@ -117,14 +123,13 @@ export default function Header() {
         borderBottom: scrolled ? `1px solid ${theme.palette.divider}` : 'none',
         transition: 'all 0.3s ease-in-out',
         width: '100%',
-        maxWidth: '100vw', // Ensures it doesn't float weirdly
+        maxWidth: '100vw',
         left: 0,
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 6 } }}>
-        {/* LOGO */}
         <Box 
-          onClick={() => handleNavClick('home')}
+          onClick={() => handleNavClick({ id: 'home' })}
           sx={{ 
             cursor: 'pointer', 
             display: 'flex', 
@@ -132,17 +137,14 @@ export default function Header() {
             gap: 1 
           }}
         >
-          {/* If you prefer text logo over image, uncomment below */}
-          {/* <Typography variant="h5" sx={{ fontFamily: 'Quicksand', fontWeight: 700 }}>Saumya.</Typography> */}
           <Box component="img" src="/logo192.png" alt="Logo" sx={{ height: 50 }} />
         </Box>
 
-        {/* DESKTOP NAV */}
         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
           {NAV_ITEMS.map((item) => (
             <Button
               key={item.id}
-              onClick={() => handleNavClick(item.id)}
+              onClick={() => handleNavClick(item)}
               sx={{
                 color: 'text.primary',
                 fontWeight: 500,
@@ -157,7 +159,6 @@ export default function Header() {
             </Button>
           ))}
 
-          {/* Special "Resume" CTA Button */}
           <Button
             variant="contained"
             color="primary"
@@ -181,7 +182,6 @@ export default function Header() {
           </Box>
         </Box>
 
-        {/* MOBILE MENU ICON */}
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -193,7 +193,6 @@ export default function Header() {
         </IconButton>
       </Toolbar>
 
-      {/* MOBILE DRAWER */}
       <Drawer
         anchor="right"
         open={mobileOpen}
@@ -203,7 +202,7 @@ export default function Header() {
           '& .MuiDrawer-paper': { 
             boxSizing: 'border-box', 
             width: 260,
-            backgroundColor: theme.palette.background.default, // Matches theme now
+            backgroundColor: theme.palette.background.default, 
             backgroundImage: 'none'
           },
         }}
