@@ -21,9 +21,9 @@ import ThemeToggle from './ThemeToggle';
 const NAV_ITEMS = [
   { name: 'Home', id: 'home', icon: <HomeIcon /> },
   { name: 'About', id: 'about', icon: <PersonIcon /> },
-  { name: 'Projects', id: 'projects', icon: <WorkIcon /> },
+  { name: 'Github', id: 'projects', icon: <WorkIcon /> },
   { name: 'Contact', id: 'contact', icon: <MailIcon /> },
-  { name: 'Python', id: 'python', path: '/python', icon: <TerminalIcon /> }, 
+  { name: 'Python Projects', id: 'python', path: '/python', icon: <TerminalIcon /> }, 
 ];
 
 export default function Header() {

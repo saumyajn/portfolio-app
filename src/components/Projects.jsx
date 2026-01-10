@@ -108,7 +108,7 @@ export default function Projects() {
                 <Typography variant="h2" sx={{ mb: 1, fontFamily: 'Quicksand', fontWeight: 700 }}>
                     My Work
                 </Typography>
-                <Typography variant="h6" color="text.secondary" sx={{ mb: 6, fontFamily: 'Inter', maxWidth: '600px' }}>
+                <Typography variant="h7" color="text.secondary" sx={{ mb: 8, fontFamily: 'Inter', maxWidth: '600px', alignmentBaseline: 'middle' }}>
                     A selection of my favorite projects, ranging from web applications to creative coding experiments.
                 </Typography>
 

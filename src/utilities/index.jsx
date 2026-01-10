@@ -15,6 +15,15 @@ import { APPS_CONFIG } from './appConfig';
 // Definition for larger Apps (Routing to new pages)
 const FULL_APPS = [
     {
+        id:'treasure_island',
+        title: 'Treasure Island',
+        description: 'An interactive text-based adventure game where you make choices to find the treasure.',
+        path: '/python/treasure-island',
+        icon: <SportsEsportsIcon fontSize="large" sx={{ color: 'white' }} />,
+        color: '#43a047',   
+
+    },
+    {
         id: 'hangman',
         title: 'Hangman',
         description: 'Coming SOON! Classic word guessing game.',

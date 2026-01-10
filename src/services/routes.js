@@ -27,6 +27,10 @@ const router = createBrowserRouter([
                 path: '/python', 
                 element: withLoader(UtilitiesDashboard) 
             },
+            {
+                path:'/python/treasure-island',
+                element: withLoader(lazy(() => import('../utilities/components/treasureIsland')))
+            }
             
         ],
     },
