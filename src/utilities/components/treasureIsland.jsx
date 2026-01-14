@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Container, Typography, Paper, Button, TextField, CircularProgress } from '@mui/material';
+import { Box, Container, Typography, Paper, Button, TextField } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
@@ -14,12 +14,21 @@ export default function TreasureIsland() {
     const [history, setHistory] = useState([]);
     const bottomRef = useRef(null);
 
-    // 1. Load the specific Python file
+    // Simple fetch for the python script
+    const fetchScript = async () => {
+        try {
+            const res = await fetch('/python/treasure_island.py');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const text = await res.text();
+            setScriptContent(text);
+            setHistory([]); // reset conversation when script reloads
+        } catch (err) {
+            console.error('Failed to load script', err);
+        }
+    };
+
     useEffect(() => {
-        fetch('/python/treasure_island.py')
-            .then(res => res.text())
-            .then(text => setScriptContent(text))
-            .catch(err => console.error("Failed to load script", err));
+        fetchScript();
     }, []);
 
     // 2. Start the script automatically once ready
@@ -65,6 +74,9 @@ export default function TreasureIsland() {
                 <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/python')} variant="outlined">
                     Back
                 </Button>
+                <Button onClick={() => { setScriptContent(""); setHistory([]); fetchScript(); }} variant="outlined">
+                    Reload
+                </Button>
                 <Typography sx={{ fontWeight: 'bold' }}>
                     <h1>Treasure Island</h1>
 
@@ -79,8 +91,8 @@ export default function TreasureIsland() {
 
                 {/* Output Log */}
                 <Box sx={{ height: '500px', overflowY: 'auto', mb: 2 }}>
-                    {!isReady && <Typography sx={{ color: '#aaa' }}>Loading Python...</Typography>}
-                    
+                    {!isReady && <Typography sx={{ color: '#aaa' }}>Loading Python runtime...</Typography>}
+
                     {history.map((line, i) => (
                         line.text && (
                             <Typography key={i} sx={{
