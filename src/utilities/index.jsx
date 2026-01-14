@@ -4,34 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 // Icons
 import TerminalIcon from '@mui/icons-material/Terminal';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import AppsIcon from '@mui/icons-material/Apps';
 import BoltIcon from '@mui/icons-material/Bolt';
 
 // Components
 import PythonWidget from './PythonWidget';
 import { APPS_CONFIG } from './appConfig';
-
-// Definition for larger Apps (Routing to new pages)
-const FULL_APPS = [
-    {
-        id:'treasure_island',
-        title: 'Treasure Island',
-        description: 'An interactive text-based adventure game where you make choices to find the treasure.',
-        path: '/python/treasure-island',
-        icon: <SportsEsportsIcon fontSize="large" sx={{ color: 'white' }} />,
-        color: '#43a047',   
-
-    },
-    {
-        id: 'hangman',
-        title: 'Hangman',
-        description: 'Coming SOON! Classic word guessing game.',
-        // path: '/python/hangman',
-        icon: <SportsEsportsIcon fontSize="large" sx={{ color: 'white' }} />,
-        color: '#ff7043',
-    },
-];
+import { FULL_APPS } from './fullApps';
 
 export default function PythonHub() {
     const theme = useTheme();
@@ -121,7 +100,7 @@ export default function PythonHub() {
                                 <CardActionArea onClick={() => navigate(app.path)} sx={{ height: '100%' }}>
                                     <Box sx={{
                                         height: 100,
-                                        background: `linear-gradient(135deg, ${app.color} 0%, #d84315 100%)`,
+                                        background: `linear-gradient(135deg, ${app.color} 0%, #dc7d60 100%)`,
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center'
