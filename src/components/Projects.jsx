@@ -74,7 +74,7 @@ export default function Projects() {
                 background: isDarkMode ? 'rgba(30, 30, 40, 0.6)' : 'rgba(255, 255, 255, 0.6)',
                 backdropFilter: 'blur(10px)',
                 transition: 'transform 0.2s',
-                '&:hover': { transform: 'translateY(-5px)', border: `1px solid ${theme.palette.primary.main}` }
+                '&:hover': { transform: 'translateY(-5px)', border: `1px solid ${theme.palette.primary.main}` ,boxShadow: '0 5px 20px rgb(255 25 221 / 20%)' }
             }}
         >
             <CardContent sx={{ flexGrow: 1 }}>
