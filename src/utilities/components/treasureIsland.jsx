@@ -4,9 +4,11 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import usePython from '../../hooks/usePython'; // Adjust path if needed
+import { useTheme } from '@mui/material';
 
 export default function TreasureIsland() {
     const navigate = useNavigate();
+    const theme = useTheme();
     const { runScript, isReady } = usePython();
 
     const [scriptContent, setScriptContent] = useState("");
@@ -38,12 +40,7 @@ export default function TreasureIsland() {
         }
     }, [isReady, scriptContent]);
 
-    // 3. Auto-scroll
-    useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [history]);
-
-    // 4. Run Logic
+ 
     const runGame = async (userCommand) => {
         try {
             // Pass user input as variable 'cmd'
@@ -87,7 +84,9 @@ export default function TreasureIsland() {
                     
 
             {/* TERMINAL UI */}
-            <Paper elevation={6} sx={{ bgcolor: '#0f0e0eff', color: '#00ff00', p: 4,  minHeight: '400px', width: '100%', borderRadius: 2 }}>
+            <Paper elevation={6} 
+            sx={{ bgcolor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#2b2b2b', 
+        color: '#00ff00',p: 4,  minHeight: '400px', width: '100%', borderRadius: 2 }}>
 
                 {/* Output Log */}
                 <Box sx={{ height: '500px', overflowY: 'auto', mb: 2 }}>
