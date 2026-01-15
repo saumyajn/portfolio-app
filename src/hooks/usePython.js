@@ -3,36 +3,46 @@ import { useState, useEffect, useRef } from 'react';
 export default function usePython() {
     const [isReady, setIsReady] = useState(false);
     const pyodideRef = useRef(null);
+    const PYODIDE_URL = "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js";
 
     useEffect(() => {
         const initPyodide = async () => {
-            // 1. Check if Pyodide is already loaded
+            // 1. Check if Pyodide is already initialized in this hook
             if (pyodideRef.current) return;
 
-            try {
-                // 2. Wait for the window.loadPyodide function (from the script tag)
-                // Sometimes the script tag takes a second to load, so we check for it.
-                if (window.loadPyodide) {
+            // 2. Check if the script tag already exists in the DOM
+            let script = document.querySelector(`script[src="${PYODIDE_URL}"]`);
+
+            if (!script) {
+                // 3. If not, inject it dynamically
+                script = document.createElement('script');
+                script.src = PYODIDE_URL;
+                script.async = true;
+                document.body.appendChild(script);
+            }
+
+            // 4. Set up the load handler (runs when script finishes downloading)
+            script.onload = async () => {
+                if (!window.loadPyodide) return;
+                try {
                     pyodideRef.current = await window.loadPyodide();
                     setIsReady(true);
-                } else {
-                    console.error("Pyodide script not found in index.html");
+                } catch (err) {
+                    console.error("Pyodide failed to load:", err);
                 }
-            } catch (error) {
-                console.error("Error loading Pyodide:", error);
+            };
+
+            // 5. Fallback: If script was already loaded by another component or cache
+            if (window.loadPyodide && !pyodideRef.current) {
+                pyodideRef.current = await window.loadPyodide();
+                setIsReady(true);
             }
         };
 
-        // Retry mechanism in case the script tag loads slowly
-        const interval = setInterval(() => {
-            if (window.loadPyodide && !isReady) {
-                initPyodide();
-                clearInterval(interval);
-            }
-        }, 500);
+        // RUN IT IMMEDIATELY
+        initPyodide();
 
-        return () => clearInterval(interval);
-    }, [isReady]);
+    }, []); // 👈 Keep dependency array empty so it only runs once on mount
 
     const runScript = async (script, inputs = {}) => {
         if (!pyodideRef.current) throw new Error("Python is not ready yet");
@@ -40,7 +50,6 @@ export default function usePython() {
         try {
             // 1. Convert JS inputs to Python variables
             for (const [key, value] of Object.entries(inputs)) {
-                // We map values to global variables in the Python environment
                 pyodideRef.current.globals.set(key, value);
             }
 
@@ -53,7 +62,7 @@ export default function usePython() {
 
             // 4. Return the joined output
             return output.join('\n');
-            
+
         } catch (err) {
             throw new Error(err.message);
         }

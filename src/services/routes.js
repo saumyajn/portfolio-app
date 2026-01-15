@@ -30,6 +30,11 @@ const router = createBrowserRouter([
             {
                 path:'/python/treasure-island',
                 element: withLoader(lazy(() => import('../utilities/components/treasureIsland')))
+            },
+         
+            {
+                path:'/python/rock-paper-scissors',
+                element: withLoader(lazy(() => import('../utilities/components/rockPaperScissors')))
             }
             
         ],

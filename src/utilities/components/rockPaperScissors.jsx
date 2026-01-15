@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import usePython from '../../hooks/usePython'; // Adjust path if needed
 
-export default function TreasureIsland() {
+export default function RockPaperScissors() {
     const navigate = useNavigate();
     const { runScript, isReady } = usePython();
 
@@ -17,7 +17,7 @@ export default function TreasureIsland() {
     // Simple fetch for the python script
     const fetchScript = async () => {
         try {
-            const res = await fetch('/python/treasure_island.py');
+            const res = await fetch('/python/rock_paper_scissor.py');
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const text = await res.text();
             setScriptContent(text);
@@ -38,12 +38,7 @@ export default function TreasureIsland() {
         }
     }, [isReady, scriptContent]);
 
-    // 3. Auto-scroll
-    useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [history]);
-
-    // 4. Run Logic
+  
     const runGame = async (userCommand) => {
         try {
             // Pass user input as variable 'cmd'
@@ -77,10 +72,10 @@ export default function TreasureIsland() {
                 <Button onClick={() => { setScriptContent(""); setHistory([]); fetchScript(); }} variant="outlined">
                     Reload
                 </Button>
-                <Typography component="div" sx={{ fontWeight: 'bold' }}>
-                    <h1>Treasure Island</h1>
+                <Typography sx={{ fontWeight: 'bold' }}>
+                    <h1>Rock Paper Scissors</h1>
 
-                    <p>Welcome to the Treasure Island adventure game! Your quest to find the hidden treasure begins here.</p>
+                    <p>Welcome to the Rock Paper Scissors game! Play against the computer and see who wins.</p>
                 </Typography>
 
             </Box>
