@@ -1,0 +1,3 @@
+[submodule "public/python"]
+	path = public/python
+	url = https://github.com/saumyajn/python-apps-repo.git
