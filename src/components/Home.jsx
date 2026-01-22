@@ -137,7 +137,7 @@ export default function Home() {
                                 <IconButton href="https://github.com/saumyajn" target="_blank" color="inherit">
                                     <GitHubIcon />
                                 </IconButton>
-                                <IconButton href="https://linkedin.com/in/saumyajn" target="_blank" color="primary">
+                                <IconButton href="https://www.linkedin.com/in/saumya-jain06/" target="_blank" color="primary">
                                     <LinkedInIcon />
                                 </IconButton>
                                 <IconButton href="mailto:your-email@example.com" color="secondary">
