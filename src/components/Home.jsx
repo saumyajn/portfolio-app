@@ -140,7 +140,7 @@ export default function Home() {
                                 <IconButton href="https://www.linkedin.com/in/saumya-jain06/" target="_blank" color="primary">
                                     <LinkedInIcon />
                                 </IconButton>
-                                <IconButton href="mailto:your-email@example.com" color="secondary">
+                                <IconButton href="mailto:saumyajn1994@gmail.com" color="secondary">
                                     <EmailIcon />
                                 </IconButton>
                             </Stack>
