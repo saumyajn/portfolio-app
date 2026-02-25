@@ -7,7 +7,7 @@ export default function usePython() {
     useEffect(() => {
   
         const workerPath = `${process.env.PUBLIC_URL}/pyodideWorker.js`;
-        
+        console.log('Initializing Python Worker from:', workerPath);
         workerRef.current = new Worker(workerPath);
 
         setIsReady(true);
@@ -19,7 +19,7 @@ export default function usePython() {
         };
     }, []);
 
-    const runScript = useCallback((script, inputs = {}) => {
+    const runScript = useCallback((script, inputs = {}, files=[]) => {
         return new Promise((resolve, reject) => {
             if (!workerRef.current) {
                 reject(new Error("Worker not initialized"));
@@ -44,7 +44,7 @@ export default function usePython() {
             workerRef.current.postMessage({
                 id,
                 python: script,
-                inputs
+                inputs, files
             });
         });
     }, []);

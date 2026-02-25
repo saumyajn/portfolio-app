@@ -6,28 +6,27 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 export const FULL_APPS = [
     {
-        id:'treasure_island',
+        id: 'treasure_island',
         title: 'Treasure Island',
         description: 'An interactive text-based adventure game where you make choices to find the treasure.',
         path: '/python/treasure-island',
         icon: <><AttachMoneyIcon fontSize="large" sx={{ color: 'white' }} /><AttachMoneyIcon fontSize="large" sx={{ color: 'white' }} /></>,
-        color: '#43a047',   
+        color: '#43a047',
 
-    },
-     {
-        id:'rock_paper_scissors',
-        title: 'Rock Paper Scissors',
-        description: 'An interactive game where you play against the computer.',
-        path: '/python/rock-paper-scissors',
+    }, {
+        id: 'python_or_bot',
+        title: 'Python or Bot',
+        description: 'A fun game to test if you can outsmart the Python script or if it will outsmart you!',
+        path: 'https://humanorbot.vercel.app/',
         icon: <><SmartToyIcon fontSize="large" sx={{ color: 'white' }} /><SmartToyIcon fontSize="large" sx={{ color: 'white' }} /></>,
-        color: '#288bd7',   
+        color: '#0cf451',
 
     },
     {
         id: 'hangman',
         title: 'Hangman',
-        description: 'Coming SOON! Classic word guessing game.',
-        // path: '/python/hangman',
+        description: 'Classic word guessing game to improve your vocabulary and have fun!',
+        path: '/python/hangman',
         icon: <SportsEsportsIcon fontSize="large" sx={{ color: 'white' }} />,
         color: '#ff7043',
     },

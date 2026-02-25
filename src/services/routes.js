@@ -16,27 +16,40 @@ const withLoader = (Component) => (
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Layout />, // Wraps everything
+        element: <Layout />,
         errorElement: <Page404 />,
         children: [
-            { 
-                index: true, 
-                element: <MainPortfolio /> // Shows your scrollable Home/About/Projects
-            },
-            { 
-                path: '/python', 
-                element: withLoader(UtilitiesDashboard) 
+            {
+                index: true,
+                element: <MainPortfolio />
             },
             {
-                path:'/python/treasure-island',
-                element: withLoader(lazy(() => import('../utilities/components/treasureIsland')))
+                path: '/python',
+                element: withLoader(UtilitiesDashboard)
             },
-         
             {
-                path:'/python/rock-paper-scissors',
-                element: withLoader(lazy(() => import('../utilities/components/rockPaperScissors')))
+                path: '/python/treasure-island',
+                element: withLoader(lazy(() => import('../utilities/components/commonFullApp'))),
+                loader: () => ({
+                    title: "Treasure Island",
+                    description: "Welcome to the Treasure Island adventure game! Your quest to find the hidden treasure begins here",
+                    pythonFile: "treasure_island.py"
+                })
+            },
+            {
+                path: '/python/hangman',
+                element: withLoader(lazy(() => import('../utilities/components/commonFullApp'))),
+                loader: () => ({
+                    title: "Hangman",
+                    description: "A classic word-guessing game where you guess letters to identify the hidden word before running out of attempts. Enjoy the challenge and have fun playing Hangman!",
+                    pythonFile: "hangman/hangman.py",
+                    dependencies: [
+                        { path: "hangman/hangman_art.py", name: "hangman_art.py" },
+                        { path: "hangman/hangman_words.py", name: "hangman_words.py" }
+                    ]
+                })
             }
-            
+
         ],
     },
 ]);

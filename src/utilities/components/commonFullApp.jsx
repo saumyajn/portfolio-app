@@ -4,12 +4,17 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import usePython from '../../hooks/usePython'; // Adjust path if needed
+import { useTheme } from '@mui/material';
+import { useLoaderData } from 'react-router-dom';
 
-export default function RockPaperScissors() {
+export default function TreasureIsland() {
     const navigate = useNavigate();
+    const theme = useTheme();
     const { runScript, isReady } = usePython();
+    const data = useLoaderData();
 
     const [scriptContent, setScriptContent] = useState("");
+    const [dependencies, setDependencies] = useState([]);
     const [input, setInput] = useState("");
     const [history, setHistory] = useState([]);
     const bottomRef = useRef(null);
@@ -17,9 +22,20 @@ export default function RockPaperScissors() {
     // Simple fetch for the python script
     const fetchScript = async () => {
         try {
-            const res = await fetch('/python/rock_paper_scissor.py');
+            const res = await fetch(`/python/${data.pythonFile}`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const text = await res.text();
+
+            if (data.dependencies) {
+                const loadedDeps = await Promise.all(
+                    data.dependencies.map(async (dep) => {
+                        const depRes = await fetch(`/python/${dep.path}`);
+                        const depText = await depRes.text();
+                        return { name: dep.name, content: depText };
+                    })
+                );
+                setDependencies(loadedDeps);
+            }
             setScriptContent(text);
             setHistory([]); // reset conversation when script reloads
         } catch (err) {
@@ -29,7 +45,7 @@ export default function RockPaperScissors() {
 
     useEffect(() => {
         fetchScript();
-    }, []);
+    }, [data.pythonFile]);
 
     // 2. Start the script automatically once ready
     useEffect(() => {
@@ -38,11 +54,12 @@ export default function RockPaperScissors() {
         }
     }, [isReady, scriptContent]);
 
-  
+
+
     const runGame = async (userCommand) => {
         try {
             // Pass user input as variable 'cmd'
-            const output = await runScript(scriptContent, { cmd: userCommand });
+            const output = await runScript(scriptContent, { cmd: userCommand }, dependencies);
 
             setHistory(prev => [
                 ...prev,
@@ -62,7 +79,7 @@ export default function RockPaperScissors() {
     };
 
     return (
-        <Container  sx={{ py: 8 }}>
+        <Container sx={{ py: 8 }}>
 
             {/* HEADER */}
             <Box sx={{ mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -72,17 +89,21 @@ export default function RockPaperScissors() {
                 <Button onClick={() => { setScriptContent(""); setHistory([]); fetchScript(); }} variant="outlined">
                     Reload
                 </Button>
-                <Typography sx={{ fontWeight: 'bold' }}>
-                    <h1>Rock Paper Scissors</h1>
+                <Typography component="div" sx={{ fontWeight: 'bold' }}>
+                    <h1>{data.title}</h1>
 
-                    <p>Welcome to the Rock Paper Scissors game! Play against the computer and see who wins.</p>
+                    <p>{data.description}</p>
                 </Typography>
 
             </Box>
-                    
+
 
             {/* TERMINAL UI */}
-            <Paper elevation={6} sx={{ bgcolor: '#0f0e0eff', color: '#00ff00', p: 4,  minHeight: '400px', width: '100%', borderRadius: 2 }}>
+            <Paper elevation={6}
+                sx={{
+                    bgcolor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#2b2b2b',
+                    color: '#00ff00', p: 4, minHeight: '400px', width: '100%', borderRadius: 2
+                }}>
 
                 {/* Output Log */}
                 <Box sx={{ height: '500px', overflowY: 'auto', mb: 2 }}>
@@ -91,7 +112,7 @@ export default function RockPaperScissors() {
                     {history.map((line, i) => (
                         line.text && (
                             <Typography key={i} sx={{
-                                fontSize:"12px",
+                                fontSize: "12px",
                                 whiteSpace: 'pre-wrap',
                                 fontFamily: 'monospace',
                                 color: line.type === 'user' ? '#ffff00' : '#00ff00',
@@ -101,7 +122,7 @@ export default function RockPaperScissors() {
                             </Typography>
                         )
                     ))}
-                    
+
                     <div ref={bottomRef} />
                 </Box>
 

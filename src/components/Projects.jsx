@@ -25,11 +25,11 @@ const FEATURED_PROJECTS = [
     },
      {
         id: 2,
-        name: "Arcade Stack",
-        description: "Modular game portal featuring multiple mini-games with score tracking and theming.",
-        tags: ["React", "MUI", "Firebase"],
-        repo: "https://github.com/saumyajn/arcade-stack",
-        demo: "https://arcade-stack.vercel.app/"
+        name: "Human Or bot",
+        description: "Can you spot the machine? Engage in live, real-time chats with global opponents and put your intuition to the test. Match with a human or an AI, interrogation-style, and cast your verdict. Are you sharp enough to identify the imposter, or will you be fooled by the bot?",
+        tags: ["Angular","Python","NodeJS","Socket.IO","AI"],
+        repo: "https://github.com/saumyajn/humanorbot",
+        demo: "hhttps://humanorbot.vercel.app/"
     },
     // Add another big project here manually
 ];

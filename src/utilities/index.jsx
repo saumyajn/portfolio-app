@@ -7,7 +7,6 @@ import TerminalIcon from '@mui/icons-material/Terminal';
 import AppsIcon from '@mui/icons-material/Apps';
 import BoltIcon from '@mui/icons-material/Bolt';
 
-// Components
 import PythonWidget from './PythonWidget';
 import { APPS_CONFIG } from './appConfig';
 import { FULL_APPS } from './fullApps';
@@ -27,15 +26,63 @@ export default function PythonHub() {
             {/* 1. Header */}
             <Box sx={{ textAlign: 'center', mb: 8 }}>
                 <Typography variant="h3" sx={{ fontFamily: 'Quicksand', fontWeight: 700, mb: 2 }}>
-                    Python Utility Lab
+                    Python Utility Labz
                 </Typography>
                 <Typography color="text.secondary">
                     Run real Python code directly in your browser.
                 </Typography>
             </Box>
 
-            {/* 2. SECTION: Quick Utilities (Your Tabbed Widget) */}
+
+
             <Box sx={{ maxWidth: '900px', mx: 'auto', mb: 10 }}>
+                <Divider textAlign="left" sx={{ mb: 4 }}>
+                    <Chip icon={<AppsIcon />} label="Full Games & Apps" color="secondary" variant="outlined" sx={{ fontWeight: 'bold' }} />
+                </Divider>
+
+                <Grid container spacing={4}>
+                    {FULL_APPS.map((app) => (
+                        <Grid item key={app.id} xs={12} sm={6} md={4}>
+                            <Card
+                                elevation={4}
+                                sx={{
+                                    height: '100%',
+                                    borderRadius: 4,
+                                    transition: 'transform 0.2s',
+                                    '&:hover': { transform: 'translateY(-5px)' }
+                                }}
+                            >
+                                <CardActionArea
+                                    onClick={() => {
+                                        const isExternal = /^https?:\/\//i.test(app.path);
+                                        if (isExternal) {
+                                            window.open(app.path, '_blank');
+                                        } else {
+                                            navigate(app.path);
+                                        }
+                                    }}
+                                    sx={{ height: '100%' }}
+                                >
+                                    <Box sx={{
+                                        height: 100,
+                                        background: `linear-gradient(135deg, ${app.color} 0%, #dc7d60 100%)`,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        {app.icon}
+                                    </Box>
+                                    <CardContent>
+                                        <Typography variant="h6" fontWeight="bold">{app.title}</Typography>
+                                        <Typography variant="body2" color="text.secondary">{app.description}</Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
+            <Box sx={{ maxWidth: '900px', mx: 'auto' }}>
                 <Divider textAlign="left" sx={{ mb: 4 }}>
                     <Chip icon={<BoltIcon />} label="Quick Utilities" color="primary" variant="outlined" sx={{ fontWeight: 'bold' }} />
                 </Divider>
@@ -78,46 +125,6 @@ export default function PythonHub() {
                     </CardContent>
                 </Card>
             </Box>
-
-            {/* 3. SECTION: Full Applications (Cards) */}
-            <Box sx={{ maxWidth: '900px', mx: 'auto' }}>
-                <Divider textAlign="left" sx={{ mb: 4 }}>
-                    <Chip icon={<AppsIcon />} label="Full Games & Apps" color="secondary" variant="outlined" sx={{ fontWeight: 'bold' }} />
-                </Divider>
-
-                <Grid container spacing={4}>
-                    {FULL_APPS.map((app) => (
-                        <Grid item key={app.id} xs={12} sm={6} md={4}>
-                            <Card
-                                elevation={4}
-                                sx={{
-                                    height: '100%',
-                                    borderRadius: 4,
-                                    transition: 'transform 0.2s',
-                                    '&:hover': { transform: 'translateY(-5px)' }
-                                }}
-                            >
-                                <CardActionArea onClick={() => navigate(app.path)} sx={{ height: '100%' }}>
-                                    <Box sx={{
-                                        height: 100,
-                                        background: `linear-gradient(135deg, ${app.color} 0%, #dc7d60 100%)`,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
-                                        {app.icon}
-                                    </Box>
-                                    <CardContent>
-                                        <Typography variant="h6" fontWeight="bold">{app.title}</Typography>
-                                        <Typography variant="body2" color="text.secondary">{app.description}</Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
-
         </Box>
     );
 }

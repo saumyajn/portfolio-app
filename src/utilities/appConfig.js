@@ -11,16 +11,17 @@ export const APPS_CONFIG = [
             { name: 'tip', label: 'Tip Percentage (%)', type: 'number', defaultValue: 15 }
         ]
     },
-    // {
-    //     id: 'password-gen',
-    //     title: 'Pass Generator',
-    //     description: 'Generates a secure random password using Python secrets.',
-    //     scriptPath: '/python/password_gen.py',
-    //     inputs: [
-    //         { name: 'length', label: 'Length', type: 'number', defaultValue: 12 },
-    //         { name: 'include_special', label: 'Include Special Chars? (1=Yes, 0=No)', type: 'number', defaultValue: 1 }
-    //     ]
-    // },
+    {
+        id: 'password-gen',
+        title: 'PyPassword Generator',
+        description: 'Generates a secure random password using randomization.',
+        scriptPath: '/python/password_generator.py',
+        inputs: [
+            { name: 'letters', label: 'How many letters?', type: 'number', defaultValue: 5 },
+            { name: 'symbols', label: 'How many symbols?', type: 'number', defaultValue: 4},
+             { name: 'numbers', label: 'How many numbers?', type: 'number', defaultValue: 3 }
+        ]
+    },
     {
         id: 'bmi-calc',
         title: 'BMI Calculator',
