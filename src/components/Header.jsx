@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AppBar, Toolbar, Button, Box, IconButton, Drawer, List, 
+  AppBar, Toolbar, Button, Box, IconButton, Drawer, List,
   ListItem, ListItemButton, ListItemIcon, ListItemText, useTheme
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -11,7 +11,7 @@ import HomeIcon from '@mui/icons-material/HomeRounded';
 import PersonIcon from '@mui/icons-material/Face3Rounded';
 import WorkIcon from '@mui/icons-material/StarsRounded';
 import MailIcon from '@mui/icons-material/ContactPageRounded';
-import DescriptionIcon from '@mui/icons-material/Description'; 
+import DescriptionIcon from '@mui/icons-material/Description';
 import TerminalIcon from '@mui/icons-material/TerminalRounded'; // Updated Icon for Python
 
 import ThemeToggle from './ThemeToggle';
@@ -23,13 +23,13 @@ const NAV_ITEMS = [
   { name: 'About', id: 'about', icon: <PersonIcon /> },
   { name: 'Github', id: 'projects', icon: <WorkIcon /> },
   { name: 'Contact', id: 'contact', icon: <MailIcon /> },
-  { name: 'Code Playpen', id: 'python', path: '/python', icon: <TerminalIcon /> }, 
+  { name: 'Code Playpen', id: 'python', path: '/python', icon: <TerminalIcon /> },
 ];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  
+
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,12 +44,12 @@ export default function Header() {
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   const handleNavClick = (item) => {
-    setMobileOpen(false); 
+    setMobileOpen(false);
 
     // 1. Route Navigation (For Python, Hangman, etc.)
     if (item.path) {
-        navigate(item.path);
-        return;
+      navigate(item.path);
+      return;
     }
 
     // 2. Scroll Navigation (For Home sections)
@@ -64,7 +64,7 @@ export default function Header() {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = 80; 
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -81,11 +81,13 @@ export default function Header() {
 
   const drawer = (
     <Box sx={{ textAlign: 'center', pt: 2 }}>
-      <Box 
-        component="img" 
-        src="/logo192.png" 
-        alt="Logo" 
-        sx={{ height: 50, mb: 2, filter: theme.palette.mode === 'dark' ? 'brightness(1.2)' : 'none' }} 
+      <Box
+        component="img"
+        src="/logo192.png"
+        alt="Logo"
+        width={50}
+        height={50}
+        sx={{ height: 50, mb: 2, filter: theme.palette.mode === 'dark' ? 'brightness(1.2)' : 'none' }}
       />
       <List>
         {NAV_ITEMS.map((item) => (
@@ -98,8 +100,8 @@ export default function Header() {
         ))}
         <ListItem disablePadding>
           <ListItemButton component="a" href="/Saumya_Jain_resume.pdf" target="_blank" sx={{ justifyContent: 'center' }}>
-             <ListItemIcon sx={{ minWidth: 40 }}><DescriptionIcon color="primary" /></ListItemIcon>
-             <ListItemText primary="Resume" primaryTypographyProps={{ color: 'primary', fontWeight: 'bold' }} />
+            <ListItemIcon sx={{ minWidth: 40 }}><DescriptionIcon color="primary" /></ListItemIcon>
+            <ListItemText primary="Resume" primaryTypographyProps={{ color: 'primary', fontWeight: 'bold' }} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -110,14 +112,14 @@ export default function Header() {
   );
 
   return (
-    <AppBar 
+    <AppBar
       component="nav"
       position="sticky"
-      elevation={scrolled ? 4 : 0} 
+      elevation={scrolled ? 4 : 0}
       sx={{
         top: 0,
-        backgroundColor: theme.palette.mode === 'dark' 
-          ? (scrolled ? 'rgba(20, 20, 35, 0.8)' : 'transparent') 
+        backgroundColor: theme.palette.mode === 'dark'
+          ? (scrolled ? 'rgba(20, 20, 35, 0.8)' : 'transparent')
           : (scrolled ? 'rgba(255, 255, 255, 0.8)' : 'transparent'),
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         borderBottom: scrolled ? `1px solid ${theme.palette.divider}` : 'none',
@@ -128,13 +130,13 @@ export default function Header() {
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 6 } }}>
-        <Box 
+        <Box
           onClick={() => handleNavClick({ id: 'home' })}
-          sx={{ 
-            cursor: 'pointer', 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 1 
+          sx={{
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1
           }}
         >
           <Box component="img" src="/logo192.png" alt="Logo" sx={{ height: 50 }} />
@@ -165,11 +167,11 @@ export default function Header() {
             href="/Saumya_Jain_resume.pdf"
             target="_blank"
             startIcon={<DescriptionIcon />}
-            sx={{ 
-              ml: 2, 
-              borderRadius: '50px', 
-              px: 3, 
-              textTransform: 'none', 
+            sx={{
+              ml: 2,
+              borderRadius: '50px',
+              px: 3,
+              textTransform: 'none',
               fontWeight: 600,
               boxShadow: '0 4px 14px 0 rgba(0,118,255,0.39)'
             }}
@@ -199,10 +201,10 @@ export default function Header() {
         onClose={handleDrawerToggle}
         ModalProps={{ keepMounted: true }}
         sx={{
-          '& .MuiDrawer-paper': { 
-            boxSizing: 'border-box', 
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
             width: 260,
-            backgroundColor: theme.palette.background.default, 
+            backgroundColor: theme.palette.background.default,
             backgroundImage: 'none'
           },
         }}

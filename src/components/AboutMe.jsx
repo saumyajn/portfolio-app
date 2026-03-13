@@ -1,25 +1,18 @@
-import React from 'react';
 import { Box, Typography, Chip, useTheme, Grid, Stack } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 
-// Import your images (Keep your existing imports)
-import img6250 from '../images/paintings/IMG_2241.webp';
-import img7672 from '../images/paintings/IMG_5845.webp';
-// ... other imports
-import IMG_1 from '../images/paintings/IMG_3.webp';
-import IMG_2 from '../images/paintings/IMG_4.webp';
 
 const paintings = [
-    { src: img6250, title: 'Falling flowers' },
-    { src: img7672, title: 'Beautiful Tree' },
-    { src: IMG_1, title: 'Abstract Colors' },
-    { src: IMG_2, title: 'Nature\'s Embrace' },
+    { src: require('../images/paintings/IMG_2241.webp'), title: 'Falling flowers' },
+    { src: require('../images/paintings/IMG_5845.webp'), title: 'Beautiful Tree' },
+    { src: require('../images/paintings/IMG_3.webp'), title: 'Abstract Colors' },
+    { src: require('../images/paintings/IMG_4.webp'), title: 'Nature\'s Embrace' },
 ];
 
 export default function AboutMe() {
     const theme = useTheme();
-    const isDarkMode = theme.palette.mode === 'dark';
+    // const isDarkMode = theme.palette.mode === 'dark';
 
     return (
         <Box id="about" sx={{ minHeight: '80vh', display: 'flex', alignItems: 'center', py: 10, px: { xs: 2, md: 8 } }}>
@@ -72,6 +65,7 @@ export default function AboutMe() {
                             >
                                 {paintings.map((item, i) => (
                                     <Box key={i} component="img" src={item.src} alt={item.title} 
+                                     loading={i < 4 ? "eager" : "lazy"} 
                                         sx={{ width: '100%', height: '400px', objectFit: 'cover' }} 
                                     />
                                 ))}
