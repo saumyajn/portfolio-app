@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Tabs, Tab, Card, CardContent, useTheme, Grid, Divider, Chip, CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
-// Icons
 import TerminalIcon from '@mui/icons-material/Terminal';
 import AppsIcon from '@mui/icons-material/Apps';
 import BoltIcon from '@mui/icons-material/Bolt';
@@ -22,8 +20,6 @@ export default function PythonHub() {
 
     return (
         <Box sx={{ minHeight: '100vh', pt: 12, px: { xs: 2, md: 8 }, pb: 8 }}>
-
-            {/* 1. Header */}
             <Box sx={{ textAlign: 'center', mb: 8 }}>
                 <Typography variant="h3" sx={{ fontFamily: 'Quicksand', fontWeight: 700, mb: 2 }}>
                     Python Utility Labz
@@ -32,8 +28,6 @@ export default function PythonHub() {
                     Run real Python code directly in your browser.
                 </Typography>
             </Box>
-
-
 
             <Box sx={{ maxWidth: '900px', mx: 'auto', mb: 10 }}>
                 <Divider textAlign="left" sx={{ mb: 4 }}>

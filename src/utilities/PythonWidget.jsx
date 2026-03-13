@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, Button, Typography, CircularProgress, Alert, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Box, TextField, Button, Typography, CircularProgress, Alert, ToggleButton, ToggleButtonGroup, useTheme } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import usePython from '../hooks/usePython';
+import Editor from '@monaco-editor/react';
 
 export default function PythonWidget({ appConfig }) {
+    const theme = useTheme();
     const { isReady, runScript } = usePython();
     
     // 1. Determine if this app has modes or just simple inputs
@@ -30,7 +32,7 @@ export default function PythonWidget({ appConfig }) {
         
         // Load default values for the new active config
         const initialState = {};
-        activeConfig.inputs.forEach(field => {
+        activeConfig.inputs?.forEach(field => {
             initialState[field.name] = field.defaultValue || "";
         });
         setInputs(initialState);
@@ -44,7 +46,7 @@ export default function PythonWidget({ appConfig }) {
             .then(text => setScriptContent(text))
             .catch(err => setError(`Failed to load ${activeConfig.scriptPath}`));
 
-    }, [appConfig, currentModeId]); // Re-run when app or mode changes
+    }, [appConfig, currentModeId]);
 
     const handleInputChange = (name, value) => {
         setInputs(prev => ({ ...prev, [name]: value }));
@@ -63,7 +65,7 @@ export default function PythonWidget({ appConfig }) {
     };
 
     return (
-        <Box sx={{ maxWidth: 500, mx: 'auto', p: 1 }}>
+        <Box sx={{ maxWidth: 800, mx: 'auto', p: 1 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
                 {appConfig.description}
             </Typography>
@@ -91,7 +93,7 @@ export default function PythonWidget({ appConfig }) {
             )}
 
             {/* Dynamic Inputs (Based on activeConfig) */}
-            {activeConfig.inputs.map((field) => (
+            {activeConfig.inputs && activeConfig.inputs.map((field) => (
                 <TextField
                     key={field.name}
                     label={field.label}
@@ -104,6 +106,23 @@ export default function PythonWidget({ appConfig }) {
                 />
             ))}
 
+            {/* MONACO EDITOR: Allows user to see and edit the python script before running */}
+            <Box sx={{ mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 1, overflow: 'hidden' }}>
+                <Editor
+                    height="300px"
+                    defaultLanguage="python"
+                    theme={theme.palette.mode === 'dark' ? "vs-dark" : "light"}
+                    value={scriptContent}
+                    onChange={(value) => setScriptContent(value)}
+                    options={{
+                        minimap: { enabled: false },
+                        fontSize: 14,
+                        wordWrap: 'on',
+                        scrollBeyondLastLine: false
+                    }}
+                />
+            </Box>
+
             <Button
                 variant="contained"
                 startIcon={isReady ? <PlayArrowIcon /> : <CircularProgress size={20} color="inherit" />}
@@ -115,12 +134,24 @@ export default function PythonWidget({ appConfig }) {
                 Run {hasModes ? activeConfig.label : "Script"}
             </Button>
 
+            {/* TERMINAL OUTPUT BOX */}
             {output && (
-                <Alert severity="success" sx={{ fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}>
-                     {output}
-                </Alert>
+                <Box sx={{ 
+                    bgcolor: '#1e1e1e', 
+                    color: '#00ff00', 
+                    p: 2, 
+                    fontFamily: 'monospace', 
+                    borderRadius: 1,
+                    maxHeight: '250px', 
+                    overflowY: 'auto',
+                    whiteSpace: 'pre-wrap'
+                }}>
+                    {/* Handles both array streams (if you update usePython) and string results */}
+                    {Array.isArray(output) ? output.map((log, i) => <div key={i}>{log}</div>) : output}
+                </Box>
             )}
-            {error && <Alert severity="error">{error}</Alert>}
+
+            {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
         </Box>
     );
 }
