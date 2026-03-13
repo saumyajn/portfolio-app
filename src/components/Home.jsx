@@ -13,7 +13,7 @@ import CodeIcon from '@mui/icons-material/Code'; // For React/Web
 import TerminalIcon from '@mui/icons-material/Terminal'; // For Python/Backend
 import BrushIcon from '@mui/icons-material/Brush'; // For Art/Design
 
-import myImage from '../images/myimg1.png';
+import myImage from '../images/myimg1.webp';
 
 export default function Home() {
     const theme = useTheme();

@@ -23,7 +23,7 @@ const NAV_ITEMS = [
   { name: 'About', id: 'about', icon: <PersonIcon /> },
   { name: 'Github', id: 'projects', icon: <WorkIcon /> },
   { name: 'Contact', id: 'contact', icon: <MailIcon /> },
-  { name: 'Python Projects', id: 'python', path: '/python', icon: <TerminalIcon /> }, 
+  { name: 'Code Playpen', id: 'python', path: '/python', icon: <TerminalIcon /> }, 
 ];
 
 export default function Header() {

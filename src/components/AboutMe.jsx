@@ -4,11 +4,11 @@ import Carousel from 'react-material-ui-carousel';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 // Import your images (Keep your existing imports)
-import img6250 from '../images/paintings/IMG_6250.jpg';
-import img7672 from '../images/paintings/IMG_7672.jpg';
+import img6250 from '../images/paintings/IMG_2241.webp';
+import img7672 from '../images/paintings/IMG_5845.webp';
 // ... other imports
-import IMG_1 from '../images/paintings/IMG_1.jpg';
-import IMG_2 from '../images/paintings/IMG_2.jpg';
+import IMG_1 from '../images/paintings/IMG_3.webp';
+import IMG_2 from '../images/paintings/IMG_4.webp';
 
 const paintings = [
     { src: img6250, title: 'Falling flowers' },
