@@ -8,43 +8,39 @@ export default function PythonWidget({ appConfig }) {
     const theme = useTheme();
     const { isReady, runScript } = usePython();
     
-    // 1. Determine if this app has modes or just simple inputs
     const hasModes = !!appConfig.modes;
-    
-    // State for the active mode (default to first mode if exists)
     const [currentModeId, setCurrentModeId] = useState(hasModes ? appConfig.modes[0].id : null);
     
-    // Helper to get the currently active config (either the mode or the root appConfig)
-    const activeConfig = hasModes 
-        ? appConfig.modes.find(m => m.id === currentModeId) 
-        : appConfig;
+    const activeConfig = hasModes ? appConfig.modes.find(m => m.id === currentModeId) : appConfig;
 
     const [scriptContent, setScriptContent] = useState("");
     const [inputs, setInputs] = useState({});
     const [output, setOutput] = useState(null);
     const [error, setError] = useState(null);
 
-    // Reset state when the App OR the Mode changes
     useEffect(() => {
         setInputs({});
         setOutput(null);
         setError(null);
         
-        // Load default values for the new active config
         const initialState = {};
         activeConfig.inputs?.forEach(field => {
             initialState[field.name] = field.defaultValue || "";
         });
         setInputs(initialState);
 
-        // Load the script
         fetch(activeConfig.scriptPath)
             .then(res => {
                 if (!res.ok) throw new Error("File not found");
                 return res.text();
             })
-            .then(text => setScriptContent(text))
-            .catch(err => setError(`Failed to load ${activeConfig.scriptPath}`));
+            .then(text => {
+                if (text.trim().toLowerCase().startsWith('<!doctype html>')) {
+                    throw new Error(`The file is missing! Could not find ${activeConfig.scriptPath} in your public/ folder.`);
+                }
+                setScriptContent(text); // Stored in the background, NO LONGER DISPLAYED!
+            })
+            .catch(err => setError(err.message));
 
     }, [appConfig, currentModeId]);
 
@@ -70,7 +66,6 @@ export default function PythonWidget({ appConfig }) {
                 {appConfig.description}
             </Typography>
 
-            {/* MODE TOGGLE SWITCH (Only renders if modes exist) */}
             {hasModes && (
                 <Box sx={{ mb: 3, display: 'flex', justifyContent: 'center' }}>
                     <ToggleButtonGroup
@@ -79,7 +74,6 @@ export default function PythonWidget({ appConfig }) {
                         onChange={(e, newMode) => {
                             if (newMode !== null) setCurrentModeId(newMode);
                         }}
-                        aria-label="measurement system"
                         color="primary"
                         size="small"
                     >
@@ -92,36 +86,42 @@ export default function PythonWidget({ appConfig }) {
                 </Box>
             )}
 
-            {/* Dynamic Inputs (Based on activeConfig) */}
-            {activeConfig.inputs && activeConfig.inputs.map((field) => (
-                <TextField
-                    key={field.name}
-                    label={field.label}
-                    type={field.type === 'number' ? 'number' : 'text'}
-                    fullWidth
-                    size="small"
-                    value={inputs[field.name] || ''}
-                    onChange={(e) => handleInputChange(field.name, e.target.value)}
-                    sx={{ mb: 2 }}
-                />
-            ))}
+            {/* DYNAMIC INPUT RENDERING */}
+            {activeConfig.inputs && activeConfig.inputs.map((field) => {
+                
+                // If the app asks for CODE, render the Monaco Editor mapped to user input!
+                if (field.type === 'code') {
+                    return (
+                        <Box key={field.name} sx={{ mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 1, overflow: 'hidden' }}>
+                            <Typography variant="caption" sx={{ px: 2, py: 1, display: 'block', bgcolor: theme.palette.mode === 'dark' ? '#1e1e1e' : '#f5f5f5', color: 'text.secondary', fontWeight: 'bold' }}>
+                                {field.label}
+                            </Typography>
+                            <Editor
+                                height="250px"
+                                defaultLanguage="python"
+                                theme={theme.palette.mode === 'dark' ? "vs-dark" : "light"}
+                                value={inputs[field.name] || ''}
+                                onChange={(value) => handleInputChange(field.name, value)}
+                                options={{ minimap: { enabled: false }, fontSize: 14, scrollBeyondLastLine: false }}
+                            />
+                        </Box>
+                    );
+                }
 
-            {/* MONACO EDITOR: Allows user to see and edit the python script before running */}
-            <Box sx={{ mb: 3, border: `1px solid ${theme.palette.divider}`, borderRadius: 1, overflow: 'hidden' }}>
-                <Editor
-                    height="300px"
-                    defaultLanguage="python"
-                    theme={theme.palette.mode === 'dark' ? "vs-dark" : "light"}
-                    value={scriptContent}
-                    onChange={(value) => setScriptContent(value)}
-                    options={{
-                        minimap: { enabled: false },
-                        fontSize: 14,
-                        wordWrap: 'on',
-                        scrollBeyondLastLine: false
-                    }}
-                />
-            </Box>
+                // Otherwise, render normal Text/Number fields
+                return (
+                    <TextField
+                        key={field.name}
+                        label={field.label}
+                        type={field.type === 'number' ? 'number' : 'text'}
+                        fullWidth
+                        size="small"
+                        value={inputs[field.name] || ''}
+                        onChange={(e) => handleInputChange(field.name, e.target.value)}
+                        sx={{ mb: 2 }}
+                    />
+                );
+            })}
 
             <Button
                 variant="contained"
@@ -142,11 +142,10 @@ export default function PythonWidget({ appConfig }) {
                     p: 2, 
                     fontFamily: 'monospace', 
                     borderRadius: 1,
-                    maxHeight: '250px', 
+                    maxHeight: '300px', 
                     overflowY: 'auto',
                     whiteSpace: 'pre-wrap'
                 }}>
-                    {/* Handles both array streams (if you update usePython) and string results */}
                     {Array.isArray(output) ? output.map((log, i) => <div key={i}>{log}</div>) : output}
                 </Box>
             )}
