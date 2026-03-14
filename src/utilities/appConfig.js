@@ -1,6 +1,13 @@
 // This list defines the tabs in your dashboard
 export const APPS_CONFIG = [
     {
+        id: 'complexity-analyzer',
+        title: 'Big-O Code Analyzer',
+        description: 'Paste your Python script in the Monaco Editor below and hit Run to analyze its Time Complexity.',
+        scriptPath: '/python/complexity_analyzer.py', // Make sure this matches the file in public/
+        inputs: []
+    },
+    {
         id: 'bill-splitter',
         title: 'Bill Splitter',
         description: 'Calculates cost per person including tip.',

@@ -1,53 +1,42 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export default function usePython() {
-    const [isReady, setIsReady] = useState(false);
-    const workerRef = useRef(null);
+  const [isReady, setIsReady] = useState(false);
+  const [worker, setWorker] = useState(null);
 
-    useEffect(() => {
-  
-        const workerPath = `${process.env.PUBLIC_URL}/pyodideWorker.js`;
-        console.log('Initializing Python Worker from:', workerPath);
-        workerRef.current = new Worker(workerPath);
-
+  useEffect(() => {
+    // Portfolio uses Create React App, so we MUST use PUBLIC_URL
+    const pyWorker = new Worker(process.env.PUBLIC_URL + '/pyodideWorker.js');
+    
+    pyWorker.onmessage = (event) => {
+      if (event.data.type === 'ready') {
         setIsReady(true);
+      }
+    };
+    
+    setWorker(pyWorker);
+    return () => pyWorker.terminate();
+  }, []);
 
-        return () => {
-            if (workerRef.current) {
-                workerRef.current.terminate();
-            }
-        };
-    }, []);
+  const runScript = useCallback((code, inputs = {}) => {
+    return new Promise((resolve, reject) => {
+      if (!worker) return reject("Worker not initialized");
+      
+      const id = Date.now().toString();
+      const handleMessage = (event) => {
+        if (event.data.id === id) {
+          worker.removeEventListener('message', handleMessage);
+          if (event.data.type === 'result') resolve(event.data.result);
+          else if (event.data.type === 'error') reject(new Error(event.data.error));
+        }
+      };
+      
+      worker.addEventListener('message', handleMessage);
+      
+      // Pass the code and the UI inputs to the worker
+      worker.postMessage({ code, inputs, id });
+    });
+  }, [worker]);
 
-    const runScript = useCallback((script, inputs = {}, files=[]) => {
-        return new Promise((resolve, reject) => {
-            if (!workerRef.current) {
-                reject(new Error("Worker not initialized"));
-                return;
-            }
-
-            const id = Math.random().toString(36).substring(7);
-
-            const handleMessage = (event) => {
-                if (event.data.id === id) {
-                    workerRef.current.removeEventListener('message', handleMessage);
-                    if (event.data.error) {
-                        reject(new Error(event.data.error));
-                    } else {
-                        resolve(event.data.results);
-                    }
-                }
-            };
-
-            workerRef.current.addEventListener('message', handleMessage);
-
-            workerRef.current.postMessage({
-                id,
-                python: script,
-                inputs, files
-            });
-        });
-    }, []);
-
-    return { isReady, runScript };
+  return { isReady, runScript };
 }

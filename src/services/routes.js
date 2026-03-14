@@ -16,7 +16,6 @@ export const fullApps = [
 const MainPortfolio = lazy(() => import('../components/MainPortfolio'));
 const Page404 = lazy(() => import('../components/Error'));
 const UtilitiesDashboard = lazy(() => import('../utilities'));
-const CommonFullApp = lazy(() => import('../components/PythonApp'));
 
 const withLoader = (Component) => (
     <Suspense fallback={<Loader message="Loading App..." />}>
@@ -36,14 +35,7 @@ const router = createBrowserRouter([
             {
                 path: '/python',
                 element: withLoader(UtilitiesDashboard)
-            },
-            {
-                path: '/python/complexity-analyzer',
-                element: withLoader(CommonFullApp),
-                loader: () => fullApps.find(app => app.id === 'complexity-analyzer')
             }
-
-
         ],
     },
 ]);
