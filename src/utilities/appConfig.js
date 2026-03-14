@@ -4,7 +4,7 @@ export const APPS_CONFIG = [
         id: 'complexity-analyzer',
         title: 'Big-O Code Analyzer',
         description: 'Paste your Python script in the Monaco Editor below and hit Run to analyze its Time Complexity.',
-        scriptPath: '/python/complexity_analyzer.py', // Make sure this matches the file in public/
+        scriptPath: '/complexity_analyzer.py', // Make sure this matches the file in public/
         inputs: [
             // This triggers the blank Monaco Editor!
             { name: 'user_code', label: 'Paste Code to Analyze', type: 'code', defaultValue: 'def example_function(arr):\n    for i in arr:\n        for j in arr:\n            print(i, j)' }
