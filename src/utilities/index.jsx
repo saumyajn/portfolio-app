@@ -7,7 +7,7 @@ import BoltIcon from '@mui/icons-material/Bolt';
 
 import PythonWidget from './PythonWidget';
 import { APPS_CONFIG } from './appConfig';
-import { FULL_APPS } from './fullApps';
+import { fullApps as FULL_APPS} from '../services/routes';
 
 export default function PythonHub() {
     const theme = useTheme();

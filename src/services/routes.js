@@ -3,9 +3,20 @@ import Layout from '../components/Layout';
 import Loader from '../components/Loader';
 import { lazy, Suspense } from 'react';
 
+export const fullApps = [
+  {
+    id: "complexity-analyzer",
+    title: "Big-O Code Analyzer",
+    description: "Paste your Python script to analyze its algorithmic Time Complexity.",
+    path: "/python/complexity-analyzer",
+    scriptPath: "/complexity-analyzer.py", 
+    inputs: []
+  }
+];
 const MainPortfolio = lazy(() => import('../components/MainPortfolio'));
 const Page404 = lazy(() => import('../components/Error'));
 const UtilitiesDashboard = lazy(() => import('../utilities'));
+const CommonFullApp = lazy(() => import('../components/PythonApp'));
 
 const withLoader = (Component) => (
     <Suspense fallback={<Loader message="Loading App..." />}>
@@ -16,9 +27,9 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
-        errorElement:  withLoader(Page404),
+        errorElement: withLoader(Page404),
         children: [
-             {
+            {
                 index: true,
                 element: <MainPortfolio />
             },
@@ -27,27 +38,11 @@ const router = createBrowserRouter([
                 element: withLoader(UtilitiesDashboard)
             },
             {
-                path: '/python/treasure-island',
-                element: withLoader(lazy(() => import('../utilities/components/commonFullApp'))),
-                loader: () => ({
-                    title: "Treasure Island",
-                    description: "Welcome to the Treasure Island adventure game! Your quest to find the hidden treasure begins here",
-                    pythonFile: "treasure_island.py"
-                })
-            },
-            {
-                path: '/python/hangman',
-                element: withLoader(lazy(() => import('../utilities/components/commonFullApp'))),
-                loader: () => ({
-                    title: "Hangman",
-                    description: "A classic word-guessing game where you guess letters to identify the hidden word before running out of attempts. Enjoy the challenge and have fun playing Hangman!",
-                    pythonFile: "hangman/hangman.py",
-                    dependencies: [
-                        { path: "hangman/hangman_art.py", name: "hangman_art.py" },
-                        { path: "hangman/hangman_words.py", name: "hangman_words.py" }
-                    ]
-                })
+                path: '/python/complexity-analyzer',
+                element: withLoader(CommonFullApp),
+                loader: () => fullApps.find(app => app.id === 'complexity-analyzer')
             }
+
 
         ],
     },

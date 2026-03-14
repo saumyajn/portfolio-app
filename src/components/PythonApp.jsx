@@ -3,11 +3,11 @@ import { Box, Container, Typography, Paper, Button, TextField } from '@mui/mater
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import usePython from '../../hooks/usePython'; // Adjust path if needed
+import usePython from '../hooks/usePython'; // Adjust path if needed
 import { useTheme } from '@mui/material';
 import { useLoaderData } from 'react-router-dom';
 
-export default function TreasureIsland() {
+export default function PythonApp() {
     const navigate = useNavigate();
     const theme = useTheme();
     const { runScript, isReady } = usePython();
@@ -23,6 +23,7 @@ export default function TreasureIsland() {
     const fetchScript = async () => {
         try {
             const res = await fetch(`/python/${data.pythonFile}`);
+            console.log('Fetching script from:', `/python/${data.pythonFile}`);
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const text = await res.text();
 
