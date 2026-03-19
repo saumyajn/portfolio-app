@@ -12,6 +12,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LaunchIcon from '@mui/icons-material/Launch';
 import CodeIcon from '@mui/icons-material/Code';
 import StorageIcon from '@mui/icons-material/Storage';
+import ArticleIcon from '@mui/icons-material/Article';
 
 // ⭐ FEATURED PROJECTS: Manually add your best work here
 const FEATURED_PROJECTS = [
@@ -29,7 +30,8 @@ const FEATURED_PROJECTS = [
         description: "Can you spot the machine? Engage in live, real-time chats with global opponents and put your intuition to the test. Match with a human or an AI, interrogation-style, and cast your verdict. Are you sharp enough to identify the imposter, or will you be fooled by the bot?",
         tags: ["Angular","Python","NodeJS","Socket.IO","AI"],
         repo: "https://github.com/saumyajn/humanorbot",
-        demo: "hhttps://humanorbot.vercel.app/"
+        demo: "https://humanorbot.vercel.app/",
+        article: "https://medium.com/@saumyajn1994/multiplayer-human-or-bot-test-can-you-spot-the-ai-e96afd251d17"
     },
     // Add another big project here manually
 ];
@@ -96,6 +98,12 @@ export default function Projects() {
                 {(project.demo || project.homepage) && (
                     <Button startIcon={<LaunchIcon />} size="small" href={project.demo || project.homepage} target="_blank">Live Demo</Button>
                 )}
+                {project.article && (
+                    <Button startIcon={<ArticleIcon />} size="small" href={project.article} target="_blank">
+                        Read Article
+                    </Button>
+                )}
+
             </CardActions>
         </Card>
     );
