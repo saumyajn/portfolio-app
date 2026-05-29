@@ -21,7 +21,7 @@ export default function FluidCanvas() {
       PRESSURE: 1,
       PRESSURE_ITERATIONS: 20,
       CURL: 10,
-      SPLAT_RADIUS: 0.02,
+      SPLAT_RADIUS: 0.05,
       SPLAT_FORCE: 1000,
       SHADING: true,
       COLORFUL: true,

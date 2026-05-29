@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef} from 'react';
+import { useInView } from 'framer-motion';
 import * as THREE from 'three';
 
 type Props = {
@@ -294,6 +295,7 @@ export const LaserFlow: React.FC<Props> = ({
 }) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const isInView = useInView(mountRef);
   
   // Strictly typed uniforms ref
   const uniformsRef = useRef<Uniforms | null>(null);
@@ -510,7 +512,7 @@ export const LaserFlow: React.FC<Props> = ({
 
     const animate = () => {
       raf = requestAnimationFrame(animate);
-      if (pausedRef.current) return;
+     if (pausedRef.current || !isInView) return;
 
       const t = clock.getElapsedTime();
       const dt = Math.max(0, t - prevTime);
