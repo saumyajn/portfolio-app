@@ -21,7 +21,7 @@ uniform float uBlend;
 out vec4 fragColor;
 
 vec3 permute(vec3 x) {
-  return mod(((x * 34.0) + 1.0) * x, 289.0);
+  return mod(((x * 44.0) + 1.0) * x, 289.0);
 }
 
 float snoise(vec2 v){
@@ -117,7 +117,7 @@ interface AuroraProps {
 }
 
 export default function Aurora(props: AuroraProps) {
-  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 1.0, blend = 0.5 } = props;
+  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 0.5, blend = 0.5 } = props;
   const propsRef = useRef<AuroraProps>(props);
  useEffect(() => {
     propsRef.current = props;
@@ -208,5 +208,5 @@ export default function Aurora(props: AuroraProps) {
     };
   }, [amplitude]);
 
-  return <div ref={ctnDom} className="w-full h-full" />;
+  return <div ref={ctnDom} className="w-full h-1/2" />;
 }

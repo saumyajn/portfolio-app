@@ -103,16 +103,16 @@ export default function Experience() {
           <div className="absolute top-20 bottom-0 left-[24px] md:left-1/2 md:-translate-x-1/2 w-[1px] bg-white/5 z-0 flex justify-center mt-32">
             
             <motion.div 
-              className="absolute top-0 w-[2px] bg-[#8b5cf6] origin-top z-10"
+              className="absolute top-0 w-[4px] bg-[#8b5cf6] origin-top z-10"
               style={{ 
                 height: '100%',
                 scaleY: laserProgress,
-                boxShadow: '0 0 10px 2px rgba(139,92,246,0.5), 0 0 20px 5px rgba(139,92,246,0.3)'
+                boxShadow: '0 0 100px 4px rgba(139,92,246,0.5), 0 0 20px 5px rgba(139,92,246,0.3)'
               }}
             />
 
             <motion.div 
-              className="absolute w-2 h-6 bg-white rounded-full z-20 blur-[1px]"
+              className="absolute w-3 h-7 bg-white rounded-full z-20 blur-[2px]"
               style={{ 
                 top: tipPosition,
                 translateY: '-50%',
