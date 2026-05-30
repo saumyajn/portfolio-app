@@ -78,14 +78,14 @@ const HyperspeedRings = () => (
 
 export default function Skills() {
   return (
-    <div className="w-full h-full flex flex-col justify-between items-center py-12 relative overflow-hidden pointer-events-none">
+    <div className="w-full h-full flex flex-col justify-between items-center py-40 relative overflow-hidden pointer-events-none">
       
       <div className="w-full text-center mt-8 z-20 relative">
-        <h2 className="text-sm font-mono tracking-[0.3em] text-[var(--text-secondary)] opacity-50 uppercase">Skills.Architecture</h2>
+        <h2 className="text-sm font-mono tracking-[0.3em] text-[var(--text-secondary)] opacity-70 uppercase">Skills.Architecture</h2>
       </div>
 
       {/* THE NEURAL CORE */}
-      <div className="relative w-full max-w-4xl flex-1 flex items-center justify-center -mt-8">
+      <div className="relative w-full max-w-4xl flex-1 flex items-center justify-center -mt-8  ">
         
         {/* NEW: The Magic Rings Background */}
         <HyperspeedRings />

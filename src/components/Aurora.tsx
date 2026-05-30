@@ -21,7 +21,7 @@ uniform float uBlend;
 out vec4 fragColor;
 
 vec3 permute(vec3 x) {
-  return mod(((x * 44.0) + 1.0) * x, 289.0);
+  return mod(((x * 54.0) + 1.0) * x, 289.0);
 }
 
 float snoise(vec2 v){
@@ -94,7 +94,7 @@ void main() {
   vec3 rampColor;
   COLOR_RAMP(colors, uv.x, rampColor);
   
-  float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25)) * 0.5 * uAmplitude;
+  float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25)) * 0.7 * uAmplitude;
   height = exp(height);
   height = (uv.y * 2.0 - height + 0.2);
   float intensity = 0.6 * height;
@@ -117,7 +117,7 @@ interface AuroraProps {
 }
 
 export default function Aurora(props: AuroraProps) {
-  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 0.5, blend = 0.5 } = props;
+  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 0.9, blend = 0.5 } = props;
   const propsRef = useRef<AuroraProps>(props);
  useEffect(() => {
     propsRef.current = props;

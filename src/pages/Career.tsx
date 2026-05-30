@@ -55,141 +55,172 @@ const timelineData = [
 
 export default function Experience() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Track scroll relative to the section entering/leaving the viewport
-  const { scrollYProgress } = useScroll({ 
+  const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end end"]
   });
-  
-  const smoothProgress = useSpring(scrollYProgress, { 
-    stiffness: 50, 
-    damping: 15, 
-    mass: 0.2, 
-    restDelta: 0.001 
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 50,
+    damping: 15,
+    mass: 0.2,
+    restDelta: 0.001
   });
 
-  const laserProgress = useTransform(smoothProgress, [0, 1], [0, 1]);
-  const tipPosition = useTransform(smoothProgress, (val) => `${val * 100}%`);
- const atmosphericGlow = useTransform(smoothProgress, [0.8, 1], [1, 0]);
+  const laserProgress = useTransform(smoothProgress, [0, 0.8], ["0%", "100%"]);
+  const tipPosition = useTransform(smoothProgress, [0, 0.8], ["0%", "100%"]);
+  const flashWidth = useTransform(smoothProgress, [0.8, 0.85], ["0vw", "100vw"]);
+  const flashOpacity = useTransform(smoothProgress, [0.8, 0.82, 0.95, 1], [0, 1, 1, 0]);
+  const atmosphericGlow = useTransform(smoothProgress, [0.8, 1], [1, 0]);
 
   return (
-   
-    <div ref={containerRef} className="w-full min-h-screen relative font-sans pointer-events-auto selection:bg-[var(--accent-amethyst)] selection:text-white pb-[30vh]">
-      
-      {/* ATMOSPHERIC WEBGL BACKGROUND */}
+    <div ref={containerRef} className="w-full min-h-screen relative font-sans pointer-events-auto selection:bg-[var(--accent-amethyst)] selection:text-white pb-[100vh]">
 
-     <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden mix-blend-screen">
-        
-        <motion.div 
-          // 2. sticky top-0 keeps the canvas in the camera view 
-          className="sticky top-0 w-full h-screen"
-          style={{ 
-            opacity: atmosphericGlow,
-            // 4. THE MAGIC BULLET: Feather the bottom edge of the canvas to transparent!
-            maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)'
-          }}
-        >
-          <LaserFlow 
-            color="#8b5cf6" 
-            fogIntensity={0.6}
-            wispIntensity={5.0}
-            wispSpeed={20.0}
-            horizontalBeamOffset={0.5} 
-          />
-        </motion.div>
-
-      </div>
-      
       <div className="relative z-10 w-full h-full">
-        <div className="max-w-7xl mx-auto px-6 pt-32 relative">
-          
-          <div className="w-full text-center pb-24 shrink-0 z-20 relative">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6 pt-32 relative">
+
+          {/* HEADER */}
+          <div className="w-full text-center pb-20 shrink-0 z-20 relative">
             <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">Career</h2>
             <p className="text-sm font-mono text-[var(--accent-amethyst)] mt-2 uppercase tracking-widest">Execution Timeline</p>
           </div>
 
-          {/* THE GLOWING AMETHYST LASER SPINE */}
-          <div className="absolute top-20 bottom-0 left-[24px] md:left-1/2 md:-translate-x-1/2 w-[1px] bg-white/5 z-0 flex justify-center mt-32">
-            
-            <motion.div 
-              className="absolute top-0 w-[4px] bg-[#8b5cf6] origin-top z-10"
-              style={{ 
-                height: '100%',
-                scaleY: laserProgress,
-                boxShadow: '0 0 100px 4px rgba(139,92,246,0.5), 0 0 20px 5px rgba(139,92,246,0.3)'
-              }}
-            />
+          <div className="relative w-full">
 
-            <motion.div 
-              className="absolute w-3 h-7 bg-white rounded-full z-20 blur-[2px]"
-              style={{ 
-                top: tipPosition,
-                translateY: '-50%',
-                boxShadow: '0 0 15px 5px #8b5cf6, 0 0 30px 10px rgba(139,92,246,0.8)'
-              }}
-            />
-          </div>
+            {/* ATMOSPHERIC WEBGL BACKGROUND */}
+            <div className="absolute inset-0 z-0 pointer-events-none mix-blend-screen hidden md:block">
+              <motion.div
+                className="sticky top-[10vh] w-full h-[75vh]"
+                style={{
+                  opacity: atmosphericGlow,
+                  maskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)'
+                }}
+              >
+                <LaserFlow
+                  color="#8b5cf6"
+                  fogIntensity={0.6}
+                  wispIntensity={5.0}
+                  wispSpeed={20.0}
+                  horizontalBeamOffset={0.5}
+                />
+              </motion.div>
+            </div>
 
-          {/* THE DATA ROWS */}
-          <div className="flex flex-col gap-12 md:gap-24 pb-40 relative z-20">
-            {timelineData.map((node) => {
-              return (
-                <motion.div 
-                  key={node.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ type: "spring", stiffness: 50, damping: 20 }}
-                  viewport={{ root: containerRef, once: false, margin: "-100px" }} 
-                  className="flex flex-col md:flex-row w-full group cursor-default"
-                >
-                  
-                  {/* METADATA HEMISPHERE */}
-                  <div className="w-full md:w-1/2 flex flex-col md:flex-row md:items-start md:justify-between pr-0 md:pr-16 pl-16 md:pl-0 relative">
-                    <div className="absolute md:right-[-4px] left-[-24px] md:left-auto top-2.5 w-2 h-2 rounded-full bg-white/10 transition-all duration-500 group-hover:bg-[#8b5cf6] group-hover:shadow-[0_0_15px_#8b5cf6] group-hover:scale-150 z-30" />
 
-                    <div className="flex flex-col max-w-[280px] text-left">
-                      <h3 className="text-2xl md:text-3xl font-bold text-white tracking-wide mb-1 leading-tight group-hover:text-[var(--accent-amethyst)] transition-colors duration-300">
-                        {node.role}
-                      </h3>
-                      <p className="text-white/40 text-sm md:text-base font-mono uppercase tracking-wider">
-                        {node.company}
-                      </p>
-                    </div>
+            <div className="absolute top-0 bottom-0 left-[76px] md:left-1/2 -translate-x-1/2 w-10 flex justify-center z-0 pointer-events-none">
 
-                    <div className="mt-4 md:mt-0">
-                      <span 
-                        className="text-3xl md:text-4xl font-extrabold tracking-tighter transition-all duration-500 text-transparent group-hover:text-white/90 drop-shadow-lg"
-                        style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}
-                      >
-                        {node.year}
-                      </span>
-                    </div>
-                  </div>
+              {/* The passive background track */}
+              <div className="w-[2px] h-full bg-white/10 absolute top-0" />
 
-                  {/* EXECUTION HEMISPHERE */}
-                  <div className="w-full md:w-1/2 md:pl-16 pl-16 pt-6 md:pt-1 flex flex-col">
-                    <p className="text-white/60 text-sm md:text-base leading-relaxed max-w-[480px]">
-                      {node.description}
-                    </p>
+              {/* The active laser beam */}
+              <motion.div
+                className="absolute top-0 w-[4px] md:w-[4px] bg-[#8b5cf6] origin-top z-10"
+                style={{
+                  height: '100%',
+                  scaleY: laserProgress,
+                  boxShadow: '0 0 100px 4px rgba(139,92,246,0.5), 0 0 20px 5px rgba(139,92,246,0.3)'
+                }}
+              />
 
-                    <div className="flex flex-wrap gap-2 mt-6 max-w-[480px]">
-                      {node.tech.map((t) => (
+              {/* The laser tip */}
+              <motion.div
+                className="absolute w-3 h-6 md:w-4 md:h-8 bg-white rounded-full z-20 blur-[2px]"
+                style={{
+                  top: tipPosition,
+                  translateY: '-50%',
+                  boxShadow: '0 0 15px 5px #8b5cf6, 0 0 30px 10px rgba(139,92,246,0.8)'
+                }}
+              />
+            </div>
+
+            {/* THE DATA ROWS */}
+            <div className="flex flex-col gap-12 md:gap-24 relative z-20">
+              {timelineData.map((node) => {
+                return (
+                  <motion.div
+                    key={node.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ type: "spring", stiffness: 50, damping: 20 }}
+                    viewport={{ root: containerRef, once: false, margin: "-100px" }}
+                    className="flex flex-col md:flex-row w-full relative group py-2 md:py-0"
+                  >
+
+                    {/* THE PERFECTLY ALIGNED DOT */}
+                    {/* This dot uses the exact same coordinate (left-[76px] and md:left-1/2) as the spine container! */}
+                    <div className="absolute left-[76px] md:left-1/2 -translate-x-1/2 top-4 md:top-2 w-3 h-3 rounded-full bg-[#111] border-2 border-white/20 transition-all duration-500 group-hover:bg-[#8b5cf6] group-hover:border-transparent group-hover:shadow-[0_0_15px_#8b5cf6] group-hover:scale-150 z-30" />
+
+                    {/* METADATA HEMISPHERE */}
+                    {/* On mobile: Padded to 104px to clear the spine. On Desktop: right-aligned left of center */}
+                    <div className="w-full md:w-1/2 flex flex-col md:flex-row md:items-start md:justify-between pl-[104px] md:pl-0 pr-6 md:pr-16 text-left md:text-right">
+
+                      <div className="md:order-2 mb-1 md:mb-0">
                         <span
-                          key={t}
-                          className="px-3 py-1 text-[10px] md:text-xs uppercase tracking-widest font-mono text-[#8b5cf6]/70 border border-[#8b5cf6]/20 rounded-full bg-[#8b5cf6]/5 hover:bg-[#8b5cf6]/20 hover:text-white hover:border-[#8b5cf6] transition-all duration-300"
+                          className="text-lg md:text-4xl font-extrabold tracking-tighter transition-all duration-500 text-white/50 group-hover:text-white drop-shadow-lg"
                         >
-                          {t}
+                          {node.year}
                         </span>
-                      ))}
-                    </div>
-                  </div>
+                      </div>
 
-                </motion.div>
-              );
-            })}
+                      <div className="flex flex-col md:order-1 max-w-[280px]  text-left">
+                        <h3 className="text-xl md:text-3xl font-bold text-white tracking-wide mb-1 leading-tight group-hover:text-[var(--accent-amethyst)] transition-colors duration-300">
+                          {node.role}
+                        </h3>
+                        <p className="text-[#8b5cf6] text-xs md:text-sm font-mono uppercase tracking-wider mb-2 md:mb-0">
+                          {node.company}
+                        </p>
+                      </div>
+
+                    </div>
+
+                    {/* EXECUTION HEMISPHERE */}
+                    {/* On mobile: Remains padded at 104px. On Desktop: left-aligned right of center */}
+                    <div className="w-full md:w-1/2 pl-[104px] md:pl-16 pr-6 md:pr-0 pt-2 md:pt-0 flex flex-col text-left">
+                      <p className="text-white/60 text-sm md:text-base leading-relaxed max-w-[480px]">
+                        {node.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mt-4 max-w-[480px]">
+                        {node.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="px-2.5 py-1 text-[9px] md:text-xs uppercase tracking-widest font-mono text-[#8b5cf6]/70 border border-[#8b5cf6]/20 rounded-full bg-[#8b5cf6]/5 group-hover:bg-[#8b5cf6]/20 group-hover:text-white group-hover:border-[#8b5cf6]/50 transition-all duration-300"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                  </motion.div>
+                );
+              })}
+            </div>
+           <motion.div 
+              className="absolute top-full left-1/2 h-[60vh] -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-0 pointer-events-none overflow-hidden mix-blend-screen"
+              style={{
+                width: flashWidth,
+                opacity: flashOpacity
+              }}
+            >
+              {/* Inside the expanding wrapper, the canvas remains a static 100vw. 
+                  This creates a flawless sliding-door reveal without squishing the shader! */}
+              <div className="w-[100vw] h-full shrink-0 flex justify-center items-center">
+                <LaserFlow 
+                  color="#8b5cf6" 
+                  fogIntensity={1.5}     
+                  wispIntensity={15.0}   
+                  horizontalSizing={1.0} 
+                  verticalSizing={1.0}
+                  flowSpeed={0.5}        
+                />
+              </div>
+            </motion.div>
           </div>
+          {/* END OF BOUNDARY */}
 
         </div>
       </div>
