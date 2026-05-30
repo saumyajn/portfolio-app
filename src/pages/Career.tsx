@@ -71,25 +71,36 @@ export default function Experience() {
 
   const laserProgress = useTransform(smoothProgress, [0, 1], [0, 1]);
   const tipPosition = useTransform(smoothProgress, (val) => `${val * 100}%`);
-  const atmosphericGlow = useTransform(smoothProgress, [0.85, 1], [0, 0.6]);
+ const atmosphericGlow = useTransform(smoothProgress, [0.8, 1], [1, 0]);
 
   return (
-    // Replaced h-screen with min-h-screen and removed overflow-y-auto
+   
     <div ref={containerRef} className="w-full min-h-screen relative font-sans pointer-events-auto selection:bg-[var(--accent-amethyst)] selection:text-white pb-[30vh]">
       
       {/* ATMOSPHERIC WEBGL BACKGROUND */}
-      <motion.div 
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{ opacity: atmosphericGlow }}
-      >
-        <LaserFlow 
-          color="#8b5cf6" 
-          fogIntensity={0.6}
-          wispIntensity={5.0}
-          wispSpeed={20.0}
-          horizontalBeamOffset={0.5} 
-        />
-      </motion.div>
+
+     <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden mix-blend-screen">
+        
+        <motion.div 
+          // 2. sticky top-0 keeps the canvas in the camera view 
+          className="sticky top-0 w-full h-screen"
+          style={{ 
+            opacity: atmosphericGlow,
+            // 4. THE MAGIC BULLET: Feather the bottom edge of the canvas to transparent!
+            maskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 70%, transparent 100%)'
+          }}
+        >
+          <LaserFlow 
+            color="#8b5cf6" 
+            fogIntensity={0.6}
+            wispIntensity={5.0}
+            wispSpeed={20.0}
+            horizontalBeamOffset={0.5} 
+          />
+        </motion.div>
+
+      </div>
       
       <div className="relative z-10 w-full h-full">
         <div className="max-w-7xl mx-auto px-6 pt-32 relative">
