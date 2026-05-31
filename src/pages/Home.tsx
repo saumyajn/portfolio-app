@@ -1,6 +1,6 @@
 // src/pages/Home.tsx
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence,  } from 'framer-motion';
+import { motion, AnimatePresence, } from 'framer-motion';
 
 import '../index.css';
 
@@ -29,7 +29,7 @@ const ScrambleText = ({ text }: { text: string }) => {
 
 export default function Home({ isBooting, }: { isBooting: boolean }) {
     const text = "SAUMYA JAIN.";
-  
+
     return (
         <main className="relative w-full h-screen overflow-hidden text-[var(--text-primary)] ">
 
@@ -71,13 +71,15 @@ export default function Home({ isBooting, }: { isBooting: boolean }) {
                             className="mt-4 flex flex-col items-start pointer-events-auto"
                         >
                             <h2 className="text-xl md:text-2xl lg:text-3xl text-[var(--accent-sapphire)] font-semibold tracking-wide drop-shadow-[0_0_10px_var(--accent-sapphire-glow)]">
-                               Lead Frontend Engineer <br/> Angular & React Specialist <br/> AWS Certified
+                                Lead Frontend Engineer <br /> Angular & React Specialist <br /> AWS Certified
                             </h2>
 
                             <div className="mt-10 flex flex-col items-start gap-4">
-                                <span className="text-[var(--text-secondary)] font-mono text-sm tracking-widest uppercase">
-                                    [ Initialize Connection ]
-                                </span>
+                                <a href="/Saumya-Jain-Resume.pdf">
+                                    <span className="text-[var(--text-secondary)] font-mono text-sm tracking-widest uppercase">
+                                        [ Download Resume ]
+                                    </span>
+                                </a>
                                 <a href="mailto:saumyajn1994@gmail.com" className="group relative px-8 py-4 rounded-full border border-[var(--accent-emerald)] text-[var(--accent-emerald)] bg-[var(--bg-main)]/40 backdrop-blur-md overflow-hidden transition-all duration-300 shadow-[0_0_15px_var(--accent-emerald-glow)] hover:shadow-[0_0_25px_var(--accent-emerald-glow)]">
                                     <span className="relative z-10 font-mono text-base tracking-wide group-hover:text-[var(--bg-main)] transition-colors duration-300 ">saumyajn1994@gmail.com</span>
                                     <div className="absolute inset-0 bg-[var(--accent-emerald)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />

@@ -41,6 +41,14 @@ const GlobalSocials = () => (
   </div>
 );
 
+const MobileNav = () => (
+  <nav className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-[120] flex items-center gap-3 rounded-full border border-white/10 bg-black/70 px-4 py-3 font-mono text-xs text-white/80 backdrop-blur-xl pointer-events-auto">
+    <a href="#projects">PROJECTS</a>
+    <a href="#contact">CONTACT</a>
+    <a href="/Saumya-Jain-Resume.pdf" className="text-[var(--accent-emerald)]">RESUME</a>
+  </nav>
+);
+
 export default function App() {
   const [isBooting, setIsBooting] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -81,6 +89,15 @@ export default function App() {
   });
 
   useEffect(() => {
+    if (window.location.hash) {
+      window.history.replaceState(null, document.title, window.location.pathname + window.location.search);
+    }
+
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
+  }, []);
+  useEffect(() => {
     document.body.style.overflow = isBooting ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
@@ -114,6 +131,7 @@ export default function App() {
         </div>
 
         <GlobalNav />
+        <MobileNav/>
         <GlobalSocials />
 
         {/* SECTION 1: The Intro Morph (Home -> About) */}

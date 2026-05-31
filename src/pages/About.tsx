@@ -20,7 +20,7 @@ export default function About() {
 
   return (
     // We align the text to the right (justify-end) because the Penguin is sliding to the left
-    <section className="w-full h-full flex items-center justify-end px-8 md:px-24 lg:px-40 relative overflow-hidden pointer-events-none">
+    <section className="w-full h-full flex items-center justify-end px-10 md:px-24 lg:px-40 relative overflow-hidden pointer-events-none">
       
       {/* SEAMLESS COLOR MERGE: A soft, transparent gradient that bleeds the emerald/sapphire 
           colors from the right side, blending perfectly with your global Aurora/FluidCanvas */}
@@ -49,7 +49,7 @@ export default function About() {
         {/* 3. Bio Paragraphs */}
         <motion.div variants={itemVars} className="space-y-4 md:space-y-6 text-[var(--text-secondary)] text-sm sm:text-base md:text-lg leading-relaxed border-l-2 border-[var(--accent-emerald)]/40 pl-4 md:pl-6 bg-gradient-to-r from-[var(--accent-emerald)]/5 to-transparent py-2">
           <p>
-            I'm a <strong className="text-white font-semibold">Lead Frontend Engineer</strong> based in New Jersey with 6+ years building enterprise-scale web platforms. At Virtusa (client: PNC Bank), I architect Angular component libraries used as the foundational UI framework across all PNC Bank web applications.
+            I'm a <strong className="text-white font-semibold">Lead Frontend Engineer</strong> based in USA with 6+ years building enterprise-scale web platforms. At Virtusa (client: PNC Bank), I architect Angular component libraries used as the foundational UI framework across all PNC Bank web applications.
           </p>
           <p>
             I hold an MS in Computer Science from NJIT and am an AWS Certified Developer (Associate). When I'm not optimizing performance budgets, I'm painting, gaming, or obsessing over clean architecture.

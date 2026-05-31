@@ -1,7 +1,6 @@
-import { useRef } from 'react';
+import { useRef, lazy } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import LaserFlow from '../components/LaserFlow';
-
+const LaserFlow = lazy(() => import('../components/LaserFlow'));
 const timelineData = [
   {
     id: "lead-swe",
@@ -37,7 +36,7 @@ const timelineData = [
   },
   {
     id: "njit",
-    role: "Master of Science",
+    role: "Master of Science - Computer Science",
     company: "New Jersey Institute of Technology",
     year: "2018 - 2020",
     description: "Completed an intensive Computer Science curriculum focused on software engineering, algorithm design, and distributed systems architecture, laying the foundation for high-performance system design.",
@@ -50,6 +49,21 @@ const timelineData = [
     year: "2017 - 2018",
     description: "Optimized RESTful APIs and implemented client-side data caching, cutting average page load times by 25%. Built robust automated regression testing coverage with Jasmine and Selenium to eliminate late-stage bugs.",
     tech: ["Node.js", "Angular", "REST APIs", "Jasmine", "Selenium"]
+  },{
+    id: "cert-digital-transformation",
+    role: "Certificate in Digital Transformation",
+    company: "Java Enterprise Apps With DevOps",
+    year: "2016 - 2017",
+    description: "Completed specialized, intensive training in enterprise-scale Java application development and DevOps pipelines, focusing on bridging the gap between modern software development and automated IT operations.",
+    tech: ["Java EE", "DevOps", "CI/CD", "Software Engineering"]
+  },
+  {
+    id: "mody-bs",
+    role: "Bachelor of Technology - Computer Science",
+    company: "Mody University",
+    year: "2012 - 2016",
+    description: "Earned a foundational degree focused on core computer science principles, structured software development, and analytical problem-solving methodologies.",
+    tech: ["Computer Science", "Algorithms", "Analytical Thinking", "Data Structures"]
   }
 ];
 

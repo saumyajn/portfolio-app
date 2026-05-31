@@ -28,7 +28,7 @@ export default function FluidCanvas() {
       COLOR_UPDATE_SPEED: 10,
       PAUSED: false,
       TRANSPARENT: true,
-      BLOOM: true,
+      BLOOM: false,
       BLOOM_ITERATIONS: 10,
       BLOOM_RESOLUTION: 256,
       BLOOM_INTENSITY: 0.4,

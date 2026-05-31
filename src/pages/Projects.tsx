@@ -12,7 +12,7 @@ const projects = [
         title: "Turing Shell Protocol",
         subtitle: "Human or Bot?",
         description: "A real-time, cross-platform Turing Test application that challenges human perception. Built with a reactive frontend and a Python microservice for NLP pattern processing to seamlessly orchestrate 1v1 human-vs-AI matchmaking.",
-        tech: ["Angular 20", "Nodejs", "Python", "WebSockets"],
+        tech: ["Angular 20", "Node.js", "Python", "WebSockets"],
         images: [turing],
         color: "from-emerald-500/20 to-emerald-900/20",
         accent: "group-hover:border-emerald-500/50",
@@ -180,10 +180,10 @@ export default function Projects() {
                                     </div>
 
                                     {/* 2. HOVER REVEAL: Subtitle & Description */}
-                                    <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                    <div className="grid grid-rows-[1fr] group-hover:grid-rows-[0fr] transition-[grid-template-rows] duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                         <div className="overflow-hidden">
                                             
-                                            <div className="pt-5 flex flex-col gap-3 transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
+                                            <div className="pt-5 flex flex-col gap-3 translate-y-0 opacity-100 md:translate-y-8 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
                                                 
                                                 <p className="text-xs font-mono text-[var(--accent-emerald)] tracking-widest uppercase">
                                                     {project.subtitle}
