@@ -1,4 +1,4 @@
-import { useRef, lazy } from 'react';
+import { useRef, lazy, Suspense } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 const LaserFlow = lazy(() => import('../components/LaserFlow'));
 const timelineData = [
@@ -49,7 +49,7 @@ const timelineData = [
     year: "2017 - 2018",
     description: "Optimized RESTful APIs and implemented client-side data caching, cutting average page load times by 25%. Built robust automated regression testing coverage with Jasmine and Selenium to eliminate late-stage bugs.",
     tech: ["Node.js", "Angular", "REST APIs", "Jasmine", "Selenium"]
-  },{
+  }, {
     id: "cert-digital-transformation",
     role: "Certificate in Digital Transformation",
     company: "Java Enterprise Apps With DevOps",
@@ -85,7 +85,7 @@ export default function Experience() {
 
   const laserProgress = useTransform(smoothProgress, [0, 0.8], ["0%", "100%"]);
   const tipPosition = useTransform(smoothProgress, [0, 0.8], ["0%", "100%"]);
-  
+
   const atmosphericGlow = useTransform(smoothProgress, [0.8, 1], [1, 0]);
 
   return (
@@ -112,13 +112,15 @@ export default function Experience() {
                   WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 100%)'
                 }}
               >
-                <LaserFlow
-                  color="#8b5cf6"
-                  fogIntensity={0.6}
-                  wispIntensity={5.0}
-                  wispSpeed={20.0}
-                  horizontalBeamOffset={0.5}
-                />
+                <Suspense fallback={null}>
+                  <LaserFlow
+                    color="#8b5cf6"
+                    fogIntensity={0.6}
+                    wispIntensity={5.0}
+                    wispSpeed={20.0}
+                    horizontalBeamOffset={0.5}
+                  />
+                </Suspense>
               </motion.div>
             </div>
 
@@ -212,7 +214,7 @@ export default function Experience() {
                 );
               })}
             </div>
-         
+
           </div>
           {/* END OF BOUNDARY */}
 

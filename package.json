@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "optionalDependencies": {
+    "@rolldown/binding-linux-x64-gnu": "1.0.2"
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
     "@use-gesture/react": "^10.3.1",
