@@ -1,0 +1,21 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* This creates a tilting animation */
+    @keyframes tiltHead {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .moving-head {
+      /* Adjust transform-origin to the penguin's neck so it pivots naturally */
+      transform-origin: 250px 300px; 
+      animation: tiltHead 3s ease-in-out infinite;
+    }
+  </style>
+
+  <image href="penguin_body.png" x="0" y="0" width="500" height="500" />
+
+  <image href="penguin_head.png" x="0" y="0" width="500" height="500" class="moving-head" />
+</svg>

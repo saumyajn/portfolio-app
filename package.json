@@ -1,60 +1,44 @@
 {
-  "name": "portfolio-app",
-  "version": "0.1.5",
+  "name": "saumya-v2",
   "private": true,
-  "dependencies": {
-    "@craco/craco": "^7.1.0",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
-    "@fontsource/inter": "^5.2.5",
-    "@fontsource/quicksand": "^5.2.6",
-    "@monaco-editor/react": "^4.7.0",
-    "@mui/icons-material": "^5.15.13",
-    "@mui/material": "^5.15.13",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@vercel/analytics": "^1.2.2",
-    "@vercel/speed-insights": "^1.0.10",
-    "axios": "^1.6.8",
-    "emailjs-com": "^3.2.0",
-    "firebase": "^10.11.1",
-    "pyodide": "^0.29.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-loader-spinner": "^6.1.6",
-    "react-material-ui-carousel": "^3.4.2",
-    "react-router-dom": "^6.22.3",
-    "react-scripts": "5.0.1",
-    "react-tsparticles": "^2.12.2",
-    "web-vitals": "^2.1.4"
-  },
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "@use-gesture/react": "^10.3.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.40.0",
+    "lenis": "^1.3.23",
+    "ogl": "^1.0.11",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-icons": "^5.6.0",
+    "tailwind-merge": "^3.6.0",
+    "three": "^0.184.0",
+    "webgl-fluid": "^0.4.0"
   },
   "devDependencies": {
-    "webpack": "^5.104.1",
-    "webpack-cli": "^6.0.1"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.12.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.184.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.5.0",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.12"
   }
 }
