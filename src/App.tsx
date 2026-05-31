@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -107,7 +107,7 @@ export default function App() {
 
   return (
     <ReactLenis root options={{ lerp: 0.06, smoothWheel: true }}>
-      <Analytics />
+     
       <div className="w-full relative min-h-screen text-white bg-transparent pointer-events-none">
         <div className="fixed top-0 left-0 w-screen h-screen z-0  pointer-events-auto overflow-hidden bg-[#050505]">
 
@@ -188,6 +188,7 @@ export default function App() {
             </LazyMount></div>
         </div>
       </div>
+       <Analytics />
     </ReactLenis>
   );
 }
