@@ -8,12 +8,13 @@ import About from './pages/About';
 import Skills from './pages/Skills';
 import Career from './pages/Career';
 import Projects from './pages/Projects';
+import Contact from './pages/Contact';
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 import Aurora from './components/Aurora';
 import CyberPenguin from './components/CyberPenguin';
 import FluidCanvas from './components/FluidCanvas';
 
-const Contact = () => <div className="h-screen w-full flex items-center justify-center text-white font-mono text-4xl border-t border-white/5">CONTACT</div>;
+
 
 const GlobalNav = () => (
   <nav className="fixed top-8 right-8 md:right-12 z-[100] flex gap-6 md:gap-6 font-mono text-sm tracking-widest text-[var(--text-secondary)] pointer-events-auto">
@@ -68,8 +69,6 @@ export default function App() {
   });
 
 
-  const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   const robotX = useTransform(introProgress, [0, 1], ["60vw", "10vw"]);
   const robotY = useTransform(introProgress, [0, 1], ["20vh", isMobile ? "70vh" : "25vh"]);
@@ -98,7 +97,6 @@ export default function App() {
           </div>
 
           <motion.div
-            style={{ y: backgroundY }}
             className="absolute inset-0 w-full h-[130%] z-10 pointer-events-none mix-blend-screen opacity-80 scale-150"
           >
             <Aurora colorStops={["#3b82f6", "#6732e3", "#8b5cf6"]} blend={0.6} speed={0.8} />
@@ -132,16 +130,17 @@ export default function App() {
 
             </div>
           </div>
-          <div className="w-full h-screen relative flex items-center"><Home isBooting={isBooting} /></div>
-          <div className="w-full h-screen relative flex items-center"><About /></div>
+          <div className="w-full h-screen relative flex items-center">
+            <Home isBooting={isBooting} />
+          </div>
+          <div className="w-full h-screen relative flex items-center">
+            <About />
+          </div>
         </div>
         <div className="w-full flex flex-col relative z-20 pointer-events-auto">
           <div className="w-full min-h-screen "><Skills /></div>
           <div className="w-full"><Career /></div>
-
-          {/* The Flagship Horizontal Carousel */}
           <div className="w-full"><Projects /></div>
-
           <div className="w-full"><Contact /></div>
         </div>
       </div>

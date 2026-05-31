@@ -144,7 +144,7 @@ export default function Skills() {
       </div>
 
       {/* STACKED Data Streams */}
-      <div className="w-full flex flex-col gap-2 mb-10 z-20 relative">
+      <div className="w-full flex flex-col gap-2 my-15 z-20 relative">
         <DataMarquee items={row1} />
         <DataMarquee items={row2} reverse />
       </div>

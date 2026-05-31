@@ -71,12 +71,11 @@ export default function Experience() {
 
   const laserProgress = useTransform(smoothProgress, [0, 0.8], ["0%", "100%"]);
   const tipPosition = useTransform(smoothProgress, [0, 0.8], ["0%", "100%"]);
-  const flashWidth = useTransform(smoothProgress, [0.8, 0.85], ["0vw", "100vw"]);
-  const flashOpacity = useTransform(smoothProgress, [0.8, 0.82, 0.95, 1], [0, 1, 1, 0]);
+  
   const atmosphericGlow = useTransform(smoothProgress, [0.8, 1], [1, 0]);
 
   return (
-    <div ref={containerRef} className="w-full min-h-screen relative font-sans pointer-events-auto selection:bg-[var(--accent-amethyst)] selection:text-white pb-[100vh]">
+    <div ref={containerRef} className="w-full min-h-screen relative font-sans pointer-events-auto selection:bg-[var(--accent-amethyst)] selection:text-white pb-[30vh]">
 
       <div className="relative z-10 w-full h-full">
         <div className="max-w-7xl mx-auto px-0 sm:px-6 pt-32 relative">
@@ -90,7 +89,7 @@ export default function Experience() {
           <div className="relative w-full">
 
             {/* ATMOSPHERIC WEBGL BACKGROUND */}
-            <div className="absolute inset-0 z-0 pointer-events-none mix-blend-screen hidden md:block">
+            <div className="absolute inset-0 z-0 pointer-events-none mix-blend-screen md:block">
               <motion.div
                 className="sticky top-[10vh] w-full h-[75vh]"
                 style={{
@@ -137,7 +136,7 @@ export default function Experience() {
             </div>
 
             {/* THE DATA ROWS */}
-            <div className="flex flex-col gap-12 md:gap-24 relative z-20">
+            <div className="flex flex-col gap-12 md:gap-24 relative w-full z-20">
               {timelineData.map((node) => {
                 return (
                   <motion.div
@@ -199,26 +198,7 @@ export default function Experience() {
                 );
               })}
             </div>
-           <motion.div 
-              className="absolute top-full left-1/2 h-[60vh] -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-0 pointer-events-none overflow-hidden mix-blend-screen"
-              style={{
-                width: flashWidth,
-                opacity: flashOpacity
-              }}
-            >
-              {/* Inside the expanding wrapper, the canvas remains a static 100vw. 
-                  This creates a flawless sliding-door reveal without squishing the shader! */}
-              <div className="w-[100vw] h-full shrink-0 flex justify-center items-center">
-                <LaserFlow 
-                  color="#8b5cf6" 
-                  fogIntensity={1.5}     
-                  wispIntensity={15.0}   
-                  horizontalSizing={1.0} 
-                  verticalSizing={1.0}
-                  flowSpeed={0.5}        
-                />
-              </div>
-            </motion.div>
+         
           </div>
           {/* END OF BOUNDARY */}
 

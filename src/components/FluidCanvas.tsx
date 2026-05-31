@@ -41,30 +41,36 @@ export default function FluidCanvas() {
 
   }, []);
 
-  // useEffect(() => {
-  //   const canvas = canvasRef.current;
-  //   if (!canvas || !simulationRef.current) return;
+  // ==========================================
+  // 2. THE GLOBAL EVENT FORWARDER (The Fix)
+  // ==========================================
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-  //   // The library usually attaches an internal 'splat' method to the simulation object
-  //   // Or it exposes a global splat function. 
-  //   // Try calling the internal method directly:
-  //   try {
-  //     // Common webgl-fluid method to add interaction manually
-  //     simulationRef.current.splat(
-  //       mousePos.x / window.innerWidth,
-  //       1 - mousePos.y / window.innerHeight,
-  //       0.05, // dx
-  //       0.05, // dy
-  //       [1, 0, 0] // color (R,G,B)
-  //     );
-  //   } catch (e) {
-  //     // Fallback: Dispatch event to window if splat method isn't exposed
-  //     window.dispatchEvent(new MouseEvent('mousemove', {
-  //       clientX: mousePos.x,
-  //       clientY: mousePos.y
-  //     }));
-  //   }
-  // }, [mousePos]);
+    const forwardMouse = (e: MouseEvent) => {
+      // If the mouse is already interacting directly with the canvas, do nothing
+      if (e.target === canvas) return;
+      
+      // Clone the mouse coordinates from the Window and synthetically fire them at the Canvas.
+      // This punches straight through any DOM layers or z-indexes blocking the background!
+      const simulatedEvent = new MouseEvent('mousemove', {
+        clientX: e.clientX,
+        clientY: e.clientY,
+        bubbles: false,
+        cancelable: false
+      });
+      
+      canvas.dispatchEvent(simulatedEvent);
+    };
+
+    // Listen at the highest possible level (the window)
+    window.addEventListener('mousemove', forwardMouse);
+
+    return () => {
+      window.removeEventListener('mousemove', forwardMouse);
+    };
+  }, []);
 
   return (
     <canvas
