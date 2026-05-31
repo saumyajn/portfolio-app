@@ -40,6 +40,18 @@
 ::-webkit-scrollbar {
     display: none;
 }
+body.dg-scroll-lock {
+  overflow: hidden;
+  touch-action: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 html, body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;     /* Firefox */
@@ -51,9 +63,7 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  /* CRITICAL: We lock the scrollbar for the initial 1-second intro */
-  overflow: hidden; 
+ 
 }
 
 h1, h2, h3, h4 {

@@ -1,37 +1,42 @@
 // src/App.tsx
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
 
 import Home from './pages/Home';
 import About from './pages/About';
-import Skills from './pages/Skills';
-import Career from './pages/Career';
-import Projects from './pages/Projects';
-import Contact from './pages/Contact';
+const Skills = lazy(() => import('./pages/Skills'));
+const Career = lazy(() => import('./pages/Career'));
+const Projects = lazy(() => import('./pages/Projects'));
+const Contact = lazy(() => import('./pages/Contact'));
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 import Aurora from './components/Aurora';
 import CyberPenguin from './components/CyberPenguin';
 import FluidCanvas from './components/FluidCanvas';
+import LazyMount from './components/LazyMount';
 
 
 
 const GlobalNav = () => (
-  <nav className="fixed top-8 right-8 md:right-12 z-[100] flex gap-6 md:gap-6 font-mono text-sm tracking-widest text-[var(--text-secondary)] pointer-events-auto">
+  <nav className=" hidden md:flex fixed top-8 right-8 md:right-12 z-[100] flex gap-6 md:gap-6 font-mono text-sm tracking-widest text-[var(--text-secondary)] pointer-events-auto">
     {['HOME', 'SKILLS', 'CAREER', 'PROJECTS', 'CONTACT'].map((item) => (
-      <a key={item} href={`#${item.toLowerCase()}`} className="group relative hover:text-white transition-colors">
+      <a key={item} href={`#${item.toLowerCase()}`} aria-label={item} className="group relative hover:text-white transition-colors">
         {item}
         <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[var(--accent-emerald)] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
       </a>
+
     ))}
+    <a href="/Saumya-Jain-Resume.pdf" aria-label='Saumya Jain Resume' className="text-[var(--accent-emerald)]">
+      RESUME
+    </a>
   </nav>
 );
 
 const GlobalSocials = () => (
   <div className="fixed left-6 md:left-8 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-center gap-6 text-[var(--text-secondary)] pointer-events-auto">
-    <a href="https://github.com/saumyajn" className="hover:text-[var(--accent-sapphire)] transition-colors"><FiGithub size={22} /></a>
-    <a href="https://linkedin.com/in/saumyajn" className="hover:text-[var(--accent-sapphire)] transition-colors"><FiLinkedin size={22} /></a>
-    <a href="mailto:saumyajn1994@gmail.com" className="hover:text-[var(--accent-sapphire)] transition-colors"><FiMail size={22} /></a>
+    <a href="https://github.com/saumyajn" aria-label="GitHub profile" className="hover:text-[var(--accent-sapphire)] transition-colors"><FiGithub size={22} /></a>
+    <a href="https://linkedin.com/in/saumyajn" aria-label="LinkedIn profile" className="hover:text-[var(--accent-sapphire)] transition-colors"><FiLinkedin size={22} /></a>
+    <a href="mailto:saumyajn1994@gmail.com" aria-label="Email Saumya Jain" className="hover:text-[var(--accent-sapphire)] transition-colors"><FiMail size={22} /></a>
     <div className="w-[1px] h-24 bg-gradient-to-b from-[var(--text-secondary)] to-transparent mt-2 opacity-30" />
   </div>
 );
@@ -48,14 +53,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Hard-lock the scroll at the DOM level
-    document.body.style.overflow = 'hidden';
 
     const timer = setTimeout(() => {
       setIsBooting(false);
-      // Hard-unlock the scroll exactly after 2.5 seconds
-      document.body.style.overflow = '';
-    }, 2500);
+
+    }, 700);
 
     return () => clearTimeout(timer);
   }, []);
@@ -69,7 +71,6 @@ export default function App() {
   });
 
 
-
   const robotX = useTransform(introProgress, [0, 1], ["60vw", "10vw"]);
   const robotY = useTransform(introProgress, [0, 1], ["20vh", isMobile ? "70vh" : "25vh"]);
   const robotScale = useTransform(introProgress, [0, 1], [1, isMobile ? 0.5 : 1]);
@@ -80,7 +81,10 @@ export default function App() {
   });
 
   useEffect(() => {
-    document.body.style.overflow = isBooting ? 'hidden' : 'auto';
+    document.body.style.overflow = isBooting ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isBooting]);
 
   return (
@@ -130,20 +134,41 @@ export default function App() {
 
             </div>
           </div>
-          <div className="w-full h-screen relative flex items-center">
+          <div id="home" className="w-full h-screen relative flex items-center">
             <Home isBooting={isBooting} />
           </div>
-          <div className="w-full h-screen relative flex items-center">
+          <div id="about" className="w-full h-screen relative flex items-center">
             <About />
           </div>
         </div>
         <div className="w-full flex flex-col relative z-20 pointer-events-auto">
-          <div className="w-full min-h-screen "><Skills /></div>
-          <div className="w-full"><Career /></div>
-          <div className="w-full"><Projects /></div>
-          <div className="w-full"><Contact /></div>
+          <div id="skills" className="w-full min-h-screen ">
+            <LazyMount>
+              <Suspense fallback={null}>
+                <Skills />
+              </Suspense>
+            </LazyMount>
+          </div>
+          <div id="career" className="w-full">
+            <LazyMount>
+              <Suspense fallback={null}>
+                <Career />
+              </Suspense>
+            </LazyMount></div>
+          <div id="projects" className="w-full">
+            <LazyMount>
+              <Suspense fallback={null}>
+                <Projects />
+              </Suspense>
+            </LazyMount></div>
+          <div id="contact" className="w-full">
+            <LazyMount>
+              <Suspense fallback={null}>
+                <Contact />
+              </Suspense>
+            </LazyMount></div>
         </div>
       </div>
-    </ReactLenis >
+    </ReactLenis>
   );
 }

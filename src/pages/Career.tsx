@@ -7,7 +7,7 @@ const timelineData = [
     id: "lead-swe",
     role: "Lead Software Engineer",
     company: "Virtusa (Client: PNC Bank)",
-    year: "2024 — Present",
+    year: "2024 - Present",
     description: "Architecting enterprise-grade Angular schematic libraries driving UI standardization bank-wide. Leading distributed teams and overseeing the integration of robust CI/CD pipelines to ensure predictable, defect-free deployments.",
     tech: ["Angular 18", "Micro-Frontends", "CI/CD", "Jenkins", "Docker"]
   },
@@ -23,7 +23,7 @@ const timelineData = [
     id: "sr-swe",
     role: "Sr Software Engineer",
     company: "Virtusa (Client: PNC Bank)",
-    year: "2022 — 2024",
+    year: "2022 - 2024",
     description: "Engineered high-performance Server-Side Rendering (SSR) workflows using Next.js and TypeScript, significantly improving API response metrics. Served as the primary technical liaison, translating business requirements into scalable architectures.",
     tech: ["Next.js", "TypeScript", "SSR", "Node.js", "RxJS"]
   },
@@ -31,7 +31,7 @@ const timelineData = [
     id: "angular-dev",
     role: "Angular Developer",
     company: "Virtusa (Client: PNC Bank)",
-    year: "2020 — 2022",
+    year: "2020 - 2022",
     description: "Developed and maintained highly responsive, user-facing web applications. Implemented rigorous automated testing strategies using Jest and Karma, reducing production defect rates by 30%.",
     tech: ["Angular", "Jest", "Karma", "Redux", "SCSS"]
   },
@@ -39,7 +39,7 @@ const timelineData = [
     id: "njit",
     role: "Master of Science",
     company: "New Jersey Institute of Technology",
-    year: "2018 — 2020",
+    year: "2018 - 2020",
     description: "Completed an intensive Computer Science curriculum focused on software engineering, algorithm design, and distributed systems architecture, laying the foundation for high-performance system design.",
     tech: ["Distributed Systems", "Algorithms", "Software Architecture"]
   },
@@ -47,7 +47,7 @@ const timelineData = [
     id: "mindstrength",
     role: "Full Stack Developer",
     company: "Mind Strength Inc",
-    year: "2017 — 2018",
+    year: "2017 - 2018",
     description: "Optimized RESTful APIs and implemented client-side data caching, cutting average page load times by 25%. Built robust automated regression testing coverage with Jasmine and Selenium to eliminate late-stage bugs.",
     tech: ["Node.js", "Angular", "REST APIs", "Jasmine", "Selenium"]
   }

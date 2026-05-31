@@ -14,7 +14,7 @@ export default function FluidCanvas() {
       IMMEDIATE: true,
       TRIGGER: "hover",
       SIM_RESOLUTION: 128,
-      DYE_RESOLUTION: 1024,
+      DYE_RESOLUTION: 512,
       CAPTURE_RESOLUTION: 512,
       DENSITY_DISSIPATION: 2.5,
       VELOCITY_DISSIPATION: 1.5,

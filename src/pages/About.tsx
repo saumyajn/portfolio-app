@@ -43,7 +43,7 @@ export default function About() {
         {/* 2. Sub-headline / Callout */}
         <motion.div variants={itemVars} className="inline-flex items-center gap-2 md:gap-3 px-4 py-2 rounded-full bg-[var(--accent-sapphire)]/10 border border-[var(--accent-sapphire)]/30 text-[var(--accent-sapphire)] font-mono text-xs sm:text-sm shadow-[0_0_15px_var(--accent-sapphire-glow)] backdrop-blur-md w-fit">
           <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[var(--accent-sapphire)] animate-pulse flex-shrink-0" />
-          <span className="whitespace-normal sm:whitespace-nowrap">Not just shipping features — setting the standard</span>
+          <span className="whitespace-normal sm:whitespace-nowrap">Not just shipping features - setting the standard</span>
         </motion.div>
 
         {/* 3. Bio Paragraphs */}

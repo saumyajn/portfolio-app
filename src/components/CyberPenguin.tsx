@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
 
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-  
-  .penguin-container { font-family: 'Share Tech Mono', monospace; }
+   .penguin-container { font-family: 'Share Tech Mono', monospace; }
   .penguin-svg {
     width: 280px;
     animation: float 3.6s ease-in-out infinite;

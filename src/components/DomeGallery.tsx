@@ -65,7 +65,7 @@ function buildItems(pool: ImageItem[], seg: number): ItemDef[] {
   });
 
   const totalSlots = coords.length;
-  if (pool.length === 0) return coords.map(c => ({ ...c, src: '', alt: '' }));
+  if (pool.length === 0) return [];
 
   const normalizedImages = pool.map(image => {
     if (typeof image === 'string') return { src: image, alt: '' };
@@ -114,6 +114,7 @@ export default function DomeGallery({
   const viewerRef = useRef<HTMLDivElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
   const focusedElRef = useRef<HTMLElement | null>(null);
+  const isVisibleRef = useRef(false);
   const originalTilePositionRef = useRef<{ left: number; top: number; width: number; height: number; } | null>(null);
 
   const rotationRef = useRef({ x: 0, y: 0 });
@@ -186,6 +187,21 @@ export default function DomeGallery({
   }, [fit, fitBasis, minRadius, maxRadius, padFactor, overlayBlurColor, grayscale, imageBorderRadius, openedImageBorderRadius, openedImageWidth, openedImageHeight, applyTransform]);
 
   useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     applyTransform(rotationRef.current.x, rotationRef.current.y);
   }, [applyTransform]);
 
@@ -195,9 +211,16 @@ export default function DomeGallery({
     const autoRotateSpeed = 0.05; // Adjust this speed if you want it faster/slower
     const loop = () => {
       // Only spin if the user is NOT dragging, releasing inertia, or opening a modal
-      if (!draggingRef.current && !inertiaRAF.current && !openingRef.current && !focusedElRef.current) {
+      if (
+        isVisibleRef.current &&
+        !document.hidden &&
+        !draggingRef.current &&
+        !inertiaRAF.current &&
+        !openingRef.current &&
+        !focusedElRef.current
+      ) {
         rotationRef.current.y = wrapAngleSigned(rotationRef.current.y + autoRotateSpeed);
-        applyTransform(rotationRef.current.x, rotationRef.current.y);
+        (applyTransform as (x: number, y: number) => void)(rotationRef.current.x, rotationRef.current.y);
       }
       autoRotateRAF.current = requestAnimationFrame(loop);
     };
@@ -249,8 +272,8 @@ export default function DomeGallery({
       onDragStart: ({ event }) => {
         if (focusedElRef.current) return;
         stopInertia();
-        const evt = event as PointerEvent;
-        pointerTypeRef.current = (evt.pointerType as any) || 'mouse';
+        const evt = event as unknown as PointerEvent;
+        pointerTypeRef.current = (evt.pointerType as 'mouse' | 'pen' | 'touch') || 'mouse';
         if (pointerTypeRef.current === 'touch') evt.preventDefault();
         if (pointerTypeRef.current === 'touch') lockScroll();
         draggingRef.current = true;
@@ -263,7 +286,7 @@ export default function DomeGallery({
       },
       onDrag: ({ event, last, velocity: velArr = [0, 0], direction: dirArr = [0, 0], movement }) => {
         if (focusedElRef.current || !draggingRef.current || !startPosRef.current) return;
-        const evt = event as PointerEvent;
+        const evt = event as unknown as PointerEvent;
         if (pointerTypeRef.current === 'touch') evt.preventDefault();
         const dxTotal = evt.clientX - startPosRef.current.x;
         const dyTotal = evt.clientY - startPosRef.current.y;
@@ -293,7 +316,7 @@ export default function DomeGallery({
             if (dist2 <= TAP_THRESH_PX * TAP_THRESH_PX) isTap = true;
           }
 
-          let [vMagX, vMagY] = velArr;
+          const [vMagX, vMagY] = velArr;
           const [dirX, dirY] = dirArr;
           let vx = vMagX * dirX;
           let vy = vMagY * dirY;
@@ -316,7 +339,7 @@ export default function DomeGallery({
           tapTargetRef.current = null;
           if (cancelTapRef.current) setTimeout(() => (cancelTapRef.current = false), 120);
           if (pointerTypeRef.current === 'touch') unlockScroll();
-          if (movedRef.current) lastDragEndAt.current = performance.now();
+          if (movedRef.current) lastDragEndAt.current = event.timeStamp;
           movedRef.current = false;
         }
       }
@@ -338,13 +361,14 @@ export default function DomeGallery({
 
       const refDiv = parent.querySelector('.item__image--reference') as HTMLElement | null;
       const originalPos = originalTilePositionRef.current;
-      
+
       if (!originalPos) {
         overlay.remove();
         if (refDiv) refDiv.remove();
         parent.style.setProperty('--rot-y-delta', `0deg`);
         parent.style.setProperty('--rot-x-delta', `0deg`);
         el.style.visibility = '';
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (el.style as any).zIndex = 0;
         focusedElRef.current = null;
         rootRef.current?.removeAttribute('data-enlarging');
@@ -393,6 +417,7 @@ export default function DomeGallery({
         requestAnimationFrame(() => {
           el.style.visibility = '';
           el.style.opacity = '0';
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (el.style as any).zIndex = 0;
           focusedElRef.current = null;
           rootRef.current?.removeAttribute('data-enlarging');
@@ -415,7 +440,15 @@ export default function DomeGallery({
         });
       };
 
-      animatingOverlay.addEventListener('transitionend', cleanup, { once: true });
+      let didCleanup = false;
+      const safeCleanup = () => {
+        if (didCleanup) return;
+        didCleanup = true;
+        cleanup();
+      };
+
+      animatingOverlay.addEventListener('transitionend', safeCleanup, { once: true });
+      window.setTimeout(safeCleanup, enlargeTransitionMs + 500);
     };
 
     scrim.addEventListener('click', close);
@@ -431,7 +464,7 @@ export default function DomeGallery({
   const openItemFromElement = (el: HTMLElement) => {
     if (openingRef.current) return;
     openingRef.current = true;
-    openStartedAtRef.current = performance.now();
+    openStartedAtRef.current =performance.now();
     lockScroll();
     const parent = el.parentElement as HTMLElement;
     focusedElRef.current = el;
@@ -468,6 +501,7 @@ export default function DomeGallery({
 
     originalTilePositionRef.current = { left: tileR.left, top: tileR.top, width: tileR.width, height: tileR.height };
     el.style.visibility = 'hidden';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (el.style as any).zIndex = 0;
     const overlay = document.createElement('div');
     overlay.className = 'enlarge';
@@ -530,7 +564,19 @@ export default function DomeGallery({
   };
 
   useEffect(() => {
-    return () => document.body.classList.remove('dg-scroll-lock');
+    return () => {
+      document.body.classList.remove('dg-scroll-lock');
+
+      if (autoRotateRAF.current) cancelAnimationFrame(autoRotateRAF.current);
+      if (inertiaRAF.current) cancelAnimationFrame(inertiaRAF.current);
+
+      viewerRef.current?.querySelectorAll('.enlarge').forEach(el => el.remove());
+      rootRef.current?.querySelectorAll('.enlarge-closing').forEach(el => el.remove());
+
+      openingRef.current = false;
+      focusedElRef.current = null;
+      originalTilePositionRef.current = null;
+    };
   }, []);
 
   // UI UPGRADE: Added box-shadows to the tiles for a more 3D lighting feel!
@@ -551,41 +597,60 @@ export default function DomeGallery({
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: cssStyles }} />
-      <div 
-        ref={rootRef} 
-        className="sphere-root relative w-full h-full" 
-        style={{ 
-          "--segments-x": segments, 
-          "--segments-y": segments, 
-          "--overlay-blur-color": overlayBlurColor, 
-          "--tile-radius": imageBorderRadius, 
-          "--enlarge-radius": openedImageBorderRadius, 
-          "--image-filter": grayscale ? 'grayscale(1)' : 'none' 
+      <div
+        ref={rootRef}
+        className="sphere-root relative w-full h-full"
+        style={{
+          "--segments-x": segments,
+          "--segments-y": segments,
+          "--overlay-blur-color": overlayBlurColor,
+          "--tile-radius": imageBorderRadius,
+          "--enlarge-radius": openedImageBorderRadius,
+          "--image-filter": grayscale ? 'grayscale(1)' : 'none'
         } as React.CSSProperties}
       >
-        <main ref={mainRef} className="absolute inset-0 grid place-items-center overflow-hidden select-none bg-transparent" style={{ touchAction: 'none', WebkitUserSelect: 'none' }}>
+        <main ref={mainRef} className="absolute inset-0 grid place-items-center overflow-hidden select-none bg-transparent" style={{ touchAction: 'pan-y', WebkitUserSelect: 'none' }}>
           <div className="stage">
             <div ref={sphereRef} className="sphere">
               {items.map((it, i) => (
-                <div 
-                  key={`${it.x},${it.y},${i}`} 
-                  className="sphere-item absolute m-auto" 
-                  data-src={it.src} 
-                  data-alt={it.alt} 
-                  data-offset-x={it.x} 
-                  data-offset-y={it.y} 
-                  data-size-x={it.sizeX} 
-                  data-size-y={it.sizeY} 
-                  style={{ 
-                    "--offset-x": it.x, 
-                    "--offset-y": it.y, 
-                    "--item-size-x": it.sizeX, 
-                    "--item-size-y": it.sizeY, 
-                    top: '-999px', bottom: '-999px', left: '-999px', right: '-999px' 
+                <div
+                  key={`${it.x},${it.y},${i}`}
+                  className="sphere-item absolute m-auto"
+                  data-src={it.src}
+                  data-alt={it.alt}
+                  data-offset-x={it.x}
+                  data-offset-y={it.y}
+                  data-size-x={it.sizeX}
+                  data-size-y={it.sizeY}
+                  style={{
+                    "--offset-x": it.x,
+                    "--offset-y": it.y,
+                    "--item-size-x": it.sizeX,
+                    "--item-size-y": it.sizeY,
+                    top: '-999px', bottom: '-999px', left: '-999px', right: '-999px'
                   } as React.CSSProperties}
                 >
-                  <div className="item__image absolute block overflow-hidden cursor-pointer bg-gray-900" role="button" tabIndex={0} aria-label={it.alt || 'Open image'} onClick={e => { if (draggingRef.current || movedRef.current || performance.now() - lastDragEndAt.current < 80 || openingRef.current) return; openItemFromElement(e.currentTarget as HTMLElement); }} onPointerUp={e => { if ((e.nativeEvent as PointerEvent).pointerType !== 'touch' || draggingRef.current || movedRef.current || performance.now() - lastDragEndAt.current < 80 || openingRef.current) return; openItemFromElement(e.currentTarget as HTMLElement); }} style={{ inset: '10px', borderRadius: `var(--tile-radius, ${imageBorderRadius})`, backfaceVisibility: 'hidden' }}>
-                    <img src={it.src} draggable={false} alt={it.alt} className="w-full h-full object-cover pointer-events-none" style={{ backfaceVisibility: 'hidden', filter: `var(--image-filter, ${grayscale ? 'grayscale(1)' : 'none'})` }} />
+                  <div className="item__image absolute block overflow-hidden cursor-pointer bg-gray-900" role="button" tabIndex={0} aria-label={it.alt || 'Open image'}
+                    onClick={e => { if (draggingRef.current || movedRef.current || performance.now() - lastDragEndAt.current < 80 || openingRef.current) return; openItemFromElement(e.currentTarget as HTMLElement); }}
+                    onKeyDown={e => {
+                      if (e.key !== 'Enter' && e.key !== ' ') return;
+                      e.preventDefault();
+                      if (openingRef.current) return;
+                      openItemFromElement(e.currentTarget as HTMLElement);
+                    }}
+                    onPointerUp={e => { if ((e.nativeEvent as PointerEvent).pointerType !== 'touch' || draggingRef.current || movedRef.current ||performance.now() - lastDragEndAt.current < 80 || openingRef.current) return; openItemFromElement(e.currentTarget as HTMLElement); }} style={{ inset: '10px', borderRadius: `var(--tile-radius, ${imageBorderRadius})`, backfaceVisibility: 'hidden' }}>
+                    <img
+                      src={it.src}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                      alt={it.alt}
+                      className="w-full h-full object-cover pointer-events-none"
+                      style={{
+                        backfaceVisibility: 'hidden',
+                        filter: `var(--image-filter, ${grayscale ? 'grayscale(1)' : 'none'})`
+                      }}
+                    />
                   </div>
                 </div>
               ))}

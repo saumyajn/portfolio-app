@@ -14,7 +14,7 @@ const ScrambleText = ({ text }: { text: string }) => {
         let iteration = 0;
         const interval = setInterval(() => {
             setDisplayedText(
-                text.split("").map((c, index) => {
+                text.split("").map((_, index) => {
                     if (index < iteration) return text[index];
                     return characters[Math.floor(Math.random() * characters.length)];
                 }).join("")

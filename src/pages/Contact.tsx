@@ -6,7 +6,10 @@ import DomeGallery from "../components/DomeGallery";
 export default function Contact() {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const domeImages = Array.from({ length: 14 }, (_, i) => `/images/IMG_${i + 1}.jpg`);
+const domeImages = Array.from({ length: 14 }, (_, i) => ({
+  src: `/images/IMG_${i + 1}.webp`,
+  alt: `Original painting ${i + 1}`,
+}));
 // --- CLEANER STATE ---
   const [inputs, setInputs] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState({ loading: false, success: false, error: false });
@@ -113,7 +116,7 @@ export default function Contact() {
                 <div>
                   <h3 className="text-3xl font-extrabold text-white mb-4 tracking-tight">Get in touch.</h3>
                   <p className="text-white/50 text-sm leading-relaxed">
-                    I am currently available for opportunities. Whether you have a project in mind, an architecture problem to solve, or just want to connect—send me a message.
+                    I am currently available for opportunities. Whether you have a project in mind, an architecture problem to solve, or just want to connect - send me a message.
                   </p>
                 </div>
 
@@ -140,8 +143,8 @@ export default function Contact() {
                   
                   <div className="flex flex-col md:flex-row gap-5">
                     <div className="flex-1">
-                      <label className="block text-xs font-mono uppercase tracking-widest text-white/50 mb-2">Name</label>
-                      <input 
+                      <label htmlFor="name" className="block text-xs font-mono uppercase tracking-widest text-white/50 mb-2">Name</label>
+                      <input id="name"
                         type="text" name="name" value={inputs.name} onChange={handleChange} required
                         className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-[var(--accent-emerald)] focus:bg-white/10 transition-colors"
                         placeholder="John Doe"
