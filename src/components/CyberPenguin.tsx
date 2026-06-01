@@ -11,6 +11,10 @@ const css = `
     position: relative;
     z-index: 20;
   }
+  @media (max-width: 767px) {
+    .penguin-container { transform-origin: center bottom; }
+    .penguin-status { font-size: 9px; padding: 2px 8px; max-width: 150px; text-align: center; }
+  }
   @keyframes float {
     0%,100% { transform: translateY(0); }
     50%      { transform: translateY(-12px); }
@@ -86,7 +90,7 @@ export default function CyberPenguin({ isCoding = false }: { isCoding?: boolean 
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 50, scale: 0.8 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="absolute bottom-[-20px] z-30 flex flex-col items-center"
+                        className="absolute bottom-[-20px] z-30 hidden md:flex flex-col items-center"
                     >
                         <div className="absolute bottom-24 flex gap-4 w-[400px] justify-center opacity-80 pointer-events-none">
                             <motion.div
@@ -174,7 +178,7 @@ export default function CyberPenguin({ isCoding = false }: { isCoding?: boolean 
                 <path d="M 110 193 Q 120 207 130 193 Q 120 199 110 193 Z" fill="#f0b040" />
             </svg>
 
-            <div className="mt-4 text-[11px] tracking-widest text-[var(--accent-emerald)] uppercase flex items-center gap-2 drop-shadow-[0_0_5px_var(--accent-emerald-glow)] z-40 relative bg-black/40 px-4 py-1 rounded-full border border-[var(--accent-emerald)]/30">
+            <div className="penguin-status mt-2 md:mt-4 text-[10px] md:text-[11px] tracking-widest text-[var(--accent-emerald)] uppercase flex items-center gap-2 drop-shadow-[0_0_5px_var(--accent-emerald-glow)] z-40 relative bg-black/50 px-3 md:px-4 py-1 rounded-full border border-[var(--accent-emerald)]/30">
                 <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-emerald)] animate-pulse" />
                 {status}
             </div>

@@ -1,6 +1,6 @@
-// src/pages/Home.tsx
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import CyberPenguin from '../components/CyberPenguin';
 
 import '../index.css';
 
@@ -27,20 +27,19 @@ const ScrambleText = ({ text }: { text: string }) => {
     return <span>{displayedText}</span>;
 };
 
-export default function Home({ isBooting, }: { isBooting: boolean }) {
+export default function Home({ isBooting }: { isBooting: boolean }) {
     const text = "SAUMYA JAIN.";
 
     return (
-        <main className="relative w-full h-screen overflow-hidden text-[var(--text-primary)] ">
-
+        <main className="relative w-full h-screen overflow-hidden text-[var(--text-primary)]">
 
             {/* PHASE 1: BOOT SEQUENCE */}
             <AnimatePresence>
                 {isBooting && (
-                    <motion.div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none">
+                    <motion.div className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none px-4 text-center">
                         <motion.h1
                             layoutId="name"
-                            className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter flex items-center drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60"
+                            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter flex items-center justify-center drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60"
                         >
                             <ScrambleText text={text} />
                             <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.2 }} className="text-[var(--accent-sapphire)] ml-2 drop-shadow-[0_0_10px_var(--accent-sapphire-glow)]">_</motion.span>
@@ -51,15 +50,13 @@ export default function Home({ isBooting, }: { isBooting: boolean }) {
 
             {/* PHASE 2: UNLOCKED SPLIT-SCREEN */}
             {!isBooting && (
-                // Removed max-w-7xl mx-auto so the layout ties strictly to the window edges
                 <div className="relative z-40 flex w-full h-full pointer-events-none">
 
                     {/* LEFT SIDE: Identity */}
-                    {/* Added items-start and explicit pixel padding to guarantee clearance of the social icons */}
-                    <div className="w-full md:w-[60%] h-full flex flex-col justify-center pl-[100px] md:pl-[140px] lg:pl-[160px]">
+                    <div className="w-full md:w-[60%] h-full flex flex-col justify-start md:justify-center pt-[15vh] md:pt-0 px-6 pl-[72px] sm:pl-[100px] md:pl-[140px] lg:pl-[160px]">
                         <motion.h1
                             layoutId="name"
-                            className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter whitespace-nowrap drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60"
+                            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter drop-shadow-[0_0_20px_rgba(255,255,255,0.2)] text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 leading-tight"
                         >
                             SAUMYA JAIN.
                         </motion.h1>
@@ -68,22 +65,28 @@ export default function Home({ isBooting, }: { isBooting: boolean }) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3, duration: 0.8 }}
-                            className="mt-4 flex flex-col items-start pointer-events-auto"
+                            className="mt-2 flex flex-col items-start pointer-events-auto"
                         >
-                            <h2 className="text-xl md:text-2xl lg:text-3xl text-[var(--accent-sapphire)] font-semibold tracking-wide drop-shadow-[0_0_10px_var(--accent-sapphire-glow)]">
+                            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-[var(--accent-sapphire)] font-semibold tracking-wide drop-shadow-[0_0_10px_var(--accent-sapphire-glow)] mt-2">
                                 Lead Frontend Engineer <br /> Angular & React Specialist <br /> AWS Certified
                             </h2>
 
-                            <div className="mt-10 flex flex-col items-start gap-4">
+                            <div className="mt-6 md:mt-10 flex flex-col items-start gap-3 md:gap-4 max-w-full">
                                 <a href="/Saumya-Jain-Resume.pdf">
-                                    <span className="text-[var(--text-secondary)] font-mono text-sm tracking-widest uppercase">
+                                    <span className="text-[var(--text-secondary)] font-mono text-xs sm:text-sm tracking-widest uppercase">
                                         [ Download Resume ]
                                     </span>
                                 </a>
-                                <a href="mailto:saumyajn1994@gmail.com" className="group relative px-8 py-4 rounded-full border border-[var(--accent-emerald)] text-[var(--accent-emerald)] bg-[var(--bg-main)]/40 backdrop-blur-md overflow-hidden transition-all duration-300 shadow-[0_0_15px_var(--accent-emerald-glow)] hover:shadow-[0_0_25px_var(--accent-emerald-glow)]">
-                                    <span className="relative z-10 font-mono text-base tracking-wide group-hover:text-[var(--bg-main)] transition-colors duration-300 ">saumyajn1994@gmail.com</span>
+                                <a href="mailto:saumyajn1994@gmail.com" className="group relative px-6 py-3 md:px-8 md:py-4 rounded-full border border-[var(--accent-emerald)] text-[var(--accent-emerald)] bg-[var(--bg-main)]/40 backdrop-blur-md overflow-hidden transition-all duration-300 shadow-[0_0_15px_var(--accent-emerald-glow)] hover:shadow-[0_0_25px_var(--accent-emerald-glow)] max-w-full">
+                                    <span className="relative z-10 font-mono text-xs sm:text-sm md:text-base tracking-wide group-hover:text-[var(--bg-main)] transition-colors duration-300 break-all sm:break-normal">
+                                        saumyajn1994@gmail.com
+                                    </span>
                                     <div className="absolute inset-0 bg-[var(--accent-emerald)] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                                 </a>
+                            </div>
+
+                            <div className="md:hidden pointer-events-auto md:self-end -mt-4 mr-1 scale-[0.7] sm:origin-bottom-right">
+                                <CyberPenguin />
                             </div>
                         </motion.div>
                     </div>
@@ -96,8 +99,7 @@ export default function Home({ isBooting, }: { isBooting: boolean }) {
                             animate={{ y: 0, opacity: 1, scale: 1.8 }}
                             transition={{ type: "spring", damping: 15, stiffness: 50, delay: 0.4 }}
                         >
-                            {/* <RestingPenguin /> */}
-                            {/* <CodingSidekick isCoding={isCoding} /> */}
+                         
                         </motion.div>
                     </div>
 
@@ -106,3 +108,4 @@ export default function Home({ isBooting, }: { isBooting: boolean }) {
         </main>
     );
 }
+

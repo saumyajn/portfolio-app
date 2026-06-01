@@ -140,7 +140,7 @@ export default function App() {
           <div className="absolute inset-0 w-full h-full pointer-events-none z-50">
             <div className="sticky top-0 w-full h-screen overflow-hidden">
 
-              {!isBooting && (
+              {!isBooting && !isMobile && (
                 <motion.div
                   style={{ x: robotX, y: robotY, scale: robotScale }}
                   className="absolute top-0 left-0 z-50 pointer-events-none origin-bottom-left"
