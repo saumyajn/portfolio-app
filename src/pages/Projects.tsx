@@ -17,7 +17,8 @@ const projects = [
         color: "from-emerald-500/20 to-emerald-900/20",
         accent: "group-hover:border-emerald-500/50",
         liveLink: "https://humanorbot.vercel.app/",
-        githubLink: "https://github.com/saumyajn/humanorbot"
+        githubLink: "https://github.com/saumyajn/humanorbot",
+        caseStudyHref: "#case-turing-test"
     },
     {
         title: "Arcade Stack",
@@ -28,7 +29,8 @@ const projects = [
         color: "from-blue-500/20 to-blue-900/20",
         accent: "group-hover:border-blue-500/50",
         liveLink: "https://arcade-stack.vercel.app",
-        githubLink: "https://github.com/saumyajn/arcade-stack"
+        githubLink: "https://github.com/saumyajn/arcade-stack",
+        caseStudyHref: "#case-arcade-stack"
     },
     {
         title: "The Last Land",
@@ -39,7 +41,8 @@ const projects = [
         color: "from-purple-500/20 to-purple-900/20",
         accent: "group-hover:border-purple-500/50",
         liveLink: "https://the-last-land-analytics.vercel.app",
-        githubLink: "https://github.com/saumyajn/the-last-land"
+        githubLink: "https://github.com/saumyajn/the-last-land",
+        caseStudyHref: "#case-last-land"
     },
     {
         title: "React Menu",
@@ -149,8 +152,15 @@ export default function Projects() {
                                                 ))}
                                             </div>
 
-                                            {/* Links Group: Live Link (Visible) + GitHub (Revealed on hover) */}
-                                            <div className="flex items-center gap-0 group-hover:gap-3 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] shrink-0">
+                                            <div className="flex flex-wrap items-center gap-3 shrink-0">
+                                                {project.caseStudyHref && (
+                                                    <a
+                                                        href={project.caseStudyHref}
+                                                        className="flex items-center gap-2 px-5 py-3 bg-white/10 text-white rounded-full text-sm font-bold hover:bg-white hover:text-black transition-colors duration-300 border border-white/15"
+                                                    >
+                                                        Case Study <FiArrowUpRight />
+                                                    </a>
+                                                )}
                                                 {project.liveLink && (
                                                     <a
                                                         href={project.liveLink}
@@ -167,8 +177,7 @@ export default function Projects() {
                                                         href={project.githubLink}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        // THE ZERO-WIDTH EXPANSION TRICK: Slides out from behind the Live link smoothly!
-                                                        className="w-0 opacity-0 scale-50 group-hover:w-12 group-hover:opacity-100 group-hover:scale-100 h-12 rounded-full border border-white/30 text-white bg-black/30 backdrop-blur-sm hover:bg-[var(--accent-emerald)] hover:border-transparent transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex items-center justify-center overflow-hidden"
+                                                        className="h-12 w-12 rounded-full border border-white/30 text-white bg-black/30 backdrop-blur-sm hover:bg-[var(--accent-emerald)] hover:border-transparent transition-all duration-300 flex items-center justify-center overflow-hidden"
                                                         title="View Source on GitHub"
                                                     >
                                                         <FiGithub size={20} className="shrink-0" />

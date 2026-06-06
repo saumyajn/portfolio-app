@@ -9,6 +9,7 @@ import About from './pages/About';
 const Skills = lazy(() => import('./pages/Skills'));
 const Career = lazy(() => import('./pages/Career'));
 const Projects = lazy(() => import('./pages/Projects'));
+const CaseStudies = lazy(() => import('./pages/CaseStudies'));
 const Contact = lazy(() => import('./pages/Contact'));
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
 import Aurora from './components/Aurora';
@@ -20,9 +21,16 @@ import LazyMount from './components/LazyMount';
 
 const GlobalNav = () => (
   <nav className=" hidden md:flex fixed top-8 right-8 md:right-12 z-[100] flex gap-6 md:gap-6 font-mono text-sm tracking-widest text-[var(--text-secondary)] pointer-events-auto">
-    {['HOME', 'SKILLS', 'CAREER', 'PROJECTS', 'CONTACT'].map((item) => (
-      <a key={item} href={`#${item.toLowerCase()}`} aria-label={item} className="group relative hover:text-white transition-colors">
-        {item}
+    {[
+      ['HOME', 'home'],
+      ['SKILLS', 'skills'],
+      ['CAREER', 'career'],
+      ['PROJECTS', 'projects'],
+      ['CASES', 'case-studies'],
+      ['CONTACT', 'contact'],
+    ].map(([label, target]) => (
+      <a key={target} href={`#${target}`} aria-label={label} className="group relative hover:text-white transition-colors">
+        {label}
         <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-[var(--accent-emerald)] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
       </a>
 
@@ -45,6 +53,7 @@ const GlobalSocials = () => (
 const MobileNav = () => (
   <nav className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-[120] flex items-center gap-3 rounded-full border border-white/10 bg-black/70 px-4 py-3 font-mono text-xs text-white/80 backdrop-blur-xl pointer-events-auto">
     <a href="#projects">PROJECTS</a>
+    <a href="#case-studies">CASES</a>
     <a href="#contact">CONTACT</a>
     <a href="/Saumya-Jain-Resume.pdf" className="text-[var(--accent-emerald)]">RESUME</a>
   </nav>
@@ -178,6 +187,12 @@ export default function App() {
             <LazyMount>
               <Suspense fallback={null}>
                 <Projects />
+              </Suspense>
+            </LazyMount></div>
+          <div id="case-studies" className="w-full">
+            <LazyMount>
+              <Suspense fallback={null}>
+                <CaseStudies />
               </Suspense>
             </LazyMount></div>
           <div id="contact" className="w-full">

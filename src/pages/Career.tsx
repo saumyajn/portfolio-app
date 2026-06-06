@@ -103,7 +103,7 @@ export default function Experience() {
           <div className="relative w-full">
 
             {/* ATMOSPHERIC WEBGL BACKGROUND */}
-            <div className="absolute inset-0 z-0 pointer-events-none mix-blend-screen md:block">
+            <div className="absolute inset-0 z-0 hidden pointer-events-none mix-blend-screen md:block">
               <motion.div
                 className="sticky top-[10vh] w-full h-[75vh]"
                 style={{

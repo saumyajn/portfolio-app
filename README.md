@@ -1,73 +1,46 @@
-# React + TypeScript + Vite
+# Saumya Jain Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Recruiter-facing portfolio for Saumya Jain, a Lead Frontend Engineer focused on Angular, React, TypeScript, AI product systems, and production-grade web architecture.
 
-Currently, two official plugins are available:
+The site is intentionally built as more than a visual landing page. It presents project case studies that explain engineering judgment: problem framing, architecture, tradeoffs, production risks, and next improvements.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Featured Case Studies
 
-## React Compiler
+- Human vs Bot: real-time Turing Test game with Angular, Socket.IO, Node middleware, FastAPI AI service, prompt iteration, evals, and deployment hardening.
+- The Last Land Analytics: real-data OCR analytics workflow using React, Python, computer vision, Firebase, and a dashboard built around protected domain logic.
+- Arcade Stack: browser gaming and learning platform combining React, TypeScript, Vite, and Python-in-browser experimentation.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Three.js and WebGL visual systems
+- Vercel Analytics
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Production Checks
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm.cmd run lint
+npm.cmd run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The Vite build removes the unused `public/python` submodule payload from `dist` after bundling so the deployed portfolio remains focused on the current site.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Local Development
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm.cmd install
+npm.cmd run dev
 ```
+
+## Portfolio Intent
+
+This portfolio is designed to help recruiters and hiring managers quickly answer:
+
+- What kinds of systems has Saumya built?
+- How does she think about architecture and tradeoffs?
+- Which projects are strongest interview anchors?
+- Where is she growing next across AI systems, frontend architecture, and production readiness?

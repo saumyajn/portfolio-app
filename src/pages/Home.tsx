@@ -4,8 +4,6 @@ import CyberPenguin from '../components/CyberPenguin';
 
 import '../index.css';
 
-// import CodingSidekick from '@/components/CodingSidekick';
-
 const ScrambleText = ({ text }: { text: string }) => {
     const [displayedText, setDisplayedText] = useState("");
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -68,14 +66,15 @@ export default function Home({ isBooting }: { isBooting: boolean }) {
                             className="mt-2 flex flex-col items-start pointer-events-auto"
                         >
                             <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-[var(--accent-sapphire)] font-semibold tracking-wide drop-shadow-[0_0_10px_var(--accent-sapphire-glow)] mt-2">
-                                Lead Frontend Engineer <br /> Angular & React Specialist <br /> AWS Certified
+                                Lead Frontend Engineer <br /> Angular & React Specialist <br /> AI Product Builder
                             </h2>
 
                             <div className="mt-6 md:mt-10 flex flex-col items-start gap-3 md:gap-4 max-w-full">
-                                <a href="/Saumya-Jain-Resume.pdf">
-                                    <span className="text-[var(--text-secondary)] font-mono text-xs sm:text-sm tracking-widest uppercase">
-                                        [ Download Resume ]
-                                    </span>
+                                <a href="#case-studies" className="text-[var(--text-secondary)] font-mono text-xs sm:text-sm tracking-widest uppercase transition-colors hover:text-white">
+                                    [ View Case Studies ]
+                                </a>
+                                <a href="/Saumya-Jain-Resume.pdf" className="text-[var(--text-secondary)] font-mono text-xs sm:text-sm tracking-widest uppercase transition-colors hover:text-white">
+                                    [ Download Resume ]
                                 </a>
                                 <a href="mailto:saumyajn1994@gmail.com" className="group relative px-6 py-3 md:px-8 md:py-4 rounded-full border border-[var(--accent-emerald)] text-[var(--accent-emerald)] bg-[var(--bg-main)]/40 backdrop-blur-md overflow-hidden transition-all duration-300 shadow-[0_0_15px_var(--accent-emerald-glow)] hover:shadow-[0_0_25px_var(--accent-emerald-glow)] max-w-full">
                                     <span className="relative z-10 font-mono text-xs sm:text-sm md:text-base tracking-wide group-hover:text-[var(--bg-main)] transition-colors duration-300 break-all sm:break-normal">
