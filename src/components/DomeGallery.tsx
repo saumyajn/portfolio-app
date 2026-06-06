@@ -267,7 +267,7 @@ export default function DomeGallery({
     inertiaRAF.current = requestAnimationFrame(step);
   }, [dragDampening, maxVerticalRotationDeg, stopInertia, applyTransform]);
 
-  useGesture(
+  const bindGesture = useGesture(
     {
       onDragStart: ({ event }) => {
         if (focusedElRef.current) return;
@@ -344,7 +344,7 @@ export default function DomeGallery({
         }
       }
     },
-    { target: mainRef, eventOptions: { passive: false } }
+    { eventOptions: { passive: false } }
   );
 
   useEffect(() => {
@@ -612,7 +612,7 @@ export default function DomeGallery({
           "--image-filter": grayscale ? 'grayscale(1)' : 'none'
         } as React.CSSProperties}
       >
-        <main ref={mainRef} className="absolute inset-0 grid place-items-center overflow-hidden select-none bg-transparent" style={{ touchAction: 'pan-y', WebkitUserSelect: 'none' }}>
+        <main ref={mainRef} {...bindGesture()} className="absolute inset-0 grid place-items-center overflow-hidden select-none bg-transparent" style={{ touchAction: 'pan-y', WebkitUserSelect: 'none' }}>
           <div className="stage">
             <div ref={sphereRef} className="sphere">
               {items.map((it, i) => (
