@@ -310,9 +310,68 @@ export const LaserFlow: React.FC<Props> = ({
   const pausedRef = useRef<boolean>(false);
 
   const mouseSmoothTimeRef = useRef(mouseSmoothTime);
+  const isInViewRef = useRef(isInView);
+  const shaderSettingsRef = useRef({
+    wispDensity,
+    mouseTiltStrength,
+    horizontalBeamOffset,
+    verticalBeamOffset,
+    flowSpeed,
+    verticalSizing,
+    horizontalSizing,
+    fogIntensity,
+    fogScale,
+    wispSpeed,
+    wispIntensity,
+    flowStrength,
+    decay,
+    falloffStart,
+    fogFallSpeed
+  });
+
   useEffect(() => {
     mouseSmoothTimeRef.current = mouseSmoothTime;
   }, [mouseSmoothTime]);
+
+  useEffect(() => {
+    isInViewRef.current = isInView;
+  }, [isInView]);
+
+  useEffect(() => {
+    shaderSettingsRef.current = {
+      wispDensity,
+      mouseTiltStrength,
+      horizontalBeamOffset,
+      verticalBeamOffset,
+      flowSpeed,
+      verticalSizing,
+      horizontalSizing,
+      fogIntensity,
+      fogScale,
+      wispSpeed,
+      wispIntensity,
+      flowStrength,
+      decay,
+      falloffStart,
+      fogFallSpeed
+    };
+  }, [
+    wispDensity,
+    mouseTiltStrength,
+    horizontalBeamOffset,
+    verticalBeamOffset,
+    flowSpeed,
+    verticalSizing,
+    horizontalSizing,
+    fogIntensity,
+    fogScale,
+    wispSpeed,
+    wispIntensity,
+    flowStrength,
+    decay,
+    falloffStart,
+    fogFallSpeed
+  ]);
 
   useEffect(() => {
     lastFpsCheckRef.current = performance.now();
@@ -354,27 +413,29 @@ export const LaserFlow: React.FC<Props> = ({
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3));
 
+    const initialShaderSettings = shaderSettingsRef.current;
+
     const uniforms: Uniforms = {
       iTime: { value: 0 },
       iResolution: { value: new THREE.Vector3(1, 1, 1) },
       iMouse: { value: new THREE.Vector4(0, 0, 0, 0) },
-      uWispDensity: { value: wispDensity },
-      uTiltScale: { value: mouseTiltStrength },
+      uWispDensity: { value: initialShaderSettings.wispDensity },
+      uTiltScale: { value: initialShaderSettings.mouseTiltStrength },
       uFlowTime: { value: 0 },
       uFogTime: { value: 0 },
-      uBeamXFrac: { value: horizontalBeamOffset },
-      uBeamYFrac: { value: verticalBeamOffset },
-      uFlowSpeed: { value: flowSpeed },
-      uVLenFactor: { value: verticalSizing },
-      uHLenFactor: { value: horizontalSizing },
-      uFogIntensity: { value: fogIntensity },
-      uFogScale: { value: fogScale },
-      uWSpeed: { value: wispSpeed },
-      uWIntensity: { value: wispIntensity },
-      uFlowStrength: { value: flowStrength },
-      uDecay: { value: decay },
-      uFalloffStart: { value: falloffStart },
-      uFogFallSpeed: { value: fogFallSpeed },
+      uBeamXFrac: { value: initialShaderSettings.horizontalBeamOffset },
+      uBeamYFrac: { value: initialShaderSettings.verticalBeamOffset },
+      uFlowSpeed: { value: initialShaderSettings.flowSpeed },
+      uVLenFactor: { value: initialShaderSettings.verticalSizing },
+      uHLenFactor: { value: initialShaderSettings.horizontalSizing },
+      uFogIntensity: { value: initialShaderSettings.fogIntensity },
+      uFogScale: { value: initialShaderSettings.fogScale },
+      uWSpeed: { value: initialShaderSettings.wispSpeed },
+      uWIntensity: { value: initialShaderSettings.wispIntensity },
+      uFlowStrength: { value: initialShaderSettings.flowStrength },
+      uDecay: { value: initialShaderSettings.decay },
+      uFalloffStart: { value: initialShaderSettings.falloffStart },
+      uFogFallSpeed: { value: initialShaderSettings.fogFallSpeed },
       uColor: { value: new THREE.Vector3(1, 1, 1) },
       uFade: { value: hasFadedRef.current ? 1 : 0 }
     };
@@ -512,7 +573,7 @@ export const LaserFlow: React.FC<Props> = ({
 
     const animate = () => {
       raf = requestAnimationFrame(animate);
-     if (pausedRef.current || !isInView) return;
+      if (pausedRef.current || !isInViewRef.current) return;
 
       const t = clock.getElapsedTime();
       const dt = Math.max(0, t - prevTime);

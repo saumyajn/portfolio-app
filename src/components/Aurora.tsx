@@ -116,8 +116,11 @@ interface AuroraProps {
   speed?: number;
 }
 
+const DEFAULT_COLOR_STOPS = ['#5227FF', '#7cff67', '#5227FF'];
+const DEFAULT_AMPLITUDE = 0.9;
+const DEFAULT_BLEND = 0.5;
+
 export default function Aurora(props: AuroraProps) {
-  const { colorStops = ['#5227FF', '#7cff67', '#5227FF'], amplitude = 0.9, blend = 0.5 } = props;
   const propsRef = useRef<AuroraProps>(props);
  useEffect(() => {
     propsRef.current = props;
@@ -158,7 +161,7 @@ export default function Aurora(props: AuroraProps) {
       delete geometry.attributes.uv;
     }
 
-    const colorStopsArray = colorStops.map(hex => {
+    const colorStopsArray = (propsRef.current.colorStops ?? DEFAULT_COLOR_STOPS).map(hex => {
       const c = new Color(hex);
       return [c.r, c.g, c.b];
     });
@@ -168,10 +171,10 @@ export default function Aurora(props: AuroraProps) {
       fragment: FRAG,
       uniforms: {
         uTime: { value: 0 },
-        uAmplitude: { value: amplitude },
+        uAmplitude: { value: propsRef.current.amplitude ?? DEFAULT_AMPLITUDE },
         uColorStops: { value: colorStopsArray },
         uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
-        uBlend: { value: blend }
+        uBlend: { value: propsRef.current.blend ?? DEFAULT_BLEND }
       }
     });
 
@@ -184,9 +187,9 @@ export default function Aurora(props: AuroraProps) {
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
       if (program) {
         program.uniforms.uTime.value = time * speed * 0.1;
-        program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
-        program.uniforms.uBlend.value = propsRef.current.blend ?? blend;
-        const stops = propsRef.current.colorStops ?? colorStops;
+        program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? DEFAULT_AMPLITUDE;
+        program.uniforms.uBlend.value = propsRef.current.blend ?? DEFAULT_BLEND;
+        const stops = propsRef.current.colorStops ?? DEFAULT_COLOR_STOPS;
         program.uniforms.uColorStops.value = stops.map((hex: string) => {
           const c = new Color(hex);
           return [c.r, c.g, c.b];
@@ -206,7 +209,7 @@ export default function Aurora(props: AuroraProps) {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [amplitude]);
+  }, []);
 
   return <div ref={ctnDom} className="w-full h-1/2" />;
 }

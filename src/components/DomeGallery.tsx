@@ -564,14 +564,17 @@ export default function DomeGallery({
   };
 
   useEffect(() => {
+    const viewer = viewerRef.current;
+    const root = rootRef.current;
+
     return () => {
       document.body.classList.remove('dg-scroll-lock');
 
       if (autoRotateRAF.current) cancelAnimationFrame(autoRotateRAF.current);
       if (inertiaRAF.current) cancelAnimationFrame(inertiaRAF.current);
 
-      viewerRef.current?.querySelectorAll('.enlarge').forEach(el => el.remove());
-      rootRef.current?.querySelectorAll('.enlarge-closing').forEach(el => el.remove());
+      viewer?.querySelectorAll('.enlarge').forEach(el => el.remove());
+      root?.querySelectorAll('.enlarge-closing').forEach(el => el.remove());
 
       openingRef.current = false;
       focusedElRef.current = null;
