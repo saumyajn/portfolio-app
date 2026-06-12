@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://saumyajain.vercel.app/
+Sitemap: https://saumyajain.vercel.app/sitemap.xml
